@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{46DAF100-AA1C-4967-84E6-74FFAB5950CD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flipster.Gateway", "server\Flipster.Gateway\Flipster.Gateway.csproj", "{F76F7B9B-AA0E-4303-8E57-55E5562C45DB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flipster.Identity", "server\Flipster.Identity\Flipster.Identity.csproj", "{846C1ECD-EE45-4410-A890-4F2600907718}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F76F7B9B-AA0E-4303-8E57-55E5562C45DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F76F7B9B-AA0E-4303-8E57-55E5562C45DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F76F7B9B-AA0E-4303-8E57-55E5562C45DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F76F7B9B-AA0E-4303-8E57-55E5562C45DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{846C1ECD-EE45-4410-A890-4F2600907718}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{846C1ECD-EE45-4410-A890-4F2600907718}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{846C1ECD-EE45-4410-A890-4F2600907718}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{846C1ECD-EE45-4410-A890-4F2600907718}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F76F7B9B-AA0E-4303-8E57-55E5562C45DB} = {46DAF100-AA1C-4967-84E6-74FFAB5950CD}
+		{846C1ECD-EE45-4410-A890-4F2600907718} = {46DAF100-AA1C-4967-84E6-74FFAB5950CD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7C566DE2-9592-4009-B0E0-2E6ED7F85AF2}
+	EndGlobalSection
+EndGlobal
