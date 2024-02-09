@@ -1,0 +1,27 @@
+@import "../../shared/assets/styles/vars.scss";
+
+.form {
+    max-width: 300px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    &__btn {
+        outline: none;
+        border: none;
+        width: 100%;
+        background: $black-priority;
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 18px;
+        font-weight: 500;
+        padding: 12px 20px;
+        transition: background 0.3s;
+        cursor: pointer;
+
+        &:hover {
+            background: $black-priority-hover;
+        }
+    }
+}
