@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{46DAF1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flipster.Gateway", "server\Flipster.Gateway\Flipster.Gateway.csproj", "{F76F7B9B-AA0E-4303-8E57-55E5562C45DB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flipster.Identity", "server\Flipster.Identity\Flipster.Identity.csproj", "{846C1ECD-EE45-4410-A890-4F2600907718}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flipster.Identity", "server\services\Flipster.Identity\Flipster.Identity.csproj", "{846C1ECD-EE45-4410-A890-4F2600907718}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
