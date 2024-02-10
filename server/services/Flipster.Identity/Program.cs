@@ -12,14 +12,17 @@ builder.Services.Configure<RouteOptions>(options =>
 builder.Services
     .AddCors("http://localhost:5173")
     .AddDatabase()
+    .AddServices()
     .AddAuth(builder.Configuration);
 
 var app = builder.Build();
 
 app.UseCors();
+
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseRouting();
+
 app.MapControllers();
 
 app.Run();

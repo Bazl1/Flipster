@@ -16,4 +16,9 @@ public class RefreshToken
             Value = value,
             Expiry = DateTime.UtcNow.AddMinutes(expiryMinutes)
         };
+
+    public bool IsValid()
+    {
+        return DateTime.UtcNow < Expiry;
+    }
 }
