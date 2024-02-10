@@ -35,12 +35,10 @@ public class AuthController(
         var result = await _userManager.CreateAsync(user, request.Password);
         if (!result.Succeeded)
         {
-            return BadRequest(
-                new { Errors = result.Errors.Select(error => new { Code = error.Code, Description = error.Description }) }
-            );
+            return BadRequest(new { Error = new { Message = result.Errors.First().Description } });
         }
 
-        if (!(await _roleManager.RoleExistsAsync(UserRoles.User.ToString())))
+        if (!await _roleManager.RoleExistsAsync(UserRoles.User.ToString()))
         {
             await _roleManager.CreateAsync(new IdentityRole(UserRoles.User.ToString()));
         }
@@ -73,7 +71,7 @@ public class AuthController(
         var result = await _signInManager.PasswordSignInAsync(user, request.Password, false, false);
         if (!result.Succeeded)
         {
-            return BadRequest(result);
+            return BadRequest(new { Error = new { Message = "Invalid user name or password." } });
         }
 
         var claims = new[]
@@ -125,9 +123,11 @@ public class AuthController(
     }
 
     [HttpGet("[action]")]
-    [Authorize(Roles = "User")]
-    public IActionResult Tets()
+    [Authorize]
+    public async Task<IActionResult> Test()
     {
+        Console.WriteLine(DateTime.Now.ToString());
+        Console.WriteLine(DateTime.UtcNow.ToString());
         return Ok("Ok");
     }
 }
