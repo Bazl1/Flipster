@@ -1,14 +1,17 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Flipster.Identity.Core.Data;
 using Flipster.Identity.Core.Domain.Entities;
 using Flipster.Identity.Core.Domain.Enums;
 using Flipster.Identity.Core.Dtos;
-using Flipster.Identity.Core.Features.Login;
-using Flipster.Identity.Core.Features.Register;
 using Flipster.Identity.Core.Services.Interfaces;
+using Flipster.Identity.Features.Login;
+using Flipster.Identity.Features.RefreshToken;
+using Flipster.Identity.Features.Register;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 #pragma warning disable CS8604
 
@@ -16,6 +19,7 @@ namespace Flipster.Identity.Api.Controllers;
 
 [Route("[controller]")]
 public class AuthController(
+    ApplicationDbContext _db,
     IJwtTokenGenerator _jwtTokenGenerator,
     UserManager<User> _userManager,
     SignInManager<User> _signInManager,
@@ -54,7 +58,7 @@ public class AuthController(
         };
         var tokens = _jwtTokenGenerator.GenerateToken(user, claims);
 
-        Response.Cookies.Append("refresh_token", tokens.RefreshToken);
+        Response.Cookies.Append("Flipster.Identity.RefreshToken", tokens.RefreshToken);
         return Ok(
             new RegisterResponse(UserDto.From(user), tokens.AccessToken, tokens.RefreshToken)
         );
@@ -82,9 +86,36 @@ public class AuthController(
         };
         var tokens = _jwtTokenGenerator.GenerateToken(user, claims);
 
-        Response.Cookies.Append("refresh_token", tokens.RefreshToken);
+        Response.Cookies.Append("Flipster.Identity.RefreshToken", tokens.RefreshToken);
         return Ok(
             new LoginResponse(UserDto.From(user), tokens.AccessToken, tokens.RefreshToken)
+        );
+    }
+
+    [HttpPost("refresh-token")]
+    [AllowAnonymous]
+    public async Task<IActionResult> RefreshToken()
+    {
+        var refreshTokenValue = Request.Cookies["Flipster.Identity.RefreshToken"];
+        if (await _db.RefreshTokens.SingleOrDefaultAsync(refreshToken => refreshToken.Value == refreshTokenValue) is not RefreshToken refreshToken)
+        {
+            return BadRequest(new { Error = new { Message = "Refresh token is not found." } });
+        }
+        var user = await _userManager.FindByIdAsync(refreshToken.UserId);
+
+        var claims = new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id),
+            new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Role, (await _userManager.GetRolesAsync(user)).First()),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
+        var tokens = _jwtTokenGenerator.GenerateToken(user, claims);
+
+        Response.Cookies.Append("Flipster.Identity.RefreshToken", tokens.RefreshToken);
+        return Ok(
+            new RefreshTokenResponse(UserDto.From(user), tokens.AccessToken, tokens.RefreshToken)
         );
     }
 }

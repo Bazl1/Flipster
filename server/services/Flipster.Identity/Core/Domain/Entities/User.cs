@@ -1,5 +1,5 @@
 using Flipster.Identity.Core.Domain.Enums;
-using Flipster.Identity.Core.Features.Register;
+using Flipster.Identity.Features.Register;
 using Microsoft.AspNetCore.Identity;
 
 namespace Flipster.Identity.Core.Domain.Entities;

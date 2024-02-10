@@ -1,4 +1,4 @@
-namespace Flipster.Identity.Core.Features.Login;
+namespace Flipster.Identity.Features.Login;
 
 public record LoginRequest(
     string Email,
