@@ -27,6 +27,17 @@ public static class DependencyInjection
         return services;
     }
 
+    public static IServiceCollection AddCors(this IServiceCollection services, params string[] origins)
+    {
+        services.AddCors(options
+            => options.AddDefaultPolicy(policy =>
+                policy.WithOrigins(origins)
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()));
+        return services;
+    }
+
     public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<IdentityOptions>(options =>
