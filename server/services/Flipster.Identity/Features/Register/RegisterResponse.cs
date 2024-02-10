@@ -1,8 +1,8 @@
 using Flipster.Identity.Core.Dtos;
 
-namespace Flipster.Identity.Core.Features.Login;
+namespace Flipster.Identity.Features.Register;
 
-public record LoginResponse(
+public record RegisterResponse(
     UserDto User,
     string AccessToken,
     string RefreshToken

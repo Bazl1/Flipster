@@ -51,6 +51,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
             refreshToken.Value = result.RefreshToken;
             refreshToken.Expiry = DateTime.UtcNow.AddMinutes(_jwtOptions.RefreshExpirationMinutes);
         }
+        _db.SaveChanges();
 
         return result;
     }

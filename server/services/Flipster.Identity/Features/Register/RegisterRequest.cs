@@ -1,4 +1,4 @@
-namespace Flipster.Identity.Core.Features.Register;
+namespace Flipster.Identity.Features.Register;
 
 public record RegisterRequest(
     string Email,
