@@ -20,6 +20,7 @@ var app = builder.Build();
 app.UseCors();
 
 app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
