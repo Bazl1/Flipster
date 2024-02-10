@@ -90,9 +90,9 @@ public class AuthController(
         );
     }
 
-    [HttpPost("refresh-token")]
+    [HttpPost("[action]")]
     [AllowAnonymous]
-    public async Task<IActionResult> RefreshToken()
+    public async Task<IActionResult> Refresh()
     {
         var refreshTokenValue = Request.Cookies["Flipster.Identity.RefreshToken"];
         if (await _db.RefreshTokens.SingleOrDefaultAsync(refreshToken => refreshToken.Value == refreshTokenValue) is not RefreshToken refreshToken)
@@ -120,14 +120,5 @@ public class AuthController(
         return Ok(
             new RefreshTokenResponse(UserDto.From(user), tokens.AccessToken, tokens.RefreshToken)
         );
-    }
-
-    [HttpGet("[action]")]
-    [Authorize]
-    public async Task<IActionResult> Test()
-    {
-        Console.WriteLine(DateTime.Now.ToString());
-        Console.WriteLine(DateTime.UtcNow.ToString());
-        return Ok("Ok");
     }
 }
