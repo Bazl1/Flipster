@@ -1,0 +1,15 @@
+@import "../../shared/assets/styles/vars.scss";
+
+.footer {
+    &__inner {
+        background: $black-priority;
+        padding: 40px 0;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+    &__copywriting {
+        color: #fff;
+        font-size: 14px;
+        text-align: center;
+    }
+}
