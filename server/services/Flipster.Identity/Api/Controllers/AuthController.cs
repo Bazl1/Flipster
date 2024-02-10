@@ -126,6 +126,8 @@ public class AuthController(
     [Authorize]
     public async Task<IActionResult> Test()
     {
+        Console.WriteLine(DateTime.Now.ToString());
+        Console.WriteLine(DateTime.UtcNow.ToString());
         return Ok("Ok");
     }
 }
