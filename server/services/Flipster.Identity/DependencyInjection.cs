@@ -20,10 +20,6 @@ public static class DependencyInjection
         services.AddDbContext<ApplicationDbContext>(
                     options => options.UseInMemoryDatabase("Flipster.Identity.Dd"));
 
-        services.AddIdentity<User, IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddDefaultTokenProviders();
-
         return services;
     }
 
@@ -40,12 +36,20 @@ public static class DependencyInjection
 
     public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<IdentityOptions>(options =>
+        services.AddIdentity<User, IdentityRole>(options =>
         {
             options.User.RequireUniqueEmail = true;
-        });
+            options.Password.RequiredLength = 0;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireDigit = false;
+            options.Password.RequireLowercase = false;
+            options.Password.RequireUppercase = false;
+        })
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+
         services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
-        services.AddTransient<IJwtTokenGenerator, JwtTokenGenerator>();
+
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
@@ -64,6 +68,12 @@ public static class DependencyInjection
 
         services.AddAuthorization();
 
+        return services;
+    }
+
+    public static IServiceCollection AddServices(this IServiceCollection services)
+    {
+        services.AddTransient<IJwtTokenGenerator, JwtTokenGenerator>();
         return services;
     }
 }

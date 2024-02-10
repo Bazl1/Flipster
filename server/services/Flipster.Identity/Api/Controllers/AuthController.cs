@@ -103,6 +103,11 @@ public class AuthController(
         }
         var user = await _userManager.FindByIdAsync(refreshToken.UserId);
 
+        if (!refreshToken.IsValid())
+        {
+            return BadRequest(new { Error = new { Message = "The refresh token has expired." } });
+        }
+
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id),
@@ -117,5 +122,12 @@ public class AuthController(
         return Ok(
             new RefreshTokenResponse(UserDto.From(user), tokens.AccessToken, tokens.RefreshToken)
         );
+    }
+
+    [HttpGet("[action]")]
+    [Authorize(Roles = "User")]
+    public IActionResult Tets()
+    {
+        return Ok("Ok");
     }
 }
