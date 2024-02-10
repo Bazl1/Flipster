@@ -68,10 +68,14 @@ public class AuthController(
         [FromBody] LoginRequest request)
     {
         var user = await _userManager.FindByEmailAsync(request.Email);
+        if (user == null)
+        {
+            return BadRequest(new { Error = new { Message = "No user with this e-mail address was found." } });
+        }
         var result = await _signInManager.PasswordSignInAsync(user, request.Password, false, false);
         if (!result.Succeeded)
         {
-            return BadRequest(new { Error = new { Message = "Invalid user name or password." } });
+            return BadRequest(new { Error = new { Message = "Password mismatch." } });
         }
 
         var claims = new[]
@@ -97,13 +101,13 @@ public class AuthController(
         var refreshTokenValue = Request.Cookies["Flipster.Identity.RefreshToken"];
         if (await _db.RefreshTokens.SingleOrDefaultAsync(refreshToken => refreshToken.Value == refreshTokenValue) is not RefreshToken refreshToken)
         {
-            return BadRequest(new { Error = new { Message = "Refresh token is not found." } });
+            return Unauthorized(new { Error = new { Message = "Refresh token is not found." } });
         }
         var user = await _userManager.FindByIdAsync(refreshToken.UserId);
 
         if (!refreshToken.IsValid())
         {
-            return BadRequest(new { Error = new { Message = "The refresh token has expired." } });
+            return Unauthorized(new { Error = new { Message = "The refresh token has expired." } });
         }
 
         var claims = new[]
@@ -120,5 +124,22 @@ public class AuthController(
         return Ok(
             new RefreshTokenResponse(UserDto.From(user), tokens.AccessToken, tokens.RefreshToken)
         );
+    }
+
+    [HttpPost("[action]")]
+    [Authorize]
+    public async Task<IActionResult> Logout()
+    {
+        var refreshTokenValue = Request.Cookies["Flipster.Identity.RefreshToken"];
+        if (await _db.RefreshTokens.SingleOrDefaultAsync(refreshToken => refreshToken.Value == refreshTokenValue) is not RefreshToken refreshToken)
+        {
+            return Unauthorized(new { Error = new { Message = "Refresh token is not found." } });
+        }
+
+        _db.Remove(refreshToken);
+        await _db.SaveChangesAsync();
+
+        Response.Cookies.Delete("Flipster.Identity.RefreshToken");
+        return Ok();
     }
 }
