@@ -1,0 +1,82 @@
+@import "../../shared/assets/styles/vars.scss";
+
+.header {
+    &__inner {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: center;
+        padding: 40px;
+        background: $black-priority;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+    &__logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: #fff;
+        text-decoration: none;
+    }
+    &__btns {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    &__btn {
+        text-decoration: none;
+        font-size: 16px;
+        color: #fff;
+        padding: 10px 20px;
+        border: 1px solid #fff;
+        border-radius: 3px;
+    }
+
+    &__menu {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    &__list {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+    &__list_item {
+        a {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-size: 16px;
+            text-decoration: none;
+            color: #fff;
+
+            span {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                svg {
+                    width: 21px;
+                    height: 21px;
+                }
+            }
+        }
+    }
+    &__fullbtn {
+        outline: none;
+        border: none;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-family: "Inter";
+        font-weight: 500;
+        font-size: 16px;
+        padding: 12px 20px;
+        background: #fff;
+        border-radius: 3px;
+        color: $color-text-priority;
+        cursor: pointer;
+        &:nth-child(2) {
+            margin-left: 20px;
+        }
+    }
+}

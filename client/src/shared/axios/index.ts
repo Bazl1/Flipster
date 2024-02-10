@@ -1,7 +1,7 @@
 import axios from "axios";
 import AuthService from "../../services/AuthService";
 
-export const API_URL = "";
+export const API_URL = "http://localhost:5107";
 
 const axiosApi = axios.create({
     withCredentials: true,
@@ -9,7 +9,10 @@ const axiosApi = axios.create({
 });
 
 axiosApi.interceptors.request.use((config) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
+    const token = localStorage.getItem("token");
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
 });
 

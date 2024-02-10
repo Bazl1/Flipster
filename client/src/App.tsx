@@ -6,13 +6,14 @@ import LayoutMain from "./component/LayoutMain/LayoutMain";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import LayoutFullPage from "./component/LayoutFullPage/LayoutFullPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import HomePage from "./pages/HomePage/HomePage";
 
 function App() {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (localStorage.getItem("token")) {
-            dispatch(checkAuth);
+            dispatch(checkAuth());
         }
     }, []);
 
@@ -33,6 +34,14 @@ function App() {
                         <LayoutFullPage>
                             <RegisterPage />
                         </LayoutFullPage>
+                    }
+                />
+                <Route
+                    path="/"
+                    element={
+                        <LayoutMain>
+                            <HomePage />
+                        </LayoutMain>
                     }
                 />
             </Routes>

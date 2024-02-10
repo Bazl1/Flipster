@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IUser } from "../../types/IUser";
 import AuthService from "../../services/AuthService";
+import { AxiosError } from "axios";
 
 interface ILogin {
     email: string;
@@ -33,6 +34,7 @@ export const registration = createAsyncThunk(
             localStorage.setItem("token", response.data.accessToken);
             dispatch(setAuth(true));
             dispatch(setUser(response.data.user));
+            return response.status;
         } catch (error) {
             console.log(error);
         }
@@ -47,6 +49,7 @@ export const login = createAsyncThunk(
             localStorage.setItem("token", response.data.accessToken);
             dispatch(setAuth(true));
             dispatch(setUser(response.data.user));
+            return response.status;
         } catch (error) {
             console.log(error);
         }

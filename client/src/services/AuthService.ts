@@ -8,21 +8,21 @@ export default class AuthService {
         email: string,
         password: string,
     ): Promise<AxiosResponse<AuthResponse>> {
-        return axiosApi.post("/oauth/registration", { name, email, password });
+        return axiosApi.post("/auth/register", { name, email, password });
     }
 
     static async login(
         email: string,
         password: string,
     ): Promise<AxiosResponse<AuthResponse>> {
-        return axiosApi.post("/oauth/login", { email, password });
+        return axiosApi.post("/auth/login", { email, password });
     }
 
     static async logout(): Promise<void> {
-        return axiosApi.post("/oauth/logout");
+        return axiosApi.post("/auth/logout");
     }
 
     static async refresh(): Promise<AxiosResponse<AuthResponse>> {
-        return axiosApi.post("/oauth/refresh");
+        return axiosApi.post("/auth/refresh");
     }
 }
