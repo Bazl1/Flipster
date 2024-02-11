@@ -65,6 +65,7 @@ const Header = () => {
                                     dispatch(logout());
                                 }}
                                 className={s.header__fullbtn}
+                                data-cy="button-logout"
                             >
                                 Logout
                             </button>

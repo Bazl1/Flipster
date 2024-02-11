@@ -53,6 +53,7 @@ const LoginForm = () => {
                             message: "Enter a valid email",
                         },
                     }}
+                    dataСy="input-email"
                 />
                 <Input
                     text={"Password*"}
@@ -73,8 +74,9 @@ const LoginForm = () => {
                             message: "Minimum password length is 8 characters",
                         },
                     }}
+                    dataСy="input-password"
                 />
-                <button className={s.form__btn} type="submit">
+                <button className={s.form__btn} type="submit" data-cy="submit">
                     sign in
                 </button>
             </form>

@@ -58,7 +58,7 @@ const RegistrationForm = () => {
                     validationOptions={{
                         required: "Required field",
                     }}
-                    data-cy="input-name"
+                    dataСy="input-name"
                 />
                 <Input
                     text="Email*"
@@ -75,7 +75,7 @@ const RegistrationForm = () => {
                             message: "Enter a valid email",
                         },
                     }}
-                    data-cy="input-email"
+                    dataСy="input-email"
                 />
                 <Input
                     text="Password*"
@@ -96,7 +96,7 @@ const RegistrationForm = () => {
                             message: "Minimum password length is 8 characters",
                         },
                     }}
-                    data-cy="input-password"
+                    dataСy="input-password"
                 />
                 <Input
                     text="Confirm Password*"
@@ -117,7 +117,7 @@ const RegistrationForm = () => {
                             message: "Minimum password length is 8 characters",
                         },
                     }}
-                    data-cy="input-confirm-password"
+                    dataСy="input-confirm-password"
                 />
                 <button className={s.form__btn} type="submit" data-cy="submit">
                     SIGN UP

@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import LayoutFullPage from "./component/LayoutFullPage/LayoutFullPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import HomePage from "./pages/HomePage/HomePage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
 function App() {
     const dispatch = useAppDispatch();
@@ -20,6 +21,16 @@ function App() {
     return (
         <Router>
             <Routes>
+                {/* user */}
+                <Route
+                    path="/profile"
+                    element={
+                        <LayoutMain>
+                            <ProfilePage />
+                        </LayoutMain>
+                    }
+                />
+                {/* public */}
                 <Route
                     path="/login"
                     element={

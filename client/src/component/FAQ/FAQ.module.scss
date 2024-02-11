@@ -1,0 +1,31 @@
+@import "../../shared/assets/styles/vars.scss";
+
+.faq {
+    &__title {
+        outline: none;
+        border: none;
+        width: 100%;
+        padding: 20px 30px;
+        background: $black-priority;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 500;
+        text-align: start;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    &__title_active {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+    &__content {
+        font-size: 16px;
+        font-weight: 400;
+        background: $light-priority;
+        padding: 40px 30px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        height: auto;
+    }
+}

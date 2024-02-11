@@ -9,6 +9,7 @@ interface InputProps {
     register: any;
     errors: any;
     validationOptions?: any;
+    dataСy?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -20,6 +21,7 @@ const Input: React.FC<InputProps> = ({
     register,
     errors,
     validationOptions,
+    dataСy = null,
 }) => {
     return (
         <label className={s.input__columns}>
@@ -32,6 +34,7 @@ const Input: React.FC<InputProps> = ({
                 }}
                 className={s.input}
                 type={type}
+                data-cy={dataСy}
             />
             {errors[registerName] && (
                 <p className={s.input__error}>

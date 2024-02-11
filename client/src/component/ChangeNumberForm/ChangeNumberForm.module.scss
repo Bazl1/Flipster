@@ -1,0 +1,32 @@
+@import "../../shared/assets/styles/vars.scss";
+
+.form {
+    &__columns {
+        max-width: 600px;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        span {
+            font-size: 12px;
+            font-weight: 400;
+        }
+    }
+
+    &__btn {
+        max-width: 210px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        outline: none;
+        border: none;
+        border-radius: 3px;
+        padding: 14px 20px;
+        margin-top: 40px;
+        font-size: 16px;
+        font-weight: 500;
+        color: #fff;
+        background: $black-priority;
+        cursor: pointer;
+    }
+}
