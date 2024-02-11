@@ -7,6 +7,7 @@ namespace Flipster.Identity.Core.Data;
 public class ApplicationDbContext : IdentityDbContext<User>
 {
     public DbSet<RefreshToken> RefreshTokens { get; set; }
+    public DbSet<Location> Locations { get; set; }
     public ApplicationDbContext(DbContextOptions options) : base(options)
     {
     }

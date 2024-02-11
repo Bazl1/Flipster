@@ -5,6 +5,8 @@ using Flipster.Identity.Core.Domain.Entities;
 using Flipster.Identity.Core.Domain.Enums;
 using Flipster.Identity.Core.Dtos;
 using Flipster.Identity.Core.Services.Interfaces;
+using Flipster.Identity.Features.ChangePassword;
+using Flipster.Identity.Features.ChangeUserInfo;
 using Flipster.Identity.Features.Login;
 using Flipster.Identity.Features.RefreshToken;
 using Flipster.Identity.Features.Register;
@@ -13,7 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-#pragma warning disable CS8604
+#pragma warning disable CS8604, CS8602
 
 namespace Flipster.Identity.Api.Controllers;
 
@@ -35,7 +37,7 @@ public class AuthController(
         var result = await _userManager.CreateAsync(user, request.Password);
         if (!result.Succeeded)
         {
-            return BadRequest(new { Error = new { Message = result.Errors.First().Description } });
+            return BadRequest(new { Error = new { Message = "There was an unforeseen error during registration, please try again later." } });
         }
 
         if (!await _roleManager.RoleExistsAsync(UserRoles.User.ToString()))
@@ -56,9 +58,12 @@ public class AuthController(
         };
         var tokens = _jwtTokenGenerator.GenerateToken(user, claims);
 
-        Response.Cookies.Append("Flipster.Identity.RefreshToken", tokens.RefreshToken);
+        AddRefreshTokenToCookie(tokens.RefreshToken);
         return Ok(
-            new RegisterResponse(UserDto.From(user), tokens.AccessToken, tokens.RefreshToken)
+            new RefreshTokenResponse(
+                UserDto.From(user, (await _userManager.GetRolesAsync(user)).First()),
+                tokens.AccessToken,
+                tokens.RefreshToken)
         );
     }
 
@@ -88,9 +93,12 @@ public class AuthController(
         };
         var tokens = _jwtTokenGenerator.GenerateToken(user, claims);
 
-        Response.Cookies.Append("Flipster.Identity.RefreshToken", tokens.RefreshToken);
+        AddRefreshTokenToCookie(tokens.RefreshToken);
         return Ok(
-            new LoginResponse(UserDto.From(user), tokens.AccessToken, tokens.RefreshToken)
+            new RefreshTokenResponse(
+                UserDto.From(user, (await _userManager.GetRolesAsync(user)).First()),
+                tokens.AccessToken,
+                tokens.RefreshToken)
         );
     }
 
@@ -120,9 +128,12 @@ public class AuthController(
         };
         var tokens = _jwtTokenGenerator.GenerateToken(user, claims);
 
-        Response.Cookies.Append("Flipster.Identity.RefreshToken", tokens.RefreshToken);
+        AddRefreshTokenToCookie(tokens.RefreshToken);
         return Ok(
-            new RefreshTokenResponse(UserDto.From(user), tokens.AccessToken, tokens.RefreshToken)
+            new RefreshTokenResponse(
+                UserDto.From(user, (await _userManager.GetRolesAsync(user)).First()),
+                tokens.AccessToken,
+                tokens.RefreshToken)
         );
     }
 
@@ -139,7 +150,61 @@ public class AuthController(
         _db.Remove(refreshToken);
         await _db.SaveChangesAsync();
 
-        Response.Cookies.Delete("Flipster.Identity.RefreshToken");
+        RemoveRefreshTokenFromCookie();
         return Ok();
+    }
+
+    [HttpPut("change-password")]
+    [Authorize]
+    public async Task<IActionResult> ChangePassword(ChangePasswordRequest request)
+    {
+        var user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        var result = await _userManager.ChangePasswordAsync(user, request.OldPassword, request.Password);
+        if (result.Succeeded)
+        {
+            return BadRequest(new { Error = new { Message = result.Errors.First().Description } });
+        }
+        await _userManager.UpdateAsync(user);
+        return Ok();
+    }
+
+    [HttpPut("change-user-info")]
+    [Authorize]
+    public async Task<IActionResult> ChangeUserInfo(ChangeUserInfoRequest request)
+    {
+        var user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        user.UserName = request.Name;
+        user.PhoneNumber = request.PhoneNumber;
+        user.Avatar = request.Avatar;
+        await _db.SaveChangesAsync();
+        return Ok(user);
+    }
+
+    [HttpDelete("remove-user")]
+    [Authorize]
+    public async Task<IActionResult> RemoveUser()
+    {
+        var user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        var result = await _userManager.DeleteAsync(user);
+        if (result.Succeeded)
+        {
+            return BadRequest(new { Error = new { Message = result.Errors.First().Description } });
+        }
+        return Ok();
+    }
+
+    public void AddRefreshTokenToCookie(string refreshToken)
+    {
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Expires = DateTime.UtcNow.AddDays(10)
+        };
+        Response.Cookies.Append("Flipster.Identity.RefreshToken", refreshToken, cookieOptions);
+    }
+
+    public void RemoveRefreshTokenFromCookie()
+    {
+        Response.Cookies.Delete("Flipster.Identity.RefreshToken");
     }
 }

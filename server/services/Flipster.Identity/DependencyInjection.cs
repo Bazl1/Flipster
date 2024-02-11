@@ -1,5 +1,7 @@
+using System.Reflection;
 using System.Text;
 using Flipster.Identity.Core.Data;
+using Flipster.Identity.Core.Data.Seeds;
 using Flipster.Identity.Core.Domain.Entities;
 using Flipster.Identity.Core.Services;
 using Flipster.Identity.Core.Services.Interfaces;
@@ -80,5 +82,15 @@ public static class DependencyInjection
     {
         services.AddTransient<IJwtTokenGenerator, JwtTokenGenerator>();
         return services;
+    }
+
+    public static IApplicationBuilder UseSeeds(this IApplicationBuilder builder)
+    {
+        using (var serviceScope = builder.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+        {
+            var db = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+            new LocationSeeder().Seed(db);
+        }
+        return builder;
     }
 }

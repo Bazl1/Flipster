@@ -17,6 +17,11 @@ builder.Services
 
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseSeeds();
+}
+
 app.UseCors();
 
 app.UseRouting();
