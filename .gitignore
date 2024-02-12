@@ -1,4 +1,10 @@
+# Dotnet
 bin
 obj
+
+# IDEs
 .vscode
+.idea
+
+# Other files or folders
 notes
