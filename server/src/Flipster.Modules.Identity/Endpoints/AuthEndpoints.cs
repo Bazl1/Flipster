@@ -72,12 +72,9 @@ public static class AuthEndpoints
         {
             Name = request.Name,
             Email = request.Email,
-            PhoneNumber = request.PhoneNumber,
         };
         if (userRepository.FindByEmail(request.Email) is not null)
             return TypedResults.BadRequest(new ErrorDto($"User with this email '{request.Email}' already exists."));
-        if (userRepository.FindByPhoneNumber(request.PhoneNumber) is not null)
-            return TypedResults.BadRequest(new ErrorDto($"User with this phone number '{request.PhoneNumber}' already exists."));
         user.PasswordHash = passwordHasher.Hash(request.Password);
         userRepository.Create(user);
         var claims = new Claim[]
