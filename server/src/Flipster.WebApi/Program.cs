@@ -10,6 +10,14 @@ builder.Services
 builder.Services
     .AddIdentityModule(builder.Configuration);
 
+builder.Services.AddCors(options
+    => options.AddDefaultPolicy(policy 
+        => policy
+            .WithOrigins("http://localhost:5173")
+            .AllowCredentials()
+            .AllowAnyHeader()
+            .AllowAnyMethod()));
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -18,6 +26,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors();
 app.UseRouting();
 
 app.UseAuthentication();
