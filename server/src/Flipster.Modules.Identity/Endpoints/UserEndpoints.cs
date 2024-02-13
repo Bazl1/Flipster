@@ -64,7 +64,14 @@ public static class UsersEndpoints
         [FromForm] ChangeAvatarRequest request)
     {
         var user = userRepository.FindById(context.User.FindFirstValue(ClaimTypes.NameIdentifier));
-        user.Avatar = await imageService.LoadImageAsync(request.Avatar);
+        try
+        {
+            user.Avatar = await imageService.LoadImageAsync(request.Avatar);
+        }
+        catch
+        {
+            return Results.BadRequest(new ErrorDto("An unexpected error occurred while loading the image."));            
+        }
         userRepository.Update(user);
         return Results.Ok(mapper.Map<UserDto>(user));
     }
@@ -76,9 +83,9 @@ public static class UsersEndpoints
         ChangeDetailsRequest request)
     {
         var user = userRepository.FindById(context.User.FindFirstValue(ClaimTypes.NameIdentifier));
-        if (request.Name != null && !string.IsNullOrEmpty(request.Name))
+        if (!string.IsNullOrEmpty(request.Name))
             user.Name = request.Name;
-        if (request.Location != null && !string.IsNullOrEmpty(request.Name))
+        if (!string.IsNullOrEmpty(request.Location))
             user.Location = request.Location;
         userRepository.Update(user);
         return Results.Ok(mapper.Map<UserDto>(user));
