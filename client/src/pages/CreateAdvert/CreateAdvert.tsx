@@ -58,15 +58,20 @@ const CreateAdvert = () => {
     const handleAddImages = (e: React.ChangeEvent<HTMLInputElement>) => {
         const input = e.target;
         if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                if (images.length >= 10) {
-                    toast.error("The maximum number of images is 10");
-                } else {
-                    setImages([...images, e.target?.result as string]);
-                }
-            };
-            reader.readAsDataURL(input.files[0]);
+            const maxSize = 2 * 1024 * 1024;
+            if (input.files[0].size > maxSize) {
+                toast.error("Maximum image size 2mb");
+            } else {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    if (images.length >= 10) {
+                        toast.error("The maximum number of images is 10");
+                    } else {
+                        setImages([...images, e.target?.result as string]);
+                    }
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
         }
     };
 
