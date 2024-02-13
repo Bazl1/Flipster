@@ -57,3 +57,7 @@ body {
     padding: 0 20px;
     margin: 0 auto;
 }
+
+.swiper-pagination-bullet-active {
+    background: $black-priority !important;
+}

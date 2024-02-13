@@ -25,7 +25,7 @@ const ChangeNumberForm = () => {
             if (response.payload === 200) {
                 toast.success("Changes saved");
             } else {
-                toast.error("The modified data could not be saved");
+                toast.error("A user with this number already exists");
             }
         } catch (error) {
             console.log(error);
@@ -50,6 +50,11 @@ const ChangeNumberForm = () => {
                                 value: /\+380\s*\d{2}\s*\d{3}\s*\d{4}/,
                                 message:
                                     "Please enter a valid phone number in the format +380 00 000 0000.",
+                            },
+                            maxLength: {
+                                value: 13,
+                                message:
+                                    "The maximum length of the phone number is 13 characters",
                             },
                         }}
                     />

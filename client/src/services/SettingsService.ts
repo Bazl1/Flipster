@@ -7,21 +7,24 @@ export default class SettingsService {
         oldPassword: string,
         newPassword: string,
     ): Promise<AxiosResponse> {
-        return axiosApi.put("/", { oldPassword, newPassword });
+        return axiosApi.put("/users/change-password", {
+            oldPassword,
+            newPassword,
+        });
     }
 
     static async changeNumber(number: string): Promise<AxiosResponse<IUser>> {
-        return axiosApi.put("/", { number });
+        return axiosApi.put("/users/change-phone-number", { number });
     }
 
     static async changeAvatar(images: any): Promise<AxiosResponse<IUser>> {
-        return axiosApi.put("/", { images });
+        return axiosApi.put("/users/change-avatar", { images });
     }
 
     static async changeDetails(
         location: string,
         name: string,
     ): Promise<AxiosResponse<IUser>> {
-        return axiosApi.put("/", { location, name });
+        return axiosApi.put("/users/change-details", { location, name });
     }
 }

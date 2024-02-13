@@ -1,0 +1,153 @@
+@import "../../shared/assets/styles/vars.scss";
+
+.create {
+    margin: 50px 0;
+
+    &__title {
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 50px;
+    }
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+    }
+    &__line {
+        width: 100%;
+        height: 1px;
+        background: rgba($black-priority, 0.1);
+    }
+    &__onload_imgs {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 40px;
+    }
+    &__form_columns {
+        max-width: 600px;
+        width: 100%;
+    }
+    &__onload_box {
+        max-width: 320px;
+        max-height: 500px;
+        height: 100vh;
+        width: 100%;
+        border: 1px dashed $black-priority;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+    }
+    &__onload_text {
+        font-size: 16px;
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            svg {
+                width: 21px;
+                height: 21px;
+            }
+        }
+    }
+    &__slider {
+        width: 100%;
+        user-select: none;
+        padding-bottom: 30px !important;
+    }
+    &__from_slide {
+        max-width: 320px;
+        width: 100%;
+    }
+    &__file {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        scale: 0;
+        opacity: 0;
+    }
+    &__form_slide_img {
+        width: 100%;
+        max-height: 500px;
+        height: 100vh;
+        border: 2px solid $black-priority;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+    &__skeletons {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+    }
+    &__skelet {
+        max-width: 320px;
+        width: 100%;
+        max-height: 500px;
+        height: 100vh;
+        border-radius: 8px;
+        background: rgba($black-priority, 0.1);
+    }
+    &__btns {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 20px;
+        margin-bottom: 30px;
+    }
+    &__btn {
+        outline: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        font-family: "Inter";
+        padding: 12px 20px;
+        background: #fff;
+        color: $black-priority;
+        border: 2px solid $black-priority;
+        cursor: pointer;
+    }
+    &__btn_active {
+        background: $black-priority;
+        color: #fff;
+        border: 2px solid $black-priority;
+    }
+    &__select_columns {
+        max-width: 600px;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        span {
+            font-size: 12px;
+            font-weight: 400;
+        }
+    }
+    &__form_columns_flex {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    &__create_btn {
+        max-width: 210px;
+        width: 100%;
+        outline: none;
+        border: none;
+        background: $black-priority;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 500;
+        padding: 14px 50px;
+        margin-left: auto;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+}

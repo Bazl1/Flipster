@@ -26,7 +26,8 @@ const ChangeAvatarForm = () => {
         }
     };
 
-    const Submit = async () => {
+    const Submit = async (e: any) => {
+        e.preventDefault();
         try {
             const response = await dispatch(changeAvatar(imgUrl));
             if (response.payload === 200) {

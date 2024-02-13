@@ -9,6 +9,7 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import HomePage from "./pages/HomePage/HomePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import PublicProfile from "./pages/PublicProfile/PublicProfile";
+import CreateAdvert from "./pages/CreateAdvert/CreateAdvert";
 
 function App() {
     const dispatch = useAppDispatch();
@@ -28,6 +29,14 @@ function App() {
                     element={
                         <LayoutMain>
                             <ProfilePage />
+                        </LayoutMain>
+                    }
+                />
+                <Route
+                    path="/create-advert"
+                    element={
+                        <LayoutMain>
+                            <CreateAdvert />
                         </LayoutMain>
                     }
                 />
