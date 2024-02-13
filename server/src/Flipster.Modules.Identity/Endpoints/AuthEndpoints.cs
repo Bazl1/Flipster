@@ -104,7 +104,7 @@ public static class AuthEndpoints
     {
         var tokenValue = CookieUtils.GetToken(context);
         if (tokenRepository.FindByValue(tokenValue) is not Token token)
-            return TypedResults.BadRequest(new ErrorDto("Invalid token."));
+            return TypedResults.Unauthorized();
         tokenRepository.Remove(token);
         CookieUtils.RemoveToken(context);
         return TypedResults.Ok();
@@ -119,9 +119,9 @@ public static class AuthEndpoints
     {
         var tokenValue = CookieUtils.GetToken(context);
         if (tokenRepository.FindByValue(tokenValue) is not Token token)
-            return TypedResults.BadRequest(new ErrorDto("Invalid token."));
+            return Results.Unauthorized();
         if (token.Expired())
-            return TypedResults.BadRequest(new ErrorDto("Token expired."));
+            return TypedResults.Unauthorized();
         var user = userRepository.FindById(token.UserId);
         var claims = new Claim[]
         {
