@@ -1,8 +1,5 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
-using Flipster.Modules.Identity.Domain.Token.Entities;
-using Flipster.Modules.Identity.Domain.Token.Repositories;
-using Flipster.Modules.Identity.Domain.Token.Services;
 using Flipster.Modules.Identity.Domain.User.Entities;
 using Flipster.Modules.Identity.Domain.User.Repositories;
 using Flipster.Modules.Identity.Domain.User.Services;
@@ -38,7 +35,7 @@ public static class AuthEndpoints
         IMapper mapper,
         LoginRequestDto request)
     {
-        if (userRepository.FindByEmail(request.Email) is not User user)
+        if (userRepository.FindByEmail(request.Email) is not Domain.User.Entities.User user)
             return TypedResults.BadRequest(new ErrorDto($"User with given email '{request.Email}' is not found."));
         if (!passwordHasher.VerifyHashedPassword(user.PasswordHash, request.Password))
             return TypedResults.BadRequest(new ErrorDto($"Password mismatch."));
@@ -68,7 +65,7 @@ public static class AuthEndpoints
         IMapper mapper,
         RegisterRequestDto request)
     {
-        var user = new User
+        var user = new Domain.User.Entities.User
         {
             Name = request.Name,
             Email = request.Email,

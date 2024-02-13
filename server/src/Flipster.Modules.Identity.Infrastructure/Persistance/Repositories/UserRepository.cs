@@ -1,6 +1,6 @@
 ﻿using Flipster.Modules.Identity.Domain.User.Repositories;
 
-namespace Flipster.Modules.Identity.Infrastructure.Persistance.Repositories;
+namespace Flipster.Modules.Identity.Domain.Infrastructure.Persistance;
 
 public class UserRepository(
     IdentityDbContext _db) : IUserRepository

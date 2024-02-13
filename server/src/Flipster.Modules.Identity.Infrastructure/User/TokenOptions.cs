@@ -1,4 +1,4 @@
-﻿namespace Flipster.Modules.Identity.Infrastructure.Token;
+﻿namespace Flipster.Modules.Identity.Domain.Infrastructure.User;
 
 public class TokenOptions
 {

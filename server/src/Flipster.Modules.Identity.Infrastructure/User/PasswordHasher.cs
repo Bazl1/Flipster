@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using Flipster.Modules.Identity.Domain.User.Services;
 
-namespace Flipster.Modules.Identity.Infrastructure.User;
+namespace Flipster.Modules.Identity.Domain.Infrastructure.User;
 
 public class PasswordHasher : IPasswordHasher
 {

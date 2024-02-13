@@ -1,4 +1,4 @@
-﻿namespace Flipster.Modules.Identity.Contracts.Abstractions;
+﻿namespace Flipster.Modules.Identity.Domain.User.Entities.Contracts.Abstractions;
 
 public interface IUserModule
 {

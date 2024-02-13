@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Flipster.Modules.Identity.Infrastructure;
+using Flipster.Modules.Identity.Domain.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

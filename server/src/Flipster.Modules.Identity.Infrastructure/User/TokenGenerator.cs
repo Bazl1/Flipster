@@ -2,12 +2,12 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Flipster.Modules.Identity.Domain.Token.Services;
-using Flipster.Modules.Identity.Infrastructure.Persistance;
+using Flipster.Modules.Identity.Domain.Infrastructure.Persistance;
+using Flipster.Modules.Identity.Domain.User.Services;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Flipster.Modules.Identity.Infrastructure.Token;
+namespace Flipster.Modules.Identity.Domain.Infrastructure.User;
 
 public class TokenGenerator : ITokenGenerator
 {
@@ -36,12 +36,12 @@ public class TokenGenerator : ITokenGenerator
             .WriteToken(accessSecurityToken);
     }
 
-    public Domain.Token.Entities.Token GenerateRefreshToken(int size = 32)
+    public Domain.User.Entities.Token GenerateRefreshToken(int size = 32)
     {
         var randomNumber = new byte[size];
         using var rng = RandomNumberGenerator.Create();
         rng.GetBytes(randomNumber);
-        return new Domain.Token.Entities.Token
+        return new Domain.User.Entities.Token
         {
             Value = Convert.ToBase64String(randomNumber),
             Expiry = DateTime.UtcNow.AddMinutes(_tokenOptions.RefreshExpiry),
