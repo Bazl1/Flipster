@@ -5,6 +5,8 @@
 *,
 *::after,
 *::before {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -35,7 +37,6 @@ body {
 }
 
 .main {
-    max-height: 100vh;
     flex: 1 0 auto;
 }
 
