@@ -15,14 +15,19 @@ const ChangeAvatarForm = () => {
     const handleUploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
         const input = e.target;
         if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                if (refImg.current) {
-                    refImg.current.src = e.target?.result as string;
-                }
-            };
-            reader.readAsDataURL(input.files[0]);
-            setImgUrl(input.files[0]);
+            const maxSize = 2 * 1024 * 1024;
+            if (input.files[0].size > maxSize) {
+                toast.error("Maximum image size 2mb");
+            } else {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    if (refImg.current) {
+                        refImg.current.src = e.target?.result as string;
+                    }
+                };
+                reader.readAsDataURL(input.files[0]);
+                setImgUrl(input.files[0]);
+            }
         }
     };
 
