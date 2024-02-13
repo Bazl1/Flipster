@@ -18,15 +18,11 @@ export default class SettingsService {
     }
 
     static async changeAvatar(images: any): Promise<AxiosResponse<IUser>> {
-        return axiosApi.put(
-            "/users/change-avatar",
-            { images },
-            {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
+        return axiosApi.put("/users/change-avatar", images, {
+            headers: {
+                "Content-Type": "multipart/form-data",
             },
-        );
+        });
     }
 
     static async changeDetails(
