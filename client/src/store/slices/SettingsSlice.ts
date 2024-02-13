@@ -58,10 +58,10 @@ export const changeDetails = createAsyncThunk(
 
 export const changeAvatar = createAsyncThunk(
     "settings/changeAvatar",
-    async function ({ images }: { images: any }, { dispatch }) {
+    async function ({ imgUrl }: { imgUrl: any }, { dispatch }) {
         try {
             const DataFile = new FormData();
-            DataFile.append("Avatar", images);
+            DataFile.append("Avatar", imgUrl);
             const response = await SettingsService.changeAvatar(DataFile);
             dispatch(setUser(response.data));
             return response.status;

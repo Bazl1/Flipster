@@ -34,7 +34,7 @@ const ChangeAvatarForm = () => {
     const Submit = async (e: any) => {
         e.preventDefault();
         try {
-            const response = await dispatch(changeAvatar(imgUrl));
+            const response = await dispatch(changeAvatar({ imgUrl }));
             if (response.payload === 200) {
                 toast.success("Your avatar has been successfully changed");
             } else {
