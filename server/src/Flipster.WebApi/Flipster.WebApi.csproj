@@ -14,6 +14,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Flipster.Modules.Identity\Flipster.Modules.Identity.csproj" />
+      <ProjectReference Include="..\Modules\Flipster.Modules.Images\Flipster.Modules.Images.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\" />
     </ItemGroup>
 
 </Project>

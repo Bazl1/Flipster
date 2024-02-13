@@ -1,19 +1,15 @@
 ﻿using System.Text;
-using Flipster.Modules.Identity.Domain.Token.Repositories;
-using Flipster.Modules.Identity.Domain.Token.Services;
+using Flipster.Modules.Identity.Domain.Infrastructure.Persistance;
+using Flipster.Modules.Identity.Domain.Infrastructure.User;
 using Flipster.Modules.Identity.Domain.User.Repositories;
 using Flipster.Modules.Identity.Domain.User.Services;
-using Flipster.Modules.Identity.Infrastructure.Persistance;
-using Flipster.Modules.Identity.Infrastructure.Persistance.Repositories;
-using Flipster.Modules.Identity.Infrastructure.Token;
-using Flipster.Modules.Identity.Infrastructure.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Flipster.Modules.Identity.Infrastructure;
+namespace Flipster.Modules.Identity.Domain.Infrastructure;
 
 public static class DependencyInjection
 {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Flipster.Modules.Identity.Domain.Token.Entities;
+namespace Flipster.Modules.Identity.Domain.User.Entities;
 
 public class Token
 {

@@ -1,4 +1,4 @@
-﻿using Flipster.Modules.Identity.Domain.Token.Entities;
+﻿using Flipster.Modules.Identity.Domain.User.Entities;
 using Microsoft.AspNetCore.Http;
 
 namespace Flipster.Modules.Identity.Utils;

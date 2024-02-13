@@ -1,14 +1,18 @@
 using Flipster.Modules.Identity;
 using Flipster.Modules.Identity.Endpoints;
+using Flipster.Modules.Images;
+using Flipster.Modules.Images.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddEndpointsApiExplorer()
-    .AddSwaggerGen();
+    .AddSwaggerGen()
+    .AddAntiforgery();
 
 builder.Services
-    .AddIdentityModule(builder.Configuration);
+    .AddIdentityModule(builder.Configuration)
+    .AddImagesModule(builder.Configuration);
 
 builder.Services.AddCors(options
     => options.AddDefaultPolicy(policy 
@@ -27,7 +31,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors();
+app.UseStaticFiles();
 app.UseRouting();
+
+app.UseAntiforgery();
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -36,5 +43,8 @@ app.MapGroup("api/auth")
     .MapAuthEndpoints();
 app.MapGroup("api/users")
     .MapUsersEndpoints();
+
+app.MapGroup("api/images")
+    .MapImagesEndpoints();
 
 app.Run();

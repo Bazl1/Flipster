@@ -1,4 +1,4 @@
-﻿namespace Flipster.Modules.Identity.Domain.Token.Repositories;
+﻿namespace Flipster.Modules.Identity.Domain.User.Repositories;
 
 public interface ITokenRepository
 {

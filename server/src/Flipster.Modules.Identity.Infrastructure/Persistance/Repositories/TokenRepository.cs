@@ -1,13 +1,13 @@
-﻿using Flipster.Modules.Identity.Domain.Token.Repositories;
+﻿using Flipster.Modules.Identity.Domain.User.Repositories;
 
-namespace Flipster.Modules.Identity.Infrastructure.Persistance.Repositories;
+namespace Flipster.Modules.Identity.Domain.Infrastructure.Persistance;
 
 public class TokenRepository(
     IdentityDbContext _db) : ITokenRepository
 {
-    public void CreateOrUpdate(Domain.Token.Entities.Token token)
+    public void CreateOrUpdate(Domain.User.Entities.Token token)
     {
-        if (_db.Tokens.SingleOrDefault(t => t.UserId == token.UserId) is not Domain.Token.Entities.Token tokenEntity)
+        if (_db.Tokens.SingleOrDefault(t => t.UserId == token.UserId) is not Domain.User.Entities.Token tokenEntity)
         {
             _db.Add(token);
         }
@@ -19,9 +19,9 @@ public class TokenRepository(
         _db.SaveChanges();
     }
 
-    public void Remove(Domain.Token.Entities.Token token)
+    public void Remove(Domain.User.Entities.Token token)
     {
-        if (_db.Tokens.SingleOrDefault(t => t.UserId == token.UserId) is not Domain.Token.Entities.Token tokenEntity)
+        if (_db.Tokens.SingleOrDefault(t => t.UserId == token.UserId) is not Domain.User.Entities.Token tokenEntity)
         {
             return;
         }
@@ -33,12 +33,12 @@ public class TokenRepository(
         _db.SaveChanges();
     }
 
-    public Domain.Token.Entities.Token? FindByUserId(string userId)
+    public Domain.User.Entities.Token? FindByUserId(string userId)
     {
         return _db.Tokens.SingleOrDefault(t => t.UserId == userId);
     }
 
-    public Domain.Token.Entities.Token? FindByValue(string value)
+    public Domain.User.Entities.Token? FindByValue(string value)
     {
         return _db.Tokens.SingleOrDefault(t => t.Value == value);
     }
