@@ -33,7 +33,7 @@ interface ILocation {
 
 const ChangeContactDetailsFrom = () => {
     const [location, setLocation] = useState<ILocation | null>(null);
-    const [name, setName] = useState<string>("");
+    const [newName, setNewName] = useState<string | null>(null);
     const [isClearable, setIsClearable] = useState(true);
 
     const {
@@ -49,6 +49,7 @@ const ChangeContactDetailsFrom = () => {
     const Submit = async () => {
         try {
             const locationLabel = location?.label || "";
+            const name = newName || "";
             const response = await dispatch(
                 changeDetails({ locationLabel, name }),
             );
@@ -86,8 +87,8 @@ const ChangeContactDetailsFrom = () => {
                         type="text"
                         register={register}
                         errors={errors}
-                        value={name}
-                        setValue={setName}
+                        value={newName || ""}
+                        setValue={setNewName}
                         validationOptions={{
                             maxLength: {
                                 value: 100,
