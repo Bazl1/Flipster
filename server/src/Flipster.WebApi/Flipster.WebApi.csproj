@@ -14,6 +14,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Flipster.Modules.Identity\Flipster.Modules.Identity.csproj" />
+      <ProjectReference Include="..\Modules\Flipster.Modules.Adverts\Flipster.Modules.Adverts.csproj" />
       <ProjectReference Include="..\Modules\Flipster.Modules.Images\Flipster.Modules.Images.csproj" />
       <ProjectReference Include="..\Modules\Flipster.Modules.Locations\Flipster.Modules.Locations.csproj" />
     </ItemGroup>

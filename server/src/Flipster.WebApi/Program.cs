@@ -1,3 +1,7 @@
+using Flipster.Modules.Adverts;
+using Flipster.Modules.Adverts.Data;
+using Flipster.Modules.Adverts.Endpoints;
+using Flipster.Modules.Adverts.Entities;
 using Flipster.Modules.Identity;
 using Flipster.Modules.Identity.Endpoints;
 using Flipster.Modules.Images;
@@ -14,6 +18,7 @@ builder.Services
 builder.Services
     .AddIdentityModule(builder.Configuration)
     .AddImagesModule(builder.Configuration)
+    .AddAdvertsModule(builder.Configuration)
     .AddLocationsModule(builder.Configuration);
 
 builder.Services.AddCors(options
@@ -30,6 +35,20 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    {
+        using var scope = app.Services.CreateScope();
+        using var _db = scope.ServiceProvider.GetRequiredService<AdvertsDbContext>();
+        _db.Categories.AddRange(
+            new Category(1, "Free", ""),
+            new Category(2, "Cars", ""),
+            new Category(3, "Works", ""),
+            new Category(4, "Animals", ""),
+            new Category(5, "Electronics", ""),
+            new Category(6, "Clothes", ""),
+            new Category(7, "Business", ""));
+        _db.SaveChanges();
+    }
 }
 
 app.UseCors();
@@ -51,5 +70,8 @@ app.MapGroup("api/images")
 
 app.MapGroup("api/locations")
     .MapLocationsEndpoints();
+
+app.MapGroup("api/categories")
+    .MapCategoriesEndpoints();
 
 app.Run();
