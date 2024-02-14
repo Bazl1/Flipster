@@ -1,0 +1,1082 @@
+[
+    {
+        "city": "Kyiv",
+        "country": "Ukraine",
+        "state": "Kyiv, Misto"
+    },
+    {
+        "city": "Kharkiv",
+        "country": "Ukraine",
+        "state": "Kharkivska Oblast"
+    },
+    {
+        "city": "Odesa",
+        "country": "Ukraine",
+        "state": "Odeska Oblast"
+    },
+    {
+        "city": "Dnipro",
+        "country": "Ukraine",
+        "state": "Dnipropetrovska Oblast"
+    },
+    {
+        "city": "Donetsk",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Zaporizhzhia",
+        "country": "Ukraine",
+        "state": "Zaporizka Oblast"
+    },
+    {
+        "city": "Lviv",
+        "country": "Ukraine",
+        "state": "Lvivska Oblast"
+    },
+    {
+        "city": "Kryvyi Rih",
+        "country": "Ukraine",
+        "state": "Dnipropetrovska Oblast"
+    },
+    {
+        "city": "Sevastopol",
+        "country": "Ukraine",
+        "state": "Sevastopol, Misto"
+    },
+    {
+        "city": "Mykolaiv",
+        "country": "Ukraine",
+        "state": "Mykolaivska Oblast"
+    },
+    {
+        "city": "Mariupol",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Luhansk",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Vinnytsia",
+        "country": "Ukraine",
+        "state": "Vinnytska Oblast"
+    },
+    {
+        "city": "Makiivka",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Simferopol",
+        "country": "Ukraine",
+        "state": "Krym, Avtonomna Respublika"
+    },
+    {
+        "city": "Poltava",
+        "country": "Ukraine",
+        "state": "Poltavska Oblast"
+    },
+    {
+        "city": "Chernihiv",
+        "country": "Ukraine",
+        "state": "Chernihivska Oblast"
+    },
+    {
+        "city": "Kherson",
+        "country": "Ukraine",
+        "state": "Khersonska Oblast"
+    },
+    {
+        "city": "Cherkasy",
+        "country": "Ukraine",
+        "state": "Cherkaska Oblast"
+    },
+    {
+        "city": "Khmelnytskyi",
+        "country": "Ukraine",
+        "state": "Khmelnytska Oblast"
+    },
+    {
+        "city": "Chernivtsi",
+        "country": "Ukraine",
+        "state": "Chernivetska Oblast"
+    },
+    {
+        "city": "Sumy",
+        "country": "Ukraine",
+        "state": "Sumska Oblast"
+    },
+    {
+        "city": "Zhytomyr",
+        "country": "Ukraine",
+        "state": "Zhytomyrska Oblast"
+    },
+    {
+        "city": "Horlivka",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Rivne",
+        "country": "Ukraine",
+        "state": "Rivnenska Oblast"
+    },
+    {
+        "city": "Ivano-Frankivsk",
+        "country": "Ukraine",
+        "state": "Ivano-Frankivska Oblast"
+    },
+    {
+        "city": "Kamianske",
+        "country": "Ukraine",
+        "state": "Dnipropetrovska Oblast"
+    },
+    {
+        "city": "Kropyvnytskyi",
+        "country": "Ukraine",
+        "state": "Kirovohradska Oblast"
+    },
+    {
+        "city": "Ternopil",
+        "country": "Ukraine",
+        "state": "Ternopilska Oblast"
+    },
+    {
+        "city": "Kremenchuk",
+        "country": "Ukraine",
+        "state": "Poltavska Oblast"
+    },
+    {
+        "city": "Lutsk",
+        "country": "Ukraine",
+        "state": "Volynska Oblast"
+    },
+    {
+        "city": "Bila Tserkva",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Kramatorsk",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Melitopol",
+        "country": "Ukraine",
+        "state": "Zaporizka Oblast"
+    },
+    {
+        "city": "Sievierodonetsk",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Kerch",
+        "country": "Ukraine",
+        "state": "Krym, Avtonomna Respublika"
+    },
+    {
+        "city": "Drohobych",
+        "country": "Ukraine",
+        "state": "Lvivska Oblast"
+    },
+    {
+        "city": "Khrustalnyi",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Uzhhorod",
+        "country": "Ukraine",
+        "state": "Zakarpatska Oblast"
+    },
+    {
+        "city": "Berdiansk",
+        "country": "Ukraine",
+        "state": "Zaporizka Oblast"
+    },
+    {
+        "city": "Sloviansk",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Nikopol",
+        "country": "Ukraine",
+        "state": "Dnipropetrovska Oblast"
+    },
+    {
+        "city": "Brovary",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Yevpatoriia",
+        "country": "Ukraine",
+        "state": "Krym, Avtonomna Respublika"
+    },
+    {
+        "city": "Pavlohrad",
+        "country": "Ukraine",
+        "state": "Dnipropetrovska Oblast"
+    },
+    {
+        "city": "Alchevsk",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Konotop",
+        "country": "Ukraine",
+        "state": "Sumska Oblast"
+    },
+    {
+        "city": "Kamianets-Podilskyi",
+        "country": "Ukraine",
+        "state": "Khmelnytska Oblast"
+    },
+    {
+        "city": "Lysychansk",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Dovzhansk",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Mukacheve",
+        "country": "Ukraine",
+        "state": "Zakarpatska Oblast"
+    },
+    {
+        "city": "Uman",
+        "country": "Ukraine",
+        "state": "Cherkaska Oblast"
+    },
+    {
+        "city": "Chervonohrad",
+        "country": "Ukraine",
+        "state": "Lvivska Oblast"
+    },
+    {
+        "city": "Yalta",
+        "country": "Ukraine",
+        "state": "Krym, Avtonomna Respublika"
+    },
+    {
+        "city": "Yenakiieve",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Bakhmut",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Stakhanov",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Nizhyn",
+        "country": "Ukraine",
+        "state": "Chernihivska Oblast"
+    },
+    {
+        "city": "Kostiantynivka",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Fedosiia",
+        "country": "Ukraine",
+        "state": "Krym, Avtonomna Respublika"
+    },
+    {
+        "city": "Kovel",
+        "country": "Ukraine",
+        "state": "Volynska Oblast"
+    },
+    {
+        "city": "Smila",
+        "country": "Ukraine",
+        "state": "Cherkaska Oblast"
+    },
+    {
+        "city": "Korosten",
+        "country": "Ukraine",
+        "state": "Zhytomyrska Oblast"
+    },
+    {
+        "city": "Pokrovsk",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Pervomaisk",
+        "country": "Ukraine",
+        "state": "Mykolaivska Oblast"
+    },
+    {
+        "city": "Kolomyia",
+        "country": "Ukraine",
+        "state": "Ivano-Frankivska Oblast"
+    },
+    {
+        "city": "Rubizhne",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Chornomorsk",
+        "country": "Ukraine",
+        "state": "Odeska Oblast"
+    },
+    {
+        "city": "Khartsyzk",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Druzhkivka",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Stryi",
+        "country": "Ukraine",
+        "state": "Lvivska Oblast"
+    },
+    {
+        "city": "Bilhorod-Dnistrovskyi",
+        "country": "Ukraine",
+        "state": "Odeska Oblast"
+    },
+    {
+        "city": "Irpin",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Novohrad-Volynskyi",
+        "country": "Ukraine",
+        "state": "Zhytomyrska Oblast"
+    },
+    {
+        "city": "Lozova",
+        "country": "Ukraine",
+        "state": "Kharkivska Oblast"
+    },
+    {
+        "city": "Antratsyt",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Chystiakove",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Horishni Plavni",
+        "country": "Ukraine",
+        "state": "Poltavska Oblast"
+    },
+    {
+        "city": "Myrnohrad",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Shakhtarsk",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Okhtyrka",
+        "country": "Ukraine",
+        "state": "Sumska Oblast"
+    },
+    {
+        "city": "Brianka",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Snizhne",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Rovenky",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Fastiv",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Lubny",
+        "country": "Ukraine",
+        "state": "Poltavska Oblast"
+    },
+    {
+        "city": "Krasnodon",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Shepetivka",
+        "country": "Ukraine",
+        "state": "Khmelnytska Oblast"
+    },
+    {
+        "city": "Romny",
+        "country": "Ukraine",
+        "state": "Sumska Oblast"
+    },
+    {
+        "city": "Myrhorod",
+        "country": "Ukraine",
+        "state": "Poltavska Oblast"
+    },
+    {
+        "city": "Podilsk",
+        "country": "Ukraine",
+        "state": "Odeska Oblast"
+    },
+    {
+        "city": "Vyshneve",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Vasylkiv",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Dubno",
+        "country": "Ukraine",
+        "state": "Rivnenska Oblast"
+    },
+    {
+        "city": "Boryslav",
+        "country": "Ukraine",
+        "state": "Lvivska Oblast"
+    },
+    {
+        "city": "Holubivske",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Boyarka",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Yasynuvata",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Bucha",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Avdiivka",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Sambir",
+        "country": "Ukraine",
+        "state": "Lvivska Oblast"
+    },
+    {
+        "city": "Toretsk",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Zhmerynka",
+        "country": "Ukraine",
+        "state": "Vinnytska Oblast"
+    },
+    {
+        "city": "Chuhuiv",
+        "country": "Ukraine",
+        "state": "Kharkivska Oblast"
+    },
+    {
+        "city": "Mohyliv-Podilskyi",
+        "country": "Ukraine",
+        "state": "Vinnytska Oblast"
+    },
+    {
+        "city": "Truskavets",
+        "country": "Ukraine",
+        "state": "Lvivska Oblast"
+    },
+    {
+        "city": "Khmilnyk",
+        "country": "Ukraine",
+        "state": "Vinnytska Oblast"
+    },
+    {
+        "city": "Kupiansk",
+        "country": "Ukraine",
+        "state": "Kharkivska Oblast"
+    },
+    {
+        "city": "Pereyaslav-Khmel’nyts’kyy",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Sofiyivs’ka Borshchahivka",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Perevalsk",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Vynohradiv",
+        "country": "Ukraine",
+        "state": "Zakarpatska Oblast"
+    },
+    {
+        "city": "Saky",
+        "country": "Ukraine",
+        "state": "Krym, Avtonomna Respublika"
+    },
+    {
+        "city": "Selydove",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Pesochin",
+        "country": "Ukraine",
+        "state": "Kharkivska Oblast"
+    },
+    {
+        "city": "Molodohvardiisk",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Merefa",
+        "country": "Ukraine",
+        "state": "Kharkivska Oblast"
+    },
+    {
+        "city": "Bilohorodka",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Sukhodilsk",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Liubotyn",
+        "country": "Ukraine",
+        "state": "Kharkivska Oblast"
+    },
+    {
+        "city": "Kotsyubyns’ke",
+        "country": "Ukraine",
+        "state": "Kyiv, Misto"
+    },
+    {
+        "city": "Hostomel",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Taromske",
+        "country": "Ukraine",
+        "state": "Dnipropetrovska Oblast"
+    },
+    {
+        "city": "Vynnyky",
+        "country": "Ukraine",
+        "state": "Lvivska Oblast"
+    },
+    {
+        "city": "Chervonopartyzansk",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Nyzhnia Krynka",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Petrovske",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Antonivka",
+        "country": "Ukraine",
+        "state": "Khersonska Oblast"
+    },
+    {
+        "city": "Zhdanivka",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Vakhrusheve",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Hirnyk",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Sartana",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Haspra",
+        "country": "Ukraine",
+        "state": "Krym, Avtonomna Respublika"
+    },
+    {
+        "city": "Novgorodskoye",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Inkerman",
+        "country": "Ukraine",
+        "state": "Sevastopol, Misto"
+    },
+    {
+        "city": "Korolevo",
+        "country": "Ukraine",
+        "state": "Zakarpatska Oblast"
+    },
+    {
+        "city": "Sniatyn",
+        "country": "Ukraine",
+        "state": "Ivano-Frankivska Oblast"
+    },
+    {
+        "city": "Sofiivka",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Bezliudivka",
+        "country": "Ukraine",
+        "state": "Kharkivska Oblast"
+    },
+    {
+        "city": "Bilenke",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Hurzuf",
+        "country": "Ukraine",
+        "state": "Krym, Avtonomna Respublika"
+    },
+    {
+        "city": "Horodenka",
+        "country": "Ukraine",
+        "state": "Ivano-Frankivska Oblast"
+    },
+    {
+        "city": "Masandra",
+        "country": "Ukraine",
+        "state": "Krym, Avtonomna Respublika"
+    },
+    {
+        "city": "Yasnohirka",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Pochaiv",
+        "country": "Ukraine",
+        "state": "Ternopilska Oblast"
+    },
+    {
+        "city": "Vuhlehirsk",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Zorynsk",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Komyshany",
+        "country": "Ukraine",
+        "state": "Khersonska Oblast"
+    },
+    {
+        "city": "Piskivka",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Karnaukhivka",
+        "country": "Ukraine",
+        "state": "Dnipropetrovska Oblast"
+    },
+    {
+        "city": "Rozkishne",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Vorzel",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Halych",
+        "country": "Ukraine",
+        "state": "Ivano-Frankivska Oblast"
+    },
+    {
+        "city": "Petropavlivs’ka Borshchahivka",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Balabyne",
+        "country": "Ukraine",
+        "state": "Zaporizka Oblast"
+    },
+    {
+        "city": "Zelenivka",
+        "country": "Ukraine",
+        "state": "Khersonska Oblast"
+    },
+    {
+        "city": "Chornukhyne",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Koreiz",
+        "country": "Ukraine",
+        "state": "Krym, Avtonomna Respublika"
+    },
+    {
+        "city": "Bryukhovychi",
+        "country": "Ukraine",
+        "state": "Lvivska Oblast"
+    },
+    {
+        "city": "Horenka",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Zalizne",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Khotiv",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Chabany",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Novooleksandrivka",
+        "country": "Ukraine",
+        "state": "Dnipropetrovska Oblast"
+    },
+    {
+        "city": "Almazna",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Shabelkivka",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Obroshino",
+        "country": "Ukraine",
+        "state": "Lvivska Oblast"
+    },
+    {
+        "city": "Novopillia",
+        "country": "Ukraine",
+        "state": "Dnipropetrovska Oblast"
+    },
+    {
+        "city": "Simeiz",
+        "country": "Ukraine",
+        "state": "Krym, Avtonomna Respublika"
+    },
+    {
+        "city": "Novosilky",
+        "country": "Ukraine",
+        "state": "Kyiv, Misto"
+    },
+    {
+        "city": "Duliby",
+        "country": "Ukraine",
+        "state": "Lvivska Oblast"
+    },
+    {
+        "city": "Kryukivshchyna",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Rohan",
+        "country": "Ukraine",
+        "state": "Kharkivska Oblast"
+    },
+    {
+        "city": "Mykhaylivka-Rubezhivka",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Valianivske",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Malokaterynivka",
+        "country": "Ukraine",
+        "state": "Zaporizka Oblast"
+    },
+    {
+        "city": "Vylok",
+        "country": "Ukraine",
+        "state": "Zakarpatska Oblast"
+    },
+    {
+        "city": "Kulynychi",
+        "country": "Ukraine",
+        "state": "Kharkivska Oblast"
+    },
+    {
+        "city": "Sadky",
+        "country": "Ukraine",
+        "state": "Poltavska Oblast"
+    },
+    {
+        "city": "Pervomaiskyi",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Brytivka",
+        "country": "Ukraine",
+        "state": "Odeska Oblast"
+    },
+    {
+        "city": "Blyzhnie",
+        "country": "Ukraine",
+        "state": "Krym, Avtonomna Respublika"
+    },
+    {
+        "city": "Lyubymivka",
+        "country": "Ukraine",
+        "state": "Dnipropetrovska Oblast"
+    },
+    {
+        "city": "Mala Rohan",
+        "country": "Ukraine",
+        "state": "Kharkivska Oblast"
+    },
+    {
+        "city": "Kaihador",
+        "country": "Ukraine",
+        "state": "Krym, Avtonomna Respublika"
+    },
+    {
+        "city": "Nikita",
+        "country": "Ukraine",
+        "state": "Krym, Avtonomna Respublika"
+    },
+    {
+        "city": "Tereshky",
+        "country": "Ukraine",
+        "state": "Poltavska Oblast"
+    },
+    {
+        "city": "Zarichany",
+        "country": "Ukraine",
+        "state": "Zhytomyrska Oblast"
+    },
+    {
+        "city": "Aviatorske",
+        "country": "Ukraine",
+        "state": "Dnipropetrovska Oblast"
+    },
+    {
+        "city": "Mykhailivka",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Verkhnosadove",
+        "country": "Ukraine",
+        "state": "Sevastopol, Misto"
+    },
+    {
+        "city": "Aeroflotskyi",
+        "country": "Ukraine",
+        "state": "Krym, Avtonomna Respublika"
+    },
+    {
+        "city": "Chornotysiv",
+        "country": "Ukraine",
+        "state": "Zakarpatska Oblast"
+    },
+    {
+        "city": "Borki",
+        "country": "Ukraine",
+        "state": "Lvivska Oblast"
+    },
+    {
+        "city": "Piilo",
+        "country": "Ukraine",
+        "state": "Ivano-Frankivska Oblast"
+    },
+    {
+        "city": "Yablunytsia",
+        "country": "Ukraine",
+        "state": "Ivano-Frankivska Oblast"
+    },
+    {
+        "city": "Dobrovlyany",
+        "country": "Ukraine",
+        "state": "Ternopilska Oblast"
+    },
+    {
+        "city": "Bilshivtsi",
+        "country": "Ukraine",
+        "state": "Ivano-Frankivska Oblast"
+    },
+    {
+        "city": "Ruski Tyshky",
+        "country": "Ukraine",
+        "state": "Kharkivska Oblast"
+    },
+    {
+        "city": "Shcherbani",
+        "country": "Ukraine",
+        "state": "Poltavska Oblast"
+    },
+    {
+        "city": "Stari Kodaky",
+        "country": "Ukraine",
+        "state": "Dnipropetrovska Oblast"
+    },
+    {
+        "city": "Berezivka",
+        "country": "Ukraine",
+        "state": "Kharkivska Oblast"
+    },
+    {
+        "city": "Nasypne",
+        "country": "Ukraine",
+        "state": "Krym, Avtonomna Respublika"
+    },
+    {
+        "city": "Lisnyky",
+        "country": "Ukraine",
+        "state": "Kyivska Oblast"
+    },
+    {
+        "city": "Andriivka",
+        "country": "Ukraine",
+        "state": "Sevastopol, Misto"
+    },
+    {
+        "city": "Iverske",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Chukaluvka",
+        "country": "Ukraine",
+        "state": "Ivano-Frankivska Oblast"
+    },
+    {
+        "city": "Pokrovske",
+        "country": "Ukraine",
+        "state": "Donetska Oblast"
+    },
+    {
+        "city": "Solomonovo",
+        "country": "Ukraine",
+        "state": "Zakarpatska Oblast"
+    },
+    {
+        "city": "Lavky",
+        "country": "Ukraine",
+        "state": "Zakarpatska Oblast"
+    },
+    {
+        "city": "Slobozhanske",
+        "country": "Ukraine",
+        "state": "Kharkivska Oblast"
+    },
+    {
+        "city": "Shevchenkivske",
+        "country": "Ukraine",
+        "state": "Dnipropetrovska Oblast"
+    },
+    {
+        "city": "Krasnokamianka",
+        "country": "Ukraine",
+        "state": "Krym, Avtonomna Respublika"
+    },
+    {
+        "city": "Bairachky",
+        "country": "Ukraine",
+        "state": "Luhanska Oblast"
+    },
+    {
+        "city": "Marianivka",
+        "country": "Ukraine",
+        "state": "Dnipropetrovska Oblast"
+    },
+    {
+        "city": "Volodymyr-Volynskyi",
+        "country": "Ukraine",
+        "state": "Volynska Oblast"
+    }
+]
