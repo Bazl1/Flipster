@@ -9,6 +9,6 @@ public class LocationProfile : Profile
     public LocationProfile()
     {
         CreateMap<Location, LocationDto>()
-            .ForMember(dest => dest.Value, opt => opt.MapFrom(src => $"{src.Country}, {src.State}, {src.City}"));
+            .ForMember(dest => dest.Label, opt => opt.MapFrom(src => $"{src.Country}, {src.State}, {src.City}"));
     }
 }
