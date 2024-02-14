@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { Suspense, lazy, useState } from "react";
 import s from "./ProfilePage.module.scss";
 import { AnimatePresence, motion } from "framer-motion";
-import Settings from "../../component/Settings/Settings";
+import Loader from "../../component/Loader/Loader";
+
+const Settings = lazy(() => import("../../component/Settings/Settings"));
 
 const ProfilePage = () => {
     const [activeTab, setActiveTab] = useState<number>(1);
@@ -46,7 +48,9 @@ const ProfilePage = () => {
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
                                 >
-                                    <Settings />
+                                    <Suspense fallback={<Loader />}>
+                                        <Settings />
+                                    </Suspense>
                                 </motion.div>
                             )}
                         </AnimatePresence>
