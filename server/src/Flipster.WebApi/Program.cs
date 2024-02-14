@@ -2,6 +2,7 @@ using Flipster.Modules.Identity;
 using Flipster.Modules.Identity.Endpoints;
 using Flipster.Modules.Images;
 using Flipster.Modules.Images.Endpoints;
+using Flipster.Modules.Locations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,8 @@ builder.Services
 
 builder.Services
     .AddIdentityModule(builder.Configuration)
-    .AddImagesModule(builder.Configuration);
+    .AddImagesModule(builder.Configuration)
+    .AddLocationsModule(builder.Configuration);
 
 builder.Services.AddCors(options
     => options.AddDefaultPolicy(policy 
@@ -46,5 +48,8 @@ app.MapGroup("api/users")
 
 app.MapGroup("api/images")
     .MapImagesEndpoints();
+
+app.MapGroup("api/locations")
+    .MapLocationsEndpoints();
 
 app.Run();
