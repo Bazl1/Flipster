@@ -2,6 +2,5 @@
 
 public class LocationDto
 {
-    public int Id { get; set; }
-    public string Value { get; set; } = null!;
+    public string Label { get; set; } = null!;
 }
