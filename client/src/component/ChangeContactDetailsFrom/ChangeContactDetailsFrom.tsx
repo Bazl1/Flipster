@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Select from "react-select";
 import Input from "../Input/Input";
 import { useForm } from "react-hook-form";
 import s from "./ChangeContactDetailsFrom.module.scss";
@@ -7,34 +6,13 @@ import "../../shared/assets/styles/formSelect.scss";
 import { useAppDispatch } from "../../shared/hooks/storeHooks";
 import { changeDetails } from "../../store/slices/SettingsSlice";
 import toast, { Toaster } from "react-hot-toast";
-
-const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-];
-
-interface ILocation {
-    value: string;
-    label: string;
-}
+import LocationSelect, {
+    ILocationList,
+} from "../LocationSelect/LocationSelect";
 
 const ChangeContactDetailsFrom = () => {
-    const [location, setLocation] = useState<ILocation | null>(null);
+    const [location, setLocation] = useState<ILocationList | null>(null);
     const [newName, setNewName] = useState<string | null>(null);
-    const [isClearable, setIsClearable] = useState(true);
 
     const {
         register,
@@ -68,16 +46,7 @@ const ChangeContactDetailsFrom = () => {
             <form className={s.form} onSubmit={handleSubmit(Submit)}>
                 <label className={s.form__columns}>
                     <span>Choose your location</span>
-                    <Select
-                        classNamePrefix="form-select"
-                        options={options}
-                        onChange={(selectedOptions) =>
-                            setLocation(selectedOptions)
-                        }
-                        value={location}
-                        placeholder={"Choose your location"}
-                        isClearable={isClearable}
-                    />
+                    <LocationSelect value={location} setValue={setLocation} />
                 </label>
                 <div className={s.form__line}></div>
                 <label className={s.form__columns}>

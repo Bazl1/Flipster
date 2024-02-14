@@ -97,7 +97,7 @@ const ChangePasswordForm = () => {
                     <Input
                         text="Confirm the password"
                         type="password"
-                        registerName="newPassword"
+                        registerName="confirmPassword"
                         register={register}
                         errors={errors}
                         value={confirmPassword}

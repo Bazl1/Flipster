@@ -4,17 +4,19 @@ import { IUser } from "../types/IUser";
 
 export default class SettingsService {
     static async changePassword(
-        oldPassword: string,
+        currentPassword: string,
         newPassword: string,
     ): Promise<AxiosResponse> {
         return axiosApi.put("/users/change-password", {
-            oldPassword,
+            currentPassword,
             newPassword,
         });
     }
 
-    static async changeNumber(number: string): Promise<AxiosResponse<IUser>> {
-        return axiosApi.put("/users/change-phone", { number });
+    static async changeNumber(
+        phoneNumber: string,
+    ): Promise<AxiosResponse<IUser>> {
+        return axiosApi.put("/users/change-phone", { phoneNumber });
     }
 
     static async changeAvatar(images: any): Promise<AxiosResponse<IUser>> {
