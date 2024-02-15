@@ -42,7 +42,7 @@ public static class ImagesEndpoints
     private static async Task<IResult> LoadImages(
         HttpContext context,
         IImageService imageService,
-        IFormFileCollection images)
+        [FromForm] List<IFormFile> images)
     {
         try
         {
