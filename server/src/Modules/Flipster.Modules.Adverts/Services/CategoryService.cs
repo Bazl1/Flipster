@@ -13,7 +13,7 @@ public class CategoryService(
 
     public Category? GetById(int id)
     {
-        throw new NotImplementedException();
+        return _categoryRepository.GetById(id);
     }
 
     public void Create(Category category)

@@ -2,8 +2,7 @@
 
 namespace Flipster.Modules.Adverts.Repositories;
 
-public interface ICategoryRepository
+public interface IAdvertRepository
 {
-    List<Category> GetAll();
-    Category? GetById(int id);
+    void Create(Advert advert);
 }

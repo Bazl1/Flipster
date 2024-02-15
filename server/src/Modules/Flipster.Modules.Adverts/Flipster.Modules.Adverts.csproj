@@ -13,4 +13,8 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Flipster.Modules.Images\Flipster.Modules.Images.csproj" />
+    </ItemGroup>
+
 </Project>
