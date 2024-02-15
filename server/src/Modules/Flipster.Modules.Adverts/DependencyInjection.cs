@@ -18,6 +18,9 @@ public static class DependencyInjection
             .AddTransient<ICategoryService, CategoryService>()
             .AddTransient<ICategoryRepository, CategoryRepository>()
             
+            .AddTransient<IAdvertService, AdvertService>()
+            .AddTransient<IAdvertRepository, AdvertRepository>()
+            
             .AddAutoMapper(Assembly.GetExecutingAssembly());
         
         return services;

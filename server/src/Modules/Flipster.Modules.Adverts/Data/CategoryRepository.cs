@@ -4,10 +4,15 @@ using Flipster.Modules.Adverts.Repositories;
 namespace Flipster.Modules.Adverts.Data;
 
 public class CategoryRepository(
-    AdvertsDbContext _advertsDbContext) : ICategoryRepository
+    AdvertsDbContext _db) : ICategoryRepository
 {
     public List<Category> GetAll()
     {
-        return _advertsDbContext.Categories.ToList();
+        return _db.Categories.ToList();
+    }
+
+    public Category? GetById(int id)
+    {
+        return _db.Categories.SingleOrDefault(category => category.Id == id);
     }
 }

@@ -71,6 +71,8 @@ app.MapGroup("api/images")
 app.MapGroup("api/locations")
     .MapLocationsEndpoints();
 
+app.MapGroup("api/adverts")
+    .MapAdvertsEndpoints();
 app.MapGroup("api/categories")
     .MapCategoriesEndpoints();
 

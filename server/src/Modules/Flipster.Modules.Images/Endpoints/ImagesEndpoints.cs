@@ -11,11 +11,15 @@ public static class ImagesEndpoints
 {
     public static IEndpointRouteBuilder MapImagesEndpoints(this IEndpointRouteBuilder builder)
     {
-        builder.MapPost("/image", LoadImage);
-        builder.MapPost("/images", LoadImages);
+        builder.MapPost("/image", LoadImage)
+            .DisableAntiforgery();
+        builder.MapPost("/images", LoadImages)
+            .DisableAntiforgery();
         
-        builder.MapDelete("/image", RemoveImage);
-        builder.MapDelete("/images", RemoveImages);
+        builder.MapDelete("/image", RemoveImage)
+            .DisableAntiforgery();
+        builder.MapDelete("/images", RemoveImages)
+            .DisableAntiforgery();
         
         return builder;
     }
@@ -38,7 +42,7 @@ public static class ImagesEndpoints
     private static async Task<IResult> LoadImages(
         HttpContext context,
         IImageService imageService,
-        List<IFormFile> images)
+        IFormFileCollection images)
     {
         try
         {
