@@ -7,6 +7,7 @@ using Flipster.Modules.Identity.Dtos;
 using Flipster.Modules.Identity.Dtos.Login;
 using Flipster.Modules.Identity.Dtos.Register;
 using Flipster.Modules.Identity.Utils;
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,7 @@ public static class AuthEndpoints
         builder.MapPost("/register", Register);
         builder.MapPost("/logout", Logout).RequireAuthorization();
         builder.MapPost("/refresh", Refresh);
-        
+
         return builder;
     }
 
@@ -32,6 +33,7 @@ public static class AuthEndpoints
         ITokenRepository tokenRepository,
         ITokenGenerator tokenGenerator,
         IPasswordHasher passwordHasher,
+        IAntiforgery antiforgery,
         IMapper mapper,
         LoginRequestDto request)
     {
@@ -49,9 +51,11 @@ public static class AuthEndpoints
         var refreshToken = tokenGenerator.GenerateRefreshToken();
         refreshToken.UserId = user.Id;
         tokenRepository.CreateOrUpdate(refreshToken);
+        var antiforgeryToken = antiforgery.GetAndStoreTokens(context);
         return TypedResults.Ok(new AuthDto
         {
             AccessToken = accessToken,
+            AntiforgeryToken = antiforgeryToken.RequestToken,
             User = mapper.Map<UserDto>(user)
         });
     }
@@ -62,6 +66,7 @@ public static class AuthEndpoints
         ITokenRepository tokenRepository,
         ITokenGenerator tokenGenerator,
         IPasswordHasher passwordHasher,
+        IAntiforgery antiforgery,
         IMapper mapper,
         RegisterRequestDto request)
     {
@@ -84,10 +89,12 @@ public static class AuthEndpoints
         var refreshToken = tokenGenerator.GenerateRefreshToken();
         refreshToken.UserId = user.Id;
         tokenRepository.CreateOrUpdate(refreshToken);
+        var antiforgeryToken = antiforgery.GetAndStoreTokens(context);
         CookieUtils.AddToken(context, refreshToken);
         return TypedResults.Ok(new AuthDto
         {
             AccessToken = accessToken,
+            AntiforgeryToken = antiforgeryToken.RequestToken,
             User = mapper.Map<UserDto>(user)
         });
     }

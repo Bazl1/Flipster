@@ -6,6 +6,7 @@ public interface IImageService
 {
     Task<string> LoadImageAsync(IFormFile image);
     Task<List<string>> LoadImagesAsync(List<IFormFile> images);
+    Task<List<string>> LoadImagesAsync(IFormFileCollection images);
     Task RemoveImageAsync(string url);
     Task RemoveImagesAsync(List<string> urls);
 }

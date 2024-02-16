@@ -7,7 +7,7 @@ internal class ImageService(
     IWebHostEnvironment _webHostEnvironment) : IImageService
 {
     public const string BASE_URL = "http://localhost:5247/images/";
-    
+
     public async Task<string> LoadImageAsync(IFormFile image)
     {
         var fileName = Path.Combine($"{Guid.NewGuid().ToString()}{Path.GetExtension(image.FileName)}");
@@ -18,6 +18,14 @@ internal class ImageService(
     }
 
     public async Task<List<string>> LoadImagesAsync(List<IFormFile> images)
+    {
+        var filePaths = new List<string>();
+        foreach (var image in images)
+            filePaths.Add(await LoadImageAsync(image));
+        return filePaths;
+    }
+
+    public async Task<List<string>> LoadImagesAsync(IFormFileCollection images)
     {
         var filePaths = new List<string>();
         foreach (var image in images)

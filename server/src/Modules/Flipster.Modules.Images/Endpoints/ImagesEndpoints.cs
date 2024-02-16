@@ -11,16 +11,12 @@ public static class ImagesEndpoints
 {
     public static IEndpointRouteBuilder MapImagesEndpoints(this IEndpointRouteBuilder builder)
     {
-        builder.MapPost("/image", LoadImage)
-            .DisableAntiforgery();
-        builder.MapPost("/images", LoadImages)
-            .DisableAntiforgery();
-        
-        builder.MapDelete("/image", RemoveImage)
-            .DisableAntiforgery();
-        builder.MapDelete("/images", RemoveImages)
-            .DisableAntiforgery();
-        
+        builder.MapPost("/image", LoadImage);
+        builder.MapPost("/images", LoadImages);
+
+        builder.MapDelete("/image", RemoveImage);
+        builder.MapDelete("/images", RemoveImages);
+
         return builder;
     }
 
@@ -38,11 +34,11 @@ public static class ImagesEndpoints
             return Results.BadRequest(new ErrorDto("An unexpected error occurred while loading the image."));
         }
     }
-    
+
     private static async Task<IResult> LoadImages(
         HttpContext context,
         IImageService imageService,
-        [FromForm] List<IFormFile> images)
+        IFormFileCollection images)
     {
         try
         {
@@ -53,7 +49,7 @@ public static class ImagesEndpoints
             return Results.BadRequest(new ErrorDto("An unexpected error occurred while loading the image."));
         }
     }
-    
+
     private static async Task<IResult> RemoveImage(
         HttpContext context,
         IImageService imageService,

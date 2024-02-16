@@ -2,6 +2,7 @@
 
 public class AuthDto
 {
-    public string AccessToken { get; set; }
-    public UserDto User { get; set; }
+    public string AccessToken { get; set; } = null!;
+    public string? AntiforgeryToken { get; set; } = null;
+    public UserDto User { get; set; } = null!;
 }

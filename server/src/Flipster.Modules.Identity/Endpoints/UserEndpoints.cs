@@ -5,6 +5,7 @@ using Flipster.Modules.Identity.Domain.User.Services;
 using Flipster.Modules.Identity.Dtos;
 using Flipster.Modules.Identity.Dtos.ChangePassword;
 using Flipster.Modules.Images.Contracts;
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ public static class UsersEndpoints
         IUserRepository userRepository,
         ChangePasswordRequest request)
     {
-        var user = userRepository.FindById(context.User.FindFirstValue(ClaimTypes.NameIdentifier)); 
+        var user = userRepository.FindById(context.User.FindFirstValue(ClaimTypes.NameIdentifier));
         if (!passwordHasher.VerifyHashedPassword(user.PasswordHash, request.CurrentPassword))
             return Results.BadRequest(new ErrorDto("Password mismatch."));
         user.PasswordHash = passwordHasher.Hash(request.NewPassword);
@@ -48,14 +49,14 @@ public static class UsersEndpoints
         var user = userRepository.FindById(context.User.FindFirstValue(ClaimTypes.NameIdentifier));
         var phoneNumber = request.PhoneNumber.Replace(" ", "");
         if (user.PhoneNumber == phoneNumber)
-            return Results.Ok(mapper.Map<UserDto>(user));                    
+            return Results.Ok(mapper.Map<UserDto>(user));
         if (userRepository.FindByPhoneNumber(phoneNumber) is not null)
             return Results.BadRequest(new ErrorDto($"User with this phone number '{phoneNumber}' already exists."));
         user.PhoneNumber = phoneNumber;
         userRepository.Update(user);
         return Results.Ok(mapper.Map<UserDto>(user));
     }
-    
+
     private static async Task<IResult> ChangeAvatar(
         HttpContext context,
         IUserRepository userRepository,
@@ -70,7 +71,7 @@ public static class UsersEndpoints
         }
         catch
         {
-            return Results.BadRequest(new ErrorDto("An unexpected error occurred while loading the image."));            
+            return Results.BadRequest(new ErrorDto("An unexpected error occurred while loading the image."));
         }
         userRepository.Update(user);
         return Results.Ok(mapper.Map<UserDto>(user));
