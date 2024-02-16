@@ -12,31 +12,21 @@ const PublicProfile = () => {
                 <div className={s.profile__inner}>
                     <div className={s.profile__top}>
                         <div className={s.profile__user}>
-                            <img
-                                className={s.profile__avatar}
-                                src={user}
-                                alt="avatar"
-                            />
+                            <img className={s.profile__avatar} src={user} alt="avatar" />
                             <h3 className={s.profile__name}>Maxim Ostapenko</h3>
                         </div>
                         {!show ? (
-                            <button
-                                onClick={() => setShow((current) => !current)}
-                                className={s.profile__show_number}
-                            >
+                            <button onClick={() => setShow((current) => !current)} className={s.profile__show_number}>
                                 Show number
                             </button>
                         ) : (
-                            <Link
-                                to={"tel:+380632805354"}
-                                className={s.profile__number}
-                            >
+                            <Link to={"tel:+380632805354"} className={s.profile__number}>
                                 +380 63 280 5354
                             </Link>
                         )}
                     </div>
                     <div className={s.profile__adverts}>
-                        <VerticalList />
+                        <VerticalList title="Adverts" />
                     </div>
                 </div>
             </div>

@@ -1,0 +1,83 @@
+@import "../../shared/assets/styles/vars.scss";
+
+.list {
+    &__title {
+        width: 100%;
+        background: $black-priority;
+        color: #fff;
+        font-size: 24px;
+        font-weight: 700;
+        text-align: center;
+        border-radius: 8px;
+        padding: 20px 30px;
+        margin-bottom: 40px;
+    }
+    &__items {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 20px;
+    }
+    &__item {
+        border-radius: 8px;
+        box-shadow: 0 0 5px 2px rgba($black-priority, 0.1);
+        position: relative;
+    }
+    &__item_img {
+        width: 100%;
+        max-height: 300px;
+        height: 100vh;
+        object-fit: cover;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+    &__item_box {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+        padding: 20px;
+    }
+    &__item_label {
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+    }
+    &__item_title {
+        font-size: 18px;
+        font-weight: 500;
+    }
+    &__item_location {
+        font-size: 14px;
+        font-weight: 500;
+    }
+    &__item_price {
+        font-size: 21px;
+        font-weight: 700;
+    }
+    &__item_likebox {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+    &__item_like {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        outline: none;
+        border: none;
+        background: #fff;
+        border-radius: 100%;
+        width: 40px;
+        height: 40px;
+        margin-left: auto;
+        padding: 0;
+        box-shadow: 0 0 5px 2px rgba($black-priority, 0.3);
+        cursor: pointer;
+        svg {
+            color: $black-priority;
+            width: 24px;
+            height: 24px;
+        }
+    }
+}

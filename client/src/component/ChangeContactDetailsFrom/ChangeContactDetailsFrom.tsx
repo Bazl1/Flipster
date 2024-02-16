@@ -6,9 +6,7 @@ import "../../shared/assets/styles/formSelect.scss";
 import { useAppDispatch } from "../../shared/hooks/storeHooks";
 import { changeDetails } from "../../store/slices/SettingsSlice";
 import toast, { Toaster } from "react-hot-toast";
-import LocationSelect, {
-    ILocationList,
-} from "../LocationSelect/LocationSelect";
+import LocationSelect, { ILocationList } from "../LocationSelect/LocationSelect";
 
 const ChangeContactDetailsFrom = () => {
     const [location, setLocation] = useState<ILocationList | null>(null);
@@ -28,9 +26,7 @@ const ChangeContactDetailsFrom = () => {
         try {
             const locationLabel = location?.label || "";
             const name = newName || "";
-            const response = await dispatch(
-                changeDetails({ locationLabel, name }),
-            );
+            const response = await dispatch(changeDetails({ locationLabel, name }));
             if (response.payload === 200) {
                 toast.success("Changes saved");
             } else {
@@ -61,10 +57,10 @@ const ChangeContactDetailsFrom = () => {
                         validationOptions={{
                             maxLength: {
                                 value: 100,
-                                message:
-                                    "The maximum length of the string should not exceed 100 characters",
+                                message: "The maximum length of the string should not exceed 100 characters",
                             },
                         }}
+                        dataСy="change-name"
                     />
                 </label>
                 <button className={s.form__btn} type="submit" data-cy="submit">

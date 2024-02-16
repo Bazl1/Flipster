@@ -5,6 +5,7 @@ import { checkAuth } from "./store/slices/AuthSlice";
 import LayoutMain from "./component/LayoutMain/LayoutMain";
 import LayoutFullPage from "./component/LayoutFullPage/LayoutFullPage";
 import Loader from "./component/Loader/Loader";
+import SingleAdvert from "./pages/SingleAdvert/SingleAdvert";
 
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage/RegisterPage"));
@@ -44,6 +45,14 @@ function App() {
                         }
                     />
                     {/* public */}
+                    <Route
+                        path="/advert/:id"
+                        element={
+                            <LayoutMain>
+                                <SingleAdvert />
+                            </LayoutMain>
+                        }
+                    />
                     <Route
                         path="/profile/:id"
                         element={

@@ -9,10 +9,7 @@ const Settings = () => {
     return (
         <div className={s.settings}>
             <FAQ title="Change avatar" children={<ChangeAvatarForm />} />
-            <FAQ
-                title="Change contact details"
-                children={<ChangeContactDetailsFrom />}
-            />
+            <FAQ title="Change contact details" children={<ChangeContactDetailsFrom />} />
             <FAQ title="Change the number" children={<ChangeNumberForm />} />
             <FAQ title="Change password" children={<ChangePasswordForm />} />
         </div>

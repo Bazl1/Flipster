@@ -123,6 +123,7 @@ const CreateAdvert = () => {
                                         type="file"
                                         onChange={handleAddImages}
                                         accept="image/png, image/jpeg"
+                                        required
                                     />
                                 </label>
                                 {images.length > 0 ? (

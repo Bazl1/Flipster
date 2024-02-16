@@ -13,16 +13,10 @@ const ProfilePage = () => {
             <div className="container">
                 <div className={s.profile__inner}>
                     <div className={s.profile__btns}>
-                        <button
-                            className={s.profile__tabs_btn}
-                            onClick={() => setActiveTab(1)}
-                        >
+                        <button className={s.profile__tabs_btn} onClick={() => setActiveTab(1)}>
                             My adverts
                         </button>
-                        <button
-                            className={s.profile__tabs_btn}
-                            onClick={() => setActiveTab(2)}
-                        >
+                        <button className={s.profile__tabs_btn} onClick={() => setActiveTab(2)} data-cy="settings-btn">
                             Settings
                         </button>
                     </div>
@@ -47,6 +41,7 @@ const ProfilePage = () => {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
+                                    data-cy="settings"
                                 >
                                     <Suspense fallback={<Loader />}>
                                         <Settings />

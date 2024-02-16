@@ -1,4 +1,4 @@
-import { API_URL } from "../../../src/shared/axios";
+import { API_URL } from "../../src/shared/axios";
 
 describe("Create account", () => {
     beforeEach(() => {
@@ -51,12 +51,8 @@ describe("Create account", () => {
 
         cy.wait("@registerRequest").then((interception) => {
             expect(interception.request.method).to.equal("POST");
-            expect(interception.request.url).to.include(
-                `${API_URL}/auth/register`,
-            );
-            expect(interception.response?.statusCode.toString()).to.equal(
-                "200",
-            );
+            expect(interception.request.url).to.include(`${API_URL}/auth/register`);
+            expect(interception.response?.statusCode.toString()).to.equal("200");
         });
 
         cy.url().should("include", "/");
@@ -104,12 +100,8 @@ describe("Login", () => {
 
         cy.wait("@loginRequest").then((interception) => {
             expect(interception.request.method).to.equal("POST");
-            expect(interception.request.url).to.include(
-                `${API_URL}/auth/login`,
-            );
-            expect(interception.response?.statusCode.toString()).to.equal(
-                "200",
-            );
+            expect(interception.request.url).to.include(`${API_URL}/auth/login`);
+            expect(interception.response?.statusCode.toString()).to.equal("200");
         });
 
         cy.url().should("include", "/");
@@ -135,12 +127,8 @@ describe("Logout", () => {
 
         cy.wait("@loginRequest").then((interception) => {
             expect(interception.request.method).to.equal("POST");
-            expect(interception.request.url).to.include(
-                `${API_URL}/auth/login`,
-            );
-            expect(interception.response?.statusCode.toString()).to.equal(
-                "200",
-            );
+            expect(interception.request.url).to.include(`${API_URL}/auth/login`);
+            expect(interception.response?.statusCode.toString()).to.equal("200");
         });
 
         cy.url().should("include", "/");
@@ -158,12 +146,8 @@ describe("Logout", () => {
 
         cy.wait("@loginRequest").then((interception) => {
             expect(interception.request.method).to.equal("POST");
-            expect(interception.request.url).to.include(
-                `${API_URL}/auth/login`,
-            );
-            expect(interception.response?.statusCode.toString()).to.equal(
-                "200",
-            );
+            expect(interception.request.url).to.include(`${API_URL}/auth/login`);
+            expect(interception.response?.statusCode.toString()).to.equal("200");
         });
 
         cy.url().should("include", "/");

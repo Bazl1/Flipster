@@ -2,28 +2,20 @@ import s from "./VerticalList.module.scss";
 import { IoMdHeart } from "react-icons/io";
 import demo from "../../shared/assets/img/login-banner.jpeg";
 
-const VerticalList = () => {
+const VerticalList = ({ title }: { title: string }) => {
     return (
         <div className={s.list}>
-            <h2 className={s.list__title}>Adverts</h2>
+            <h2 className={s.list__title}>{title}</h2>
             <div className={s.list__items}>
                 <div className={s.list__item}>
                     <div className={s.list__item_row}>
                         <div className={s.list__item_columns}>
-                            <img
-                                className={s.list__item_img}
-                                src={demo}
-                                alt="img"
-                            />
+                            <img className={s.list__item_img} src={demo} alt="img" />
                         </div>
                         <div className={s.list__item_columns}>
                             <div className={s.list__item_box}>
-                                <h3 className={s.list__item_title}>
-                                    Demo title
-                                </h3>
-                                <p className={s.list__item_location}>
-                                    Location: Uktaine, Kyev obls, Kyev
-                                </p>
+                                <h3 className={s.list__item_title}>Demo title</h3>
+                                <p className={s.list__item_location}>Location: Uktaine, Kyev obls, Kyev</p>
                             </div>
                             <div className={s.list__item_box}>
                                 <button className={s.list__item_like}>

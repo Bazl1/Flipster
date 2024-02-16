@@ -18,14 +18,12 @@ interface LocationSelectProps {
 
 const fetchLocationList = async () => {
     const LocationList = await LocationService.getLocationList();
-    const options = LocationList.data.map(
-        (item: IGetLocationList, index: number) => {
-            return {
-                value: index.toString(),
-                label: item.label,
-            };
-        },
-    );
+    const options = LocationList.data.map((item: IGetLocationList, index: number) => {
+        return {
+            value: index.toString(),
+            label: item.label,
+        };
+    });
     return options;
 };
 
