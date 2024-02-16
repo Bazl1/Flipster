@@ -22,10 +22,7 @@ const Header = () => {
                             <Link to={"/login"} className={s.header__btn}>
                                 Sign in
                             </Link>
-                            <Link
-                                to={"/registration"}
-                                className={s.header__btn}
-                            >
+                            <Link to={"/registration"} className={s.header__btn}>
                                 Sign up
                             </Link>
                         </div>
@@ -57,7 +54,7 @@ const Header = () => {
                                     </Link>
                                 </li>
                             </ul>
-                            <Link to={"/"} className={s.header__fullbtn}>
+                            <Link to={"/create-advert"} className={s.header__fullbtn}>
                                 CREATE ADVERT
                             </Link>
                             <button

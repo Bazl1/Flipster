@@ -4,37 +4,19 @@ import Input from "../../component/Input/Input";
 import { MdFileUpload } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { Pagination } from "swiper/modules";
-import Select from "react-select";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import Textarea from "../../component/Textarea/Textarea";
 import toast, { Toaster } from "react-hot-toast";
-
-const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-];
-
-interface ILocation {
-    value: string;
-    label: string;
-}
+import LocationSelect, { ILocationList } from "../../component/LocationSelect/LocationSelect";
+import { useAddAvdertMutation } from "../../services/AdvertService";
+import { useAppSelector } from "../../shared/hooks/storeHooks";
+import { selectUserInfo } from "../../store/selectors";
 
 const CreateAdvert = () => {
+    const user = useAppSelector(selectUserInfo);
+
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [images, setImages] = useState<string[]>([]);
@@ -42,10 +24,9 @@ const CreateAdvert = () => {
     const [price, setPrice] = useState<string>("");
     const [type, setType] = useState<string>("Business");
     const [status, setStatus] = useState<string>("New");
-    const [isClearable, setIsClearable] = useState(true);
-    const [location, setLocation] = useState<ILocation | null>(null);
-    const [email, setEmail] = useState<string>("");
-    const [phone, setPhone] = useState<string>("");
+    const [location, setLocation] = useState<ILocationList | null>(null);
+    const [email, setEmail] = useState<string>(user.email);
+    const [phone, setPhone] = useState<string>(user.number || "");
 
     const {
         register,
@@ -54,6 +35,8 @@ const CreateAdvert = () => {
     } = useForm({
         mode: "onBlur",
     });
+
+    const [addAvdert, { isSuccess }] = useAddAvdertMutation();
 
     const handleAddImages = (e: React.ChangeEvent<HTMLInputElement>) => {
         const input = e.target;
@@ -79,10 +62,30 @@ const CreateAdvert = () => {
         if (free) {
             setPrice("");
         }
+        const locationLabel = location?.label || "";
+
         const data = new FormData();
-        images.forEach((image, index) => {
-            data.append(`img${index}`, image);
+        // data.append("Title", title);
+        // data.append("Description", description);
+        // data.append("IsFree", free.toString());
+        // data.append("Price", price);
+        // data.append("ProductType", status);
+        // data.append("BusinessType", type);
+        // data.append("Location", locationLabel);
+        // data.append("CategoryId", "0");
+        // data.append("Email", email);
+        // data.append("PhoneNumber", phone);
+        images.forEach((image) => {
+            data.append("images", image);
         });
+
+        await addAvdert(data);
+
+        if (isSuccess) {
+            toast.success("Product has been successfully added ");
+        } else {
+            toast.error("Error when adding a product");
+        }
     };
 
     return (
@@ -91,10 +94,7 @@ const CreateAdvert = () => {
                 <div className="container">
                     <div className={s.create__inner}>
                         <h2 className={s.create__title}>Create your advert</h2>
-                        <form
-                            className={s.create__form}
-                            onSubmit={handleSubmit(Submit)}
-                        >
+                        <form className={s.create__form} onSubmit={handleSubmit(Submit)}>
                             <div className={s.create__form_columns}>
                                 <Input
                                     text={"Title"}
@@ -133,26 +133,13 @@ const CreateAdvert = () => {
                                         spaceBetween={40}
                                         slidesPerView={3}
                                     >
-                                        {images.map(
-                                            (item: any, index: number) => {
-                                                return (
-                                                    <SwiperSlide
-                                                        key={index}
-                                                        className={
-                                                            s.create__from_slide
-                                                        }
-                                                    >
-                                                        <img
-                                                            className={
-                                                                s.create__form_slide_img
-                                                            }
-                                                            src={item}
-                                                            alt="img"
-                                                        />
-                                                    </SwiperSlide>
-                                                );
-                                            },
-                                        )}
+                                        {images.map((item: any, index: number) => {
+                                            return (
+                                                <SwiperSlide key={index} className={s.create__from_slide}>
+                                                    <img className={s.create__form_slide_img} src={item} alt="img" />
+                                                </SwiperSlide>
+                                            );
+                                        })}
                                     </Swiper>
                                 ) : (
                                     <div className={s.create__skeletons}>
@@ -182,9 +169,7 @@ const CreateAdvert = () => {
                                     <button
                                         onClick={() => setFree(false)}
                                         className={
-                                            !free
-                                                ? `${s.create__btn} ${s.create__btn_active}`
-                                                : `${s.create__btn}`
+                                            !free ? `${s.create__btn} ${s.create__btn_active}` : `${s.create__btn}`
                                         }
                                         type="button"
                                     >
@@ -193,9 +178,7 @@ const CreateAdvert = () => {
                                     <button
                                         onClick={() => setFree(true)}
                                         className={
-                                            free
-                                                ? `${s.create__btn} ${s.create__btn_active}`
-                                                : `${s.create__btn}`
+                                            free ? `${s.create__btn} ${s.create__btn_active}` : `${s.create__btn}`
                                         }
                                         type="button"
                                     >
@@ -215,8 +198,7 @@ const CreateAdvert = () => {
                                             required: "Required field",
                                             minLeght: {
                                                 value: 1,
-                                                message:
-                                                    "Enter at least one character",
+                                                message: "Enter at least one character",
                                             },
                                         }}
                                     />
@@ -275,22 +257,11 @@ const CreateAdvert = () => {
                             <div className={s.create__form_columns}>
                                 <label className={s.create__select_columns}>
                                     <span>Choose your location</span>
-                                    <Select
-                                        classNamePrefix="form-select"
-                                        options={options}
-                                        onChange={(selectedOptions) =>
-                                            setLocation(selectedOptions)
-                                        }
-                                        value={location}
-                                        placeholder={"Choose your location"}
-                                        isClearable={isClearable}
-                                    />
+                                    <LocationSelect value={location} setValue={setLocation} />
                                 </label>
                             </div>
                             <div className={s.create__line}></div>
-                            <div
-                                className={`${s.create__form_columns} ${s.create__form_columns_flex}`}
-                            >
+                            <div className={`${s.create__form_columns} ${s.create__form_columns_flex}`}>
                                 <Input
                                     text="Email"
                                     type="Email"
@@ -324,16 +295,12 @@ const CreateAdvert = () => {
                                         },
                                         maxLength: {
                                             value: 13,
-                                            message:
-                                                "The maximum length of the phone number is 13 characters",
+                                            message: "The maximum length of the phone number is 13 characters",
                                         },
                                     }}
                                 />
                             </div>
-                            <button
-                                className={s.create__create_btn}
-                                type="submit"
-                            >
+                            <button className={s.create__create_btn} type="submit">
                                 Create
                             </button>
                         </form>
