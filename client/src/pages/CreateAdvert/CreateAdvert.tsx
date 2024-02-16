@@ -42,7 +42,7 @@ const CreateAdvert = () => {
         const input = e.target;
         if (input.files) {
             const maxSize = 2 * 1024 * 1024;
-            if (input.files.length >= 10) {
+            if (input.files.length + images.length > 10) {
                 toast.error("The maximum number of images is 10");
                 return;
             }
