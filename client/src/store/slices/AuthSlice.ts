@@ -26,12 +26,9 @@ export const registration = createAsyncThunk(
     "auth/registration",
     async function ({ name, email, password }: IRegistration, { dispatch }) {
         try {
-            const response = await AuthService.registration(
-                name,
-                email,
-                password,
-            );
+            const response = await AuthService.registration(name, email, password);
             localStorage.setItem("token", response.data.accessToken);
+            localStorage.setItem("antiforgeryToken", response.data.antiforgeryToken || "");
             dispatch(setAuth(true));
             dispatch(setUser(response.data.user));
             return response.status;
@@ -41,48 +38,41 @@ export const registration = createAsyncThunk(
     },
 );
 
-export const login = createAsyncThunk(
-    "auth/login",
-    async function ({ email, password }: ILogin, { dispatch }) {
-        try {
-            const response = await AuthService.login(email, password);
-            localStorage.setItem("token", response.data.accessToken);
-            dispatch(setAuth(true));
-            dispatch(setUser(response.data.user));
-            return response.status;
-        } catch (error) {
-            console.log(error);
-        }
-    },
-);
+export const login = createAsyncThunk("auth/login", async function ({ email, password }: ILogin, { dispatch }) {
+    try {
+        const response = await AuthService.login(email, password);
+        localStorage.setItem("token", response.data.accessToken);
+        localStorage.setItem("antiforgeryToken", response.data.antiforgeryToken || "");
+        dispatch(setAuth(true));
+        dispatch(setUser(response.data.user));
+        return response.status;
+    } catch (error) {
+        console.log(error);
+    }
+});
 
-export const logout = createAsyncThunk(
-    "auth/logout",
-    async function (_, { dispatch }) {
-        try {
-            await AuthService.logout;
-            localStorage.removeItem("token");
-            dispatch(setAuth(false));
-            dispatch(setUser({} as IUser));
-        } catch (error) {
-            console.log(error);
-        }
-    },
-);
+export const logout = createAsyncThunk("auth/logout", async function (_, { dispatch }) {
+    try {
+        await AuthService.logout;
+        localStorage.removeItem("token");
+        localStorage.removeItem("antiforgeryToken");
+        dispatch(setAuth(false));
+        dispatch(setUser({} as IUser));
+    } catch (error) {
+        console.log(error);
+    }
+});
 
-export const checkAuth = createAsyncThunk(
-    "auth/refresh",
-    async function (_, { dispatch }) {
-        try {
-            const response = await AuthService.refresh();
-            localStorage.setItem("token", response.data.accessToken);
-            dispatch(setAuth(true));
-            dispatch(setUser(response.data.user));
-        } catch (error) {
-            console.log(error);
-        }
-    },
-);
+export const checkAuth = createAsyncThunk("auth/refresh", async function (_, { dispatch }) {
+    try {
+        const response = await AuthService.refresh();
+        localStorage.setItem("token", response.data.accessToken);
+        dispatch(setAuth(true));
+        dispatch(setUser(response.data.user));
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 export const AuthSlice = createSlice({
     name: "auth",

@@ -10,6 +10,7 @@ const baseQuery = fetchBaseQuery({
         }
         return headers;
     },
+    credentials: "include",
 });
 
 const baseQueryWithRefresh: BaseQueryFn<string | FetchArgs, unknown, unknown> = async (args, api, extraOptions) => {
