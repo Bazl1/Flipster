@@ -38,22 +38,35 @@ const CreateAdvert = () => {
 
     const [addAvdert, { isSuccess }] = useAddAvdertMutation();
 
-    const handleAddImages = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleAddImages = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const input = e.target;
-        if (input.files && input.files[0]) {
+        if (input.files) {
             const maxSize = 2 * 1024 * 1024;
-            if (input.files[0].size > maxSize) {
-                toast.error("Maximum image size 2mb");
-            } else {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    if (images.length >= 10) {
-                        toast.error("The maximum number of images is 10");
-                    } else {
-                        setImages([...images, e.target?.result as string]);
-                    }
-                };
-                reader.readAsDataURL(input.files[0]);
+            if (input.files.length >= 10) {
+                toast.error("The maximum number of images is 10");
+                return;
+            }
+            for (let i = 0; i < input.files.length; i++) {
+                if (input.files[i].size > maxSize) {
+                    toast.error("Maximum image size 2mb");
+                } else {
+                    await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            if (images.length >= 10) {
+                                toast.error("The maximum number of images is 10");
+                                resolve(null);
+                            } else {
+                                setImages((prevImages) => [...prevImages, e.target?.result as string]);
+                                resolve(null);
+                            }
+                        };
+                        reader.onerror = reject;
+                        if (input.files) {
+                            reader.readAsDataURL(input.files[i]);
+                        }
+                    });
+                }
             }
         }
     };
@@ -124,6 +137,7 @@ const CreateAdvert = () => {
                                         onChange={handleAddImages}
                                         accept="image/png, image/jpeg"
                                         required
+                                        multiple
                                     />
                                 </label>
                                 {images.length > 0 ? (
