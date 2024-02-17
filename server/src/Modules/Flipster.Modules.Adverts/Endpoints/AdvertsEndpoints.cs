@@ -18,12 +18,10 @@ public static class AdvertsEndpoints
 {
     public static IEndpointRouteBuilder MapAdvertsEndpoints(this IEndpointRouteBuilder builder)
     {
-        builder.MapPost("/", Create)
-            .RequireAuthorization()
-            .DisableAntiforgery();
-        
+        builder.MapPost("/", Create).RequireAuthorization();
+
         builder.MapGet("/", GetAll);
-        
+
         return builder;
     }
 
@@ -44,7 +42,7 @@ public static class AdvertsEndpoints
         advertService.Create(advert);
         return Results.Created();
     }
-    
+
     private static async Task<IResult> GetAll(
         HttpContext context,
         AdvertsDbContext db,
@@ -61,8 +59,8 @@ public static class AdvertsEndpoints
         var pageCount = (int)Math.Ceiling((double)adverts.Count / (double)pageSize);
         return Results.Ok(new
         {
-            Adverts = adverts, 
+            Adverts = adverts,
             PageCount = pageCount,
         });
-    }    
+    }
 }

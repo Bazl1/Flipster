@@ -17,14 +17,6 @@ internal class ImageService(
         return $"{BASE_URL}{fileName}";
     }
 
-    public async Task<List<string>> LoadImagesAsync(List<IFormFile> images)
-    {
-        var filePaths = new List<string>();
-        foreach (var image in images)
-            filePaths.Add(await LoadImageAsync(image));
-        return filePaths;
-    }
-
     public async Task<List<string>> LoadImagesAsync(IFormFileCollection images)
     {
         var filePaths = new List<string>();

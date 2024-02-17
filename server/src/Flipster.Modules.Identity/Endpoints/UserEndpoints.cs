@@ -19,9 +19,7 @@ public static class UsersEndpoints
     {
         builder.MapPut("/change-password", ChangePassword).RequireAuthorization();
         builder.MapPut("/change-phone", ChangePhoneNumber).RequireAuthorization();
-        builder.MapPut("/change-avatar", ChangeAvatar)
-                .RequireAuthorization()
-                .DisableAntiforgery();
+        builder.MapPut("/change-avatar", ChangeAvatar).RequireAuthorization();
         builder.MapPut("/change-details", ChangeDetails).RequireAuthorization();
         return builder;
     }
