@@ -2,7 +2,8 @@ import { useState } from "react";
 import s from "./CreateAdvert.module.scss";
 import Input from "../../component/Input/Input";
 import { MdFileUpload } from "react-icons/md";
-import { useForm } from "react-hook-form";
+import { IoClose } from "react-icons/io5";
+import { Controller, useForm } from "react-hook-form";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -13,13 +14,16 @@ import LocationSelect, { ILocationList } from "../../component/LocationSelect/Lo
 import { useAddAvdertMutation } from "../../services/AdvertService";
 import { useAppSelector } from "../../shared/hooks/storeHooks";
 import { selectUserInfo } from "../../store/selectors";
+import CategoriesSelect, { CategoriesList } from "../../component/CategoriesSelect/CategoriesSelect";
 
 const CreateAdvert = () => {
     const user = useAppSelector(selectUserInfo);
 
     const [title, setTitle] = useState<string>("");
+    const [category, setCategory] = useState<CategoriesList | null>(null);
     const [description, setDescription] = useState<string>("");
     const [images, setImages] = useState<string[]>([]);
+    const [fetchImages, setFetchImages] = useState<File[]>([]);
     const [free, setFree] = useState<boolean>(false);
     const [price, setPrice] = useState<string>("");
     const [type, setType] = useState<string>("Business");
@@ -31,15 +35,17 @@ const CreateAdvert = () => {
     const {
         register,
         handleSubmit,
+        control,
         formState: { errors },
     } = useForm({
         mode: "onBlur",
     });
 
-    const [addAvdert, { isSuccess }] = useAddAvdertMutation();
+    const [addAvdert, { isError, error }] = useAddAvdertMutation();
 
     const handleAddImages = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const input = e.target;
+
         if (input.files) {
             const maxSize = 2 * 1024 * 1024;
             if (input.files.length + images.length > 10) {
@@ -47,6 +53,8 @@ const CreateAdvert = () => {
                 return;
             }
             for (let i = 0; i < input.files.length; i++) {
+                const file = input.files[i];
+
                 if (input.files[i].size > maxSize) {
                     toast.error("Maximum image size 2mb");
                 } else {
@@ -58,17 +66,21 @@ const CreateAdvert = () => {
                                 resolve(null);
                             } else {
                                 setImages((prevImages) => [...prevImages, e.target?.result as string]);
+                                setFetchImages((prevImages) => [...prevImages, file]);
                                 resolve(null);
                             }
                         };
                         reader.onerror = reject;
-                        if (input.files) {
-                            reader.readAsDataURL(input.files[i]);
-                        }
+                        reader.readAsDataURL(file);
                     });
                 }
             }
         }
+    };
+
+    const handleRemoveImage = (index: number) => {
+        setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+        setFetchImages((prevImages) => prevImages.filter((_, i) => i !== index));
     };
 
     const Submit = async () => {
@@ -76,29 +88,33 @@ const CreateAdvert = () => {
             setPrice("");
         }
         const locationLabel = location?.label || "";
+        const categoryId = category?.value || "";
 
         const data = new FormData();
-        // data.append("Title", title);
-        // data.append("Description", description);
-        // data.append("IsFree", free.toString());
-        // data.append("Price", price);
-        // data.append("ProductType", status);
-        // data.append("BusinessType", type);
-        // data.append("Location", locationLabel);
-        // data.append("CategoryId", "0");
-        // data.append("Email", email);
-        // data.append("PhoneNumber", phone);
-        images.forEach((image) => {
+        data.append("Title", title);
+        data.append("Description", description);
+        data.append("IsFree", free.toString());
+        if (!free) {
+            data.append("Price", price);
+        }
+        data.append("ProductType", status);
+        data.append("BusinessType", type);
+        data.append("Location", locationLabel);
+        data.append("CategoryId", categoryId.toString());
+        data.append("Email", email);
+        data.append("PhoneNumber", phone);
+        fetchImages.forEach((image) => {
             data.append("images", image);
         });
 
-        await addAvdert(data);
-
-        if (isSuccess) {
-            toast.success("Product has been successfully added ");
-        } else {
-            toast.error("Error when adding a product");
-        }
+        await addAvdert(data).then(() => {
+            if (!isError) {
+                toast.success("Product has been successfully added ");
+            } else {
+                toast.error("Error when adding a product");
+                console.log(error);
+            }
+        });
     };
 
     return (
@@ -121,6 +137,23 @@ const CreateAdvert = () => {
                                         required: "Required field",
                                     }}
                                 />
+                            </div>
+                            <div className={s.create__line}></div>
+                            <div className={s.create__form_columns}>
+                                <label className={s.create__select_columns}>
+                                    <span>Select a category</span>
+                                    <Controller
+                                        name="category"
+                                        control={control}
+                                        rules={{ required: "Required field" }}
+                                        render={({ field }) => (
+                                            <CategoriesSelect {...field} value={category} setValue={setCategory} />
+                                        )}
+                                    />
+                                    {errors.category && typeof errors.category.message === "string" && (
+                                        <p className={s.create__error}>{errors.category.message}</p>
+                                    )}
+                                </label>
                             </div>
                             <div className={s.create__line}></div>
                             <div className={s.create__onload_imgs}>
@@ -152,6 +185,14 @@ const CreateAdvert = () => {
                                             return (
                                                 <SwiperSlide key={index} className={s.create__from_slide}>
                                                     <img className={s.create__form_slide_img} src={item} alt="img" />
+                                                    <div className={s.create__overlay}></div>
+                                                    <button
+                                                        className={s.create__delete}
+                                                        onClick={() => handleRemoveImage(index)}
+                                                        type="button"
+                                                    >
+                                                        <IoClose />
+                                                    </button>
                                                 </SwiperSlide>
                                             );
                                         })}
@@ -272,7 +313,17 @@ const CreateAdvert = () => {
                             <div className={s.create__form_columns}>
                                 <label className={s.create__select_columns}>
                                     <span>Choose your location</span>
-                                    <LocationSelect value={location} setValue={setLocation} />
+                                    <Controller
+                                        name="location"
+                                        control={control}
+                                        rules={{ required: "Required field" }}
+                                        render={({ field }) => (
+                                            <LocationSelect {...field} value={location} setValue={setLocation} />
+                                        )}
+                                    />
+                                    {errors.location && typeof errors.location.message === "string" && (
+                                        <p className={s.create__error}>{errors.location.message}</p>
+                                    )}
                                 </label>
                             </div>
                             <div className={s.create__line}></div>
