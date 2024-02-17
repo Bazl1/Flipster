@@ -8,3 +8,6 @@ obj
 
 # Other files or folders
 notes
+
+# React
+node_modules
