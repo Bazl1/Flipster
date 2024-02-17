@@ -9,7 +9,7 @@ public class AdvertCreateRequest
     public int CategoryId { get; set; }
     public IFormFileCollection Images { get; set; } = null!;
     public bool IsFree { get; set; }
-    public decimal Price { get; set; }
+    public decimal Price { get; set; } = 0.00m;
     public string ProductType { get; set; } = null!;
     public string BusinessType { get; set; } = null!;
     public string Location { get; set; } = null!;

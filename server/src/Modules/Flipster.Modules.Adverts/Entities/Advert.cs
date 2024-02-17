@@ -1,5 +1,4 @@
 ﻿using Flipster.Modules.Adverts.Enums;
-using Flipster.Modules.Adverts.ValueObjects;
 
 namespace Flipster.Modules.Adverts.Entities;
 
@@ -11,10 +10,15 @@ public class Advert
     public string Title { get; set; } = null!;
     public string Description { get; set; } = null!;
     public int CategoryId { get; set; }
+    public Category? Category { get; set; }
     public List<string>? Images { get; set; }
     public AdvertProductType ProductType { get; set; }
     public AdvertBusinessType BusinessType { get; set; }
     public DateTime CreateAt { get; set; } = DateTime.Now;
-    public AdvertPrice Price { get; set; }
-    public AdvertContact Contact { get; set; }
+    public bool IsFree { get; set; }
+    public decimal Price { get; set; }
+    public string SellerId { get; set; } = null!;
+    public string Location { get; set; } = null!;
+    public string Email { get; set; } = null!;
+    public string PhoneNumber { get; set; } = null!;
 }
