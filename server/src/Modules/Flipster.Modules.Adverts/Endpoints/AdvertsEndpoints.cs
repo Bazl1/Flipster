@@ -40,7 +40,7 @@ public static class AdvertsEndpoints
         advert.Images = await imageService.LoadImagesAsync(request.Images);
         advert.Contact = new AdvertContact(userId, request.Location, request.Email, request.PhoneNumber);
         advertService.Create(advert);
-        return Results.Created();
+        return Results.Ok();
     }
 
     private static async Task<IResult> GetAll(
