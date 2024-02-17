@@ -6,7 +6,7 @@ export const advertApi = apiRTK.injectEndpoints({
     endpoints: (build) => ({
         addAvdert: build.mutation<void, FormData>({
             query: (body: FormData) => ({
-                url: "/images/images",
+                url: "/adverts",
                 method: "POST",
                 headers: {
                     RequestVerificationToken: localStorage.getItem("antiforgeryToken") || "",
@@ -20,7 +20,7 @@ export const advertApi = apiRTK.injectEndpoints({
             query(data) {
                 const { id, ...body } = data;
                 return {
-                    url: `posts/${id}`,
+                    url: `adverts/${id}`,
                     method: "PUT",
                     headers: {
                         RequestVerificationToken: localStorage.getItem("antiforgeryToken") || "",
