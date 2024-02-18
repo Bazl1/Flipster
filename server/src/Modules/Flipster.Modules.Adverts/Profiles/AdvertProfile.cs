@@ -17,6 +17,6 @@ public class AdvertProfile : Profile
                 Location = src.Location
             }))
             .ForMember(dest => dest.CreateAt, opt => opt.MapFrom(src => src.CreateAt.ToString()));
-        CreateMap<AdvertCreateRequest, Advert>();
+        CreateMap<AdvertUpdateRequest, Advert>();
     }
 }
