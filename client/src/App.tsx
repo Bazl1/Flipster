@@ -37,6 +37,14 @@ function App() {
                         }
                     />
                     <Route
+                        path="/change-advert"
+                        element={
+                            <LayoutMain>
+                                <CreateAdvert />
+                            </LayoutMain>
+                        }
+                    />
+                    <Route
                         path="/create-advert"
                         element={
                             <LayoutMain>

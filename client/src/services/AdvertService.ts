@@ -1,6 +1,6 @@
 import { apiRTK } from "../store/api";
 import { IAdvert } from "../types/IAdvert";
-import { AdvertResponse } from "../types/response/AdvertResponse";
+import { Advert, AdvertResponse } from "../types/response/AdvertResponse";
 
 export const advertApi = apiRTK.injectEndpoints({
     endpoints: (build) => ({
@@ -16,8 +16,16 @@ export const advertApi = apiRTK.injectEndpoints({
             invalidatesTags: [{ type: "MyAdverts", id: "LIST" }],
         }),
 
+        deleteAdvert: build.mutation<void, { id: string }>({
+            query: (params) => ({
+                url: `/adverts/${params.id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: (_result, _error, params) => [{ type: "MyAdverts", id: params.id }],
+        }),
+
         updateAdvert: build.mutation<IAdvert, Pick<IAdvert, "id"> & Partial<IAdvert>>({
-            query(data) {
+            query: (data) => {
                 const { id, ...body } = data;
                 return {
                     url: `adverts/${id}`,
@@ -28,10 +36,13 @@ export const advertApi = apiRTK.injectEndpoints({
                     body,
                 };
             },
-            invalidatesTags: (advert) => [{ type: "MyAdverts", id: advert?.id }],
+            invalidatesTags: (advert) => [
+                { type: "MyAdverts", id: advert?.id },
+                { type: "Adverts", id: advert?.id },
+            ],
         }),
 
-        getMyAdverts: build.query<AdvertResponse, { limit: number; page: string; userId: string }>({
+        getMyAdverts: build.query<AdvertResponse, { limit: number; page: number; userId: string }>({
             query: (params) => ({
                 url: `/adverts/?page=${params.page}&limit=${params.limit}&user=${params.userId}`,
                 method: "GET",
@@ -44,7 +55,16 @@ export const advertApi = apiRTK.injectEndpoints({
                       ]
                     : [{ type: "MyAdverts", id: "LIST" }],
         }),
+
+        getAdvertForId: build.query<Advert, { id: string }>({
+            query: (id) => ({
+                url: `/adverts/${id}`,
+                method: "GET",
+            }),
+            providesTags: (advert) => (advert ? [{ type: "Adverts", id: advert.id }] : []),
+        }),
     }),
 });
 
-export const { useAddAvdertMutation, useUpdateAdvertMutation, useGetMyAdvertsQuery } = advertApi;
+export const { useAddAvdertMutation, useUpdateAdvertMutation, useGetMyAdvertsQuery, useDeleteAdvertMutation } =
+    advertApi;
