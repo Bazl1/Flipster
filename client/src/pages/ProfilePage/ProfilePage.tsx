@@ -1,12 +1,27 @@
-import { Suspense, lazy, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import s from "./ProfilePage.module.scss";
 import { AnimatePresence, motion } from "framer-motion";
 import Loader from "../../component/Loader/Loader";
+import VerticalList from "../../component/VerticalList/VerticalList";
+import { useGetMyAdvertsQuery } from "../../services/AdvertService";
+import { useAppSelector } from "../../shared/hooks/storeHooks";
+import { selectUserInfo } from "../../store/selectors";
+import { AdvertResponse } from "../../types/response/AdvertResponse";
 
 const Settings = lazy(() => import("../../component/Settings/Settings"));
 
 const ProfilePage = () => {
     const [activeTab, setActiveTab] = useState<number>(1);
+    const [advertList, setAdvertList] = useState<AdvertResponse | null>(null);
+    const [activePage, setActivePage] = useState<number>(1);
+
+    const user = useAppSelector(selectUserInfo);
+
+    const { data } = useGetMyAdvertsQuery({ limit: 1, page: activePage, userId: user.id });
+
+    useEffect(() => {
+        setAdvertList(data || null);
+    }, [data]);
 
     return (
         <section className={s.profile}>
@@ -31,7 +46,14 @@ const ProfilePage = () => {
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
                                 >
-                                    dsfsd1
+                                    <Suspense fallback={<Loader />}>
+                                        <VerticalList
+                                            title="Your Adverts"
+                                            list={advertList || null}
+                                            changes={true}
+                                            setActivePage={setActivePage}
+                                        />
+                                    </Suspense>
                                 </motion.div>
                             )}
                             {activeTab === 2 && (
