@@ -1,7 +1,7 @@
 export interface Advert {
     id: string;
     title: string;
-    desciption: string;
+    description: string;
     images: string[];
     category: {
         id: number;

@@ -5,7 +5,6 @@ import { checkAuth } from "./store/slices/AuthSlice";
 import LayoutMain from "./component/LayoutMain/LayoutMain";
 import LayoutFullPage from "./component/LayoutFullPage/LayoutFullPage";
 import Loader from "./component/Loader/Loader";
-import SingleAdvert from "./pages/SingleAdvert/SingleAdvert";
 
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage/RegisterPage"));
@@ -13,6 +12,8 @@ const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage/ProfilePage"));
 const PublicProfile = lazy(() => import("./pages/PublicProfile/PublicProfile"));
 const CreateAdvert = lazy(() => import("./pages/CreateAdvert/CreateAdvert"));
+const ChangeAdvert = lazy(() => import("./pages/ChangeAdvert/ChangeAdvert"));
+const SingleAdvert = lazy(() => import("./pages/SingleAdvert/SingleAdvert"));
 
 function App() {
     const dispatch = useAppDispatch();
@@ -37,10 +38,10 @@ function App() {
                         }
                     />
                     <Route
-                        path="/change-advert"
+                        path="/change-advert/:id"
                         element={
                             <LayoutMain>
-                                <CreateAdvert />
+                                <ChangeAdvert />
                             </LayoutMain>
                         }
                     />

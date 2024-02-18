@@ -52,6 +52,7 @@ const ProfilePage = () => {
                                             list={advertList || null}
                                             changes={true}
                                             setActivePage={setActivePage}
+                                            activePage={activePage}
                                         />
                                     </Suspense>
                                 </motion.div>
