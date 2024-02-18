@@ -11,7 +11,7 @@ public class Advert
     public string Description { get; set; } = null!;
     public int CategoryId { get; set; }
     public Category? Category { get; set; }
-    public List<string>? Images { get; set; }
+    public List<string> Images { get; set; } = new();
     public AdvertProductType ProductType { get; set; }
     public AdvertBusinessType BusinessType { get; set; }
     public DateTime CreateAt { get; set; } = DateTime.Now;
