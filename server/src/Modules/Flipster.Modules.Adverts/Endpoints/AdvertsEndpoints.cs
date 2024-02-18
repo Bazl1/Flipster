@@ -35,9 +35,7 @@ public static class AdvertsEndpoints
         IMapper mapper,
         [FromRoute] string id)
     {
-        if (await db.Adverts
-            .Include(a => a.Images)
-            .SingleOrDefaultAsync(a => a.Id == id) is not Advert advert)
+        if (await db.Adverts.SingleOrDefaultAsync(a => a.Id == id) is not Advert advert)
             return Results.BadRequest(new ErrorDto("Advert with given id is not found."));
         return Results.Ok(mapper.Map<AdvertDto>(advert));
     }
@@ -50,9 +48,7 @@ public static class AdvertsEndpoints
         [FromRoute] string id,
         [FromForm] AdvertUpdateRequest request)
     {
-        if (await db.Adverts
-            .Include(a => a.Images)
-            .SingleOrDefaultAsync(a => a.Id == id) is not Advert advert)
+        if (await db.Adverts.SingleOrDefaultAsync(a => a.Id == id) is not Advert advert)
             return Results.BadRequest(new ErrorDto("Advert with given id is not found."));
         advert.Title = request.Title;
         advert.Description = request.Description;
@@ -84,9 +80,7 @@ public static class AdvertsEndpoints
         IImageService imageService,
         [FromRoute] string id)
     {
-        if (await db.Adverts
-            .Include(a => a.Images)
-            .SingleOrDefaultAsync(a => a.Id == id) is not Advert advert)
+        if (await db.Adverts.SingleOrDefaultAsync(a => a.Id == id) is not Advert advert)
             return Results.BadRequest(new ErrorDto("Advert with given id is not found."));
         try
         {
@@ -94,7 +88,8 @@ public static class AdvertsEndpoints
         }
         catch { }
         db.Remove(advert);
-        return Results.Ok();
+        await db.SaveChangesAsync();
+        return Results.Ok(new { });
     }
 
     private static async Task<IResult> Create(
