@@ -51,9 +51,11 @@ public static class AuthEndpoints
         var refreshToken = tokenGenerator.GenerateRefreshToken();
         refreshToken.UserId = user.Id;
         tokenRepository.CreateOrUpdate(refreshToken);
-        var antiforgeryTokenCookie = context.Request.Cookies.SingleOrDefault(cookie => cookie.Key.Contains(".AspNetCore.Antiforgery."));
-        if (antiforgeryTokenCookie.Key != string.Empty)
-            context.Response.Cookies.Delete(antiforgeryTokenCookie.Key);
+        try
+        {
+            context.Response.Cookies.Delete(context.Request.Cookies.SingleOrDefault(cookie => cookie.Key.Contains(".AspNetCore.Antiforgery.")).Key);
+        }
+        catch { }
         var antiforgeryToken = antiforgery.GetAndStoreTokens(context);
         return TypedResults.Ok(new AuthDto
         {
@@ -92,9 +94,11 @@ public static class AuthEndpoints
         var refreshToken = tokenGenerator.GenerateRefreshToken();
         refreshToken.UserId = user.Id;
         tokenRepository.CreateOrUpdate(refreshToken);
-        var antiforgeryTokenCookie = context.Request.Cookies.SingleOrDefault(cookie => cookie.Key.Contains(".AspNetCore.Antiforgery."));
-        if (antiforgeryTokenCookie.Key != string.Empty)
-            context.Response.Cookies.Delete(antiforgeryTokenCookie.Key);
+        try
+        {
+            context.Response.Cookies.Delete(context.Request.Cookies.SingleOrDefault(cookie => cookie.Key.Contains(".AspNetCore.Antiforgery.")).Key);
+        }
+        catch { }
         var antiforgeryToken = antiforgery.GetAndStoreTokens(context);
         CookieUtils.AddToken(context, refreshToken);
         return TypedResults.Ok(new AuthDto
@@ -113,9 +117,11 @@ public static class AuthEndpoints
         if (tokenRepository.FindByValue(tokenValue) is not Token token)
             return TypedResults.Unauthorized();
         tokenRepository.Remove(token);
-        var antiforgeryTokenCookie = context.Request.Cookies.SingleOrDefault(cookie => cookie.Key.Contains(".AspNetCore.Antiforgery."));
-        if (antiforgeryTokenCookie.Key != string.Empty)
-            context.Response.Cookies.Delete(antiforgeryTokenCookie.Key);
+        try
+        {
+            context.Response.Cookies.Delete(context.Request.Cookies.SingleOrDefault(cookie => cookie.Key.Contains(".AspNetCore.Antiforgery.")).Key);
+        }
+        catch { }
         CookieUtils.RemoveToken(context);
         return TypedResults.Ok();
     }
