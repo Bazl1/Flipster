@@ -24,18 +24,15 @@ export const advertApi = apiRTK.injectEndpoints({
             invalidatesTags: (_result, _error, params) => [{ type: "MyAdverts", id: params.id }],
         }),
 
-        updateAdvert: build.mutation<IAdvert, Pick<IAdvert, "id"> & Partial<IAdvert>>({
-            query: (data) => {
-                const { id, ...body } = data;
-                return {
-                    url: `adverts/${id}`,
-                    method: "PUT",
-                    headers: {
-                        RequestVerificationToken: localStorage.getItem("antiforgeryToken") || "",
-                    },
-                    body,
-                };
-            },
+        updateAdvert: build.mutation<IAdvert, { id: string; body: FormData }>({
+            query: (params) => ({
+                url: `adverts/${params.id}`,
+                method: "PUT",
+                headers: {
+                    RequestVerificationToken: localStorage.getItem("antiforgeryToken") || "",
+                },
+                body: params.body,
+            }),
             invalidatesTags: (advert) => [
                 { type: "MyAdverts", id: advert?.id },
                 { type: "Adverts", id: advert?.id },
@@ -57,8 +54,8 @@ export const advertApi = apiRTK.injectEndpoints({
         }),
 
         getAdvertForId: build.query<Advert, { id: string }>({
-            query: (id) => ({
-                url: `/adverts/${id}`,
+            query: (params) => ({
+                url: `/adverts/${params.id}`,
                 method: "GET",
             }),
             providesTags: (advert) => (advert ? [{ type: "Adverts", id: advert.id }] : []),
@@ -66,5 +63,10 @@ export const advertApi = apiRTK.injectEndpoints({
     }),
 });
 
-export const { useAddAvdertMutation, useUpdateAdvertMutation, useGetMyAdvertsQuery, useDeleteAdvertMutation } =
-    advertApi;
+export const {
+    useAddAvdertMutation,
+    useUpdateAdvertMutation,
+    useGetMyAdvertsQuery,
+    useDeleteAdvertMutation,
+    useGetAdvertForIdQuery,
+} = advertApi;

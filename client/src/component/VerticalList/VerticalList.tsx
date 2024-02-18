@@ -5,19 +5,24 @@ import { IoTrashBinSharp } from "react-icons/io5";
 import { Advert, AdvertResponse } from "../../types/response/AdvertResponse";
 import { useDeleteAdvertMutation } from "../../services/AdvertService";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 interface VerticalListProps {
     title: string;
     list: AdvertResponse | null;
     setActivePage: (value: number) => void;
+    activePage: number;
     changes?: boolean;
 }
 
-const VerticalList: React.FC<VerticalListProps> = ({ title, list, setActivePage, changes = false }) => {
+const VerticalList: React.FC<VerticalListProps> = ({ title, list, setActivePage, activePage, changes = false }) => {
     const [deleteAdvert, { isError }] = useDeleteAdvertMutation();
 
     const handleRemoveAdvert = async (id: string) => {
-        console.log(id);
+        if (list?.adverts.length === 1 && activePage > 1) {
+            setActivePage(activePage - 1);
+        }
+
         await deleteAdvert({ id });
         if (!isError) {
             toast.success("Successful removal");
@@ -47,9 +52,9 @@ const VerticalList: React.FC<VerticalListProps> = ({ title, list, setActivePage,
                                         <div className={s.list__item_box}>
                                             {changes ? (
                                                 <div className={s.list__item_btns}>
-                                                    <button className={s.list__item_btn}>
+                                                    <Link to={`/change-advert/${item.id}`} className={s.list__item_btn}>
                                                         <FaPenToSquare />
-                                                    </button>
+                                                    </Link>
                                                     <button
                                                         onClick={() => handleRemoveAdvert(item.id)}
                                                         className={s.list__item_btn}
