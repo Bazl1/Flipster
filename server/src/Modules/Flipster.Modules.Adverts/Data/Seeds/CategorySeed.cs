@@ -9,13 +9,13 @@ public class CategorySeed
     {
         using var _db = serviceProvider.GetRequiredService<AdvertsDbContext>();
         _db.Categories.AddRange(
-            new Category(1, "Free", ""),
-            new Category(2, "Cars", ""),
-            new Category(3, "Works", ""),
-            new Category(4, "Animals", ""),
-            new Category(5, "Electronics", ""),
-            new Category(6, "Clothes", ""),
-            new Category(7, "Business", ""));
+            new Category(1, "Free", "free-icon.svg"),
+            new Category(2, "Cars", "cars-icon.svg"),
+            new Category(3, "Works", "works-icon.svg"),
+            new Category(4, "Animals", "animals-icon.svg"),
+            new Category(5, "Electronics", "electronics-icon.svg"),
+            new Category(6, "Clothes", "clothes-icon.svg"),
+            new Category(7, "Business", "business-icon.svg"));
         _db.SaveChanges();
     }
 }
