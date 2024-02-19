@@ -14,17 +14,12 @@ import LocationSelect, { ILocationList } from "../../component/LocationSelect/Lo
 import { useGetAdvertForIdQuery, useUpdateAdvertMutation } from "../../services/AdvertService";
 import CategoriesSelect, { CategoriesList } from "../../component/CategoriesSelect/CategoriesSelect";
 import { useParams } from "react-router-dom";
-import { Advert } from "../../types/response/AdvertResponse";
 
 const ChangeAdvert = () => {
-    let data: Advert | undefined;
-    let refetch: any;
-
     const { id } = useParams();
+    const AdvertId = id || "";
 
-    if (id) {
-        ({ data, refetch } = useGetAdvertForIdQuery({ id }));
-    }
+    const { data, refetch } = useGetAdvertForIdQuery({ id: AdvertId });
 
     const [title, setTitle] = useState<string>("");
     const [category, setCategory] = useState<CategoriesList | null>(null);

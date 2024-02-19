@@ -17,7 +17,7 @@ const ProfilePage = () => {
 
     const user = useAppSelector(selectUserInfo);
 
-    const { data } = useGetMyAdvertsQuery({ limit: 1, page: activePage, userId: user.id });
+    const { data } = useGetMyAdvertsQuery({ limit: 6, page: activePage, userId: user.id });
 
     useEffect(() => {
         setAdvertList(data || null);

@@ -53,6 +53,21 @@ export const advertApi = apiRTK.injectEndpoints({
                     : [{ type: "MyAdverts", id: "LIST" }],
         }),
 
+        getAdverts: build.query<AdvertResponse, { limit: number; page: number }>({
+            query: (params) => ({
+                url: `/adverts/?page=${params.page}&limit=${params.limit}`,
+                method: "GET",
+            }),
+            providesTags: (result) => {
+                return result?.adverts
+                    ? [
+                          ...result.adverts.map(({ id }) => ({ type: "Adverts" as const, id })),
+                          { type: "Adverts", id: "LIST" },
+                      ]
+                    : [{ type: "Adverts", id: "LIST" }];
+            },
+        }),
+
         getAdvertForId: build.query<Advert, { id: string }>({
             query: (params) => ({
                 url: `/adverts/${params.id}`,
@@ -69,4 +84,5 @@ export const {
     useGetMyAdvertsQuery,
     useDeleteAdvertMutation,
     useGetAdvertForIdQuery,
+    useGetAdvertsQuery,
 } = advertApi;
