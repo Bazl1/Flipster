@@ -5,6 +5,7 @@ using Flipster.Modules.Adverts.Dto;
 using Flipster.Modules.Adverts.Entities;
 using Flipster.Modules.Adverts.Enums;
 using Flipster.Modules.Adverts.Services;
+using Flipster.Modules.Identity.Domain.User.Entities.Contracts.Abstractions;
 using Flipster.Modules.Images.Contracts;
 using Flipster.Modules.Images.Dtos;
 using Microsoft.AspNetCore.Builder;
@@ -32,12 +33,17 @@ public static class AdvertsEndpoints
     private static async Task<IResult> GetById(
         HttpContext context,
         AdvertsDbContext db,
+        IUserModule userModule,
         IMapper mapper,
         [FromRoute] string id)
     {
-        if (await db.Adverts.SingleOrDefaultAsync(a => a.Id == id) is not Advert advert)
+        if (await db.Adverts.Include(advert => advert.Category).SingleOrDefaultAsync(a => a.Id == id) is not Advert advert)
             return Results.BadRequest(new ErrorDto("Advert with given id is not found."));
-        return Results.Ok(mapper.Map<AdvertDto>(advert));
+        var result = mapper.Map<AdvertDto>(advert);
+        var seller = userModule.GetById(advert.SellerId);
+        result.Contact.Name = seller.Name;
+        result.Contact.Avatar = seller.Avatar;
+        return Results.Ok();
     }
 
     private static async Task<IResult> Update(
@@ -62,7 +68,14 @@ public static class AdvertsEndpoints
         advert.PhoneNumber = request.PhoneNumber;
         try
         {
-            await imageService.RemoveImagesAsync(advert.Images.Where(url => !request.ImageUrls.Contains(url)).ToList());
+            foreach (var image in advert.Images)
+            {
+                if (!request.ImageUrls.Contains(image))
+                {
+                    await imageService.RemoveImageAsync(image);
+                    advert.Images.Remove(image);
+                }
+            }
             advert.Images.AddRange(await imageService.LoadImagesAsync(request.Images));
         }
         catch
@@ -114,6 +127,7 @@ public static class AdvertsEndpoints
         HttpContext context,
         AdvertsDbContext db,
         IMapper mapper,
+        IUserModule userModule,
         [FromQuery] int page = 1,
         [FromQuery(Name = "limit")] int pageSize = 9,
         [FromQuery] string? user = null)
@@ -125,9 +139,17 @@ public static class AdvertsEndpoints
         var pageCount = (int)Math.Ceiling((double)adverts.Count / (double)pageSize);
         return Results.Ok(new
         {
-            Adverts = mapper.Map<List<AdvertDto>>(adverts
+            Adverts = adverts
                 .Skip((page - 1) * pageSize)
-                .Take(pageSize)),
+                .Take(pageSize)
+                .Select(advert =>
+            {
+                var result = mapper.Map<AdvertDto>(advert);
+                var seller = userModule.GetById(advert.SellerId);
+                result.Contact.Name = seller.Name;
+                result.Contact.Avatar = seller.Avatar;
+                return result;
+            }),
             PageCount = pageCount,
         });
     }

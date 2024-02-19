@@ -15,6 +15,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Flipster.Modules.Images\Flipster.Modules.Images.csproj" />
+      <ProjectReference Include="..\..\Flipster.Modules.Identity\Flipster.Modules.Identity.csproj" />
     </ItemGroup>
 
 </Project>
