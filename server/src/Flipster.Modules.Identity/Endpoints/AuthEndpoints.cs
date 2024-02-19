@@ -121,9 +121,15 @@ public static class AuthEndpoints
     {
         var tokenValue = CookieUtils.GetToken(context);
         if (tokenRepository.FindByValue(tokenValue) is not Token token)
+        {
+            context.Response.Cookies.Delete(context.Request.Cookies.SingleOrDefault(cookie => cookie.Key.Contains(".AspNetCore.Antiforgery.")).Key);
             return Results.Unauthorized();
+        }
         if (token.Expired())
+        {
+            context.Response.Cookies.Delete(context.Request.Cookies.SingleOrDefault(cookie => cookie.Key.Contains(".AspNetCore.Antiforgery.")).Key);
             return TypedResults.Unauthorized();
+        }
         var user = userRepository.FindById(token.UserId);
         var claims = new Claim[]
         {
