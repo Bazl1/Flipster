@@ -145,10 +145,10 @@ const ChangeAdvert = () => {
             setPrice(data.price);
             setType(data.businessType);
             setStatus(data.productType);
-            // setLocation({
-            //     value: "0",
-            //     label: data.contact.location || "",
-            // });
+            setLocation({
+                value: "",
+                label: data.contact.location || "",
+            });
             setEmail(data.contact.email);
             setPhone(data.contact.phoneNumber);
         }

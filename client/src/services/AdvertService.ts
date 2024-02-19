@@ -21,7 +21,7 @@ export const advertApi = apiRTK.injectEndpoints({
                 url: `/adverts/${params.id}`,
                 method: "DELETE",
             }),
-            invalidatesTags: (_result, _error, params) => [{ type: "MyAdverts", id: params.id }],
+            invalidatesTags: () => [{ type: "MyAdverts", id: "LIST" }],
         }),
 
         updateAdvert: build.mutation<IAdvert, { id: string; body: FormData }>({
