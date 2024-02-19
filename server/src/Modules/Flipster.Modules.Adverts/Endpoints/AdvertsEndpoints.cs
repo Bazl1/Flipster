@@ -37,7 +37,7 @@ public static class AdvertsEndpoints
         IMapper mapper,
         [FromRoute] string id)
     {
-        if (await db.Adverts.Include(advert => advert.Category).SingleOrDefaultAsync(a => a.Id == id) is not Advert advert)
+        if (await db.Adverts.SingleOrDefaultAsync(a => a.Id == id) is not Advert advert)
             return Results.BadRequest(new ErrorDto("Advert with given id is not found."));
         var result = mapper.Map<AdvertDto>(advert);
         var seller = userModule.GetById(advert.SellerId);
@@ -130,10 +130,19 @@ public static class AdvertsEndpoints
         IUserModule userModule,
         [FromQuery] int page = 1,
         [FromQuery(Name = "limit")] int pageSize = 9,
+        [FromQuery] string? query = null,
+        [FromQuery] int? category = null,
+        [FromQuery] int? min = null,
+        [FromQuery] int? max = null,
         [FromQuery] string? user = null)
     {
+        var keyWords = query != null ? query.Trim().Split('.') : null;
         var adverts = db.Adverts
-            .Where(a => user == null || a.SellerId == user)
+            .Where(a =>
+                (user == null || a.SellerId == user) &&
+                (keyWords == null || keyWords.Any(keyWord => a.Title.Contains(keyWord) || a.Description.Contains(keyWord))) &&
+                (category == null || a.CategoryId == category) &&
+                ((min == null && max == null) || (min <= a.Price && a.Price <= max)))
             .Include(a => a.Category)
             .ToList();
         var pageCount = (int)Math.Ceiling((double)adverts.Count / (double)pageSize);
