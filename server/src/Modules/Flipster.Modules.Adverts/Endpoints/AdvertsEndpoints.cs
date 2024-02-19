@@ -37,7 +37,7 @@ public static class AdvertsEndpoints
         IMapper mapper,
         [FromRoute] string id)
     {
-        if (await db.Adverts.Include(advert => advert.Category).SingleOrDefaultAsync(a => a.Id == id) is not Advert advert)
+        if (await db.Adverts.SingleOrDefaultAsync(a => a.Id == id) is not Advert advert)
             return Results.BadRequest(new ErrorDto("Advert with given id is not found."));
         var result = mapper.Map<AdvertDto>(advert);
         var seller = userModule.GetById(advert.SellerId);
