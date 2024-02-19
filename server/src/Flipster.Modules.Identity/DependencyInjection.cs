@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 using Flipster.Modules.Identity.Domain.Infrastructure;
+using Flipster.Modules.Identity.Domain.User.Entities.Contracts;
+using Flipster.Modules.Identity.Domain.User.Entities.Contracts.Abstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,9 +13,10 @@ public static class DependencyInjection
     {
         services
             .AddInfrastructure(configuration)
-            
+
+            .AddTransient<IUserModule, UserModule>()
             .AddAutoMapper(Assembly.GetExecutingAssembly());
-        
+
         return services;
     }
 }
