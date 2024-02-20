@@ -3,7 +3,7 @@ import s from "./ProfilePage.module.scss";
 import { AnimatePresence, motion } from "framer-motion";
 import Loader from "../../component/Loader/Loader";
 import VerticalList from "../../component/VerticalList/VerticalList";
-import { useGetMyAdvertsQuery } from "../../services/AdvertService";
+import { useGetUserAdvertsQuery } from "../../services/AdvertService";
 import { useAppSelector } from "../../shared/hooks/storeHooks";
 import { selectUserInfo } from "../../store/selectors";
 import { AdvertResponse } from "../../types/response/AdvertResponse";
@@ -17,7 +17,7 @@ const ProfilePage = () => {
 
     const user = useAppSelector(selectUserInfo);
 
-    const { data } = useGetMyAdvertsQuery({ limit: 6, page: activePage, userId: user.id });
+    const { data } = useGetUserAdvertsQuery({ limit: 6, page: activePage, userId: user.id });
 
     useEffect(() => {
         setAdvertList(data || null);

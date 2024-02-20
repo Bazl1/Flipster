@@ -1,11 +1,9 @@
 import s from "./VerticalList.module.scss";
-import { IoMdHeart } from "react-icons/io";
-import { FaPenToSquare } from "react-icons/fa6";
-import { IoTrashBinSharp } from "react-icons/io5";
 import { Advert, AdvertResponse } from "../../types/response/AdvertResponse";
 import { useDeleteAdvertMutation } from "../../services/AdvertService";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import VerticalListItem from "../VerticalListItem/VerticalListItem";
+import { useEffect, useState } from "react";
 
 interface VerticalListProps {
     title: string;
@@ -15,8 +13,13 @@ interface VerticalListProps {
     changes?: boolean;
 }
 
+interface ILike {
+    id: string;
+}
+
 const VerticalList: React.FC<VerticalListProps> = ({ title, list, setActivePage, activePage, changes = false }) => {
     const [deleteAdvert, { isError }] = useDeleteAdvertMutation();
+    const [likes, setLikes] = useState<ILike[]>([]);
 
     const handleRemoveAdvert = async (e: any, id: string) => {
         e.preventDefault();
@@ -32,50 +35,28 @@ const VerticalList: React.FC<VerticalListProps> = ({ title, list, setActivePage,
         }
     };
 
+    useEffect(() => {
+        const localLikes = JSON.parse(localStorage.getItem("favorite") || "[]");
+        setLikes(localLikes);
+    }, []);
+
     return (
         <div className={s.list}>
             <h2 className={s.list__title}>{title}</h2>
             <div className={s.list__items}>
                 {list &&
                     list.adverts &&
-                    list.adverts.map((item: Advert) => {
+                    list.adverts.map((advert: Advert) => {
+                        let InitialLike = likes.some((item: ILike) => item.id === advert.id);
+
                         return (
-                            <Link to={`/advert/${item.id}`} key={item.id} className={s.list__item}>
-                                <div className={s.list__item_row}>
-                                    <div className={s.list__item_columns}>
-                                        <img className={s.list__item_img} src={item.images[0]} alt="img" />
-                                    </div>
-                                    <div className={s.list__item_columns}>
-                                        <div className={s.list__item_box}>
-                                            <h3 className={s.list__item_title}>{item.title}</h3>
-                                            <p className={s.list__item_location}>Location: {item.contact.location}</p>
-                                        </div>
-                                        <div className={s.list__item_box}>
-                                            {changes ? (
-                                                <div className={s.list__item_btns}>
-                                                    <Link to={`/change-advert/${item.id}`} className={s.list__item_btn}>
-                                                        <FaPenToSquare />
-                                                    </Link>
-                                                    <button
-                                                        onClick={(e) => handleRemoveAdvert(e, item.id)}
-                                                        className={s.list__item_btn}
-                                                    >
-                                                        <IoTrashBinSharp />
-                                                    </button>
-                                                </div>
-                                            ) : (
-                                                <button className={s.list__item_btn}>
-                                                    <IoMdHeart />
-                                                </button>
-                                            )}
-                                            <p className={s.list__item_price}>
-                                                Price: <span>${item.price}</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                {item.isFree && <div className={s.list__item_free}>Free</div>}
-                            </Link>
+                            <VerticalListItem
+                                key={advert.id}
+                                item={advert}
+                                changes={changes}
+                                InitialLike={InitialLike}
+                                handleRemoveAdvert={handleRemoveAdvert}
+                            />
                         );
                     })}
             </div>

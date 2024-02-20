@@ -23,7 +23,7 @@ const Input: React.FC<InputProps> = ({
     errors,
     validationOptions,
     dataСy = null,
-    placeholder = null,
+    placeholder = "",
 }) => {
     return (
         <label className={s.input__columns}>
@@ -37,7 +37,7 @@ const Input: React.FC<InputProps> = ({
                 className={s.input}
                 type={type}
                 data-cy={dataСy}
-                placeholder={placeholder !== null && placeholder}
+                placeholder={placeholder.toString()}
             />
             {errors[registerName] && <p className={s.input__error}>{errors[registerName]?.message}</p>}
         </label>

@@ -85,28 +85,36 @@ const SingleAdvert = () => {
                         </div>
                     </div>
                     <div className={s.advert__columns}>
-                        <div className={s.advert__user}>
-                            <img className={s.advert__user_img} src={user} alt="user" />
-                            <h3 className={s.advert__name}>{data?.contact.id}</h3>
-                        </div>
+                        <Link className={s.advert__user_link} to={`/profile/${data?.contact.id}`}>
+                            <div className={s.advert__user}>
+                                {data?.contact.avatar ? (
+                                    <img className={s.advert__user_img} src={data?.contact.avatar} alt="user" />
+                                ) : (
+                                    <img className={s.advert__user_img} src={user} alt="user" />
+                                )}
+                                <h3 className={s.advert__name}>{data?.contact.name}</h3>
+                            </div>
+                        </Link>
                         <div className={s.advert__btns}>
                             <button className={s.advert__user_btn}>Send Message</button>
-                            {!active ? (
-                                <button onClick={() => setActive(true)} className={s.advert__user_btn}>
-                                    Show Phone Number
-                                </button>
-                            ) : (
-                                <Link
-                                    className={s.advert__number}
-                                    to={`tel:${data?.contact.phoneNumber && data?.contact.phoneNumber.trim()}`}
-                                >
-                                    {data?.contact.phoneNumber}
-                                </Link>
-                            )}
+                            {data?.contact.phoneNumber ? (
+                                !active ? (
+                                    <button onClick={() => setActive(true)} className={s.advert__user_btn}>
+                                        Show Phone Number
+                                    </button>
+                                ) : (
+                                    <Link
+                                        className={s.advert__number}
+                                        to={`tel:${data?.contact.phoneNumber && data?.contact.phoneNumber.trim()}`}
+                                    >
+                                        {data?.contact.phoneNumber}
+                                    </Link>
+                                )
+                            ) : null}
                         </div>
                     </div>
                 </div>
-                <HorizontalList />
+                {/* <HorizontalList title="Similar advertisements" /> */}
             </div>
         </section>
     );

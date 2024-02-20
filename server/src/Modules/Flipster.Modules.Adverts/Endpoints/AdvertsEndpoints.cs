@@ -66,9 +66,24 @@ public static class AdvertsEndpoints
         advert.Location = request.Location;
         advert.Email = request.Email;
         advert.PhoneNumber = request.PhoneNumber;
-        try
-        {
-            foreach (var image in advert.Images)
+        // try
+        // {
+        //     foreach (var image in advert.Images)
+        //     {
+        //         if (!request.ImageUrls.Contains(image))
+        //         {
+        //             await imageService.RemoveImageAsync(image);
+        //             advert.Images.Remove(image);
+        //         }
+        //     }
+        //     advert.Images.AddRange(await imageService.LoadImagesAsync(request.Images));
+        // }
+        // catch
+        // {
+        //     return Results.BadRequest(new ErrorDto("An unexpected error occurred while loading the image."));
+        // }
+
+        foreach (var image in advert.Images)
             {
                 if (!request.ImageUrls.Contains(image))
                 {
@@ -77,11 +92,6 @@ public static class AdvertsEndpoints
                 }
             }
             advert.Images.AddRange(await imageService.LoadImagesAsync(request.Images));
-        }
-        catch
-        {
-            return Results.BadRequest(new ErrorDto("An unexpected error occurred while loading the image."));
-        }
 
         await db.SaveChangesAsync();
         return Results.Ok(mapper.Map<AdvertDto>(advert));

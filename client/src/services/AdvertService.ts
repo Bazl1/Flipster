@@ -39,7 +39,7 @@ export const advertApi = apiRTK.injectEndpoints({
             ],
         }),
 
-        getMyAdverts: build.query<AdvertResponse, { limit: number; page: number; userId: string }>({
+        getUserAdverts: build.query<AdvertResponse, { limit: number; page: number; userId: string }>({
             query: (params) => ({
                 url: `/adverts/?page=${params.page}&limit=${params.limit}&user=${params.userId}`,
                 method: "GET",
@@ -81,7 +81,7 @@ export const advertApi = apiRTK.injectEndpoints({
 export const {
     useAddAvdertMutation,
     useUpdateAdvertMutation,
-    useGetMyAdvertsQuery,
+    useGetUserAdvertsQuery,
     useDeleteAdvertMutation,
     useGetAdvertForIdQuery,
     useGetAdvertsQuery,

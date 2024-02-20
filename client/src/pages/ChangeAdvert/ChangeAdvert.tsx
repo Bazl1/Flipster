@@ -66,7 +66,8 @@ const ChangeAdvert = () => {
                                 toast.error("The maximum number of images is 10");
                                 resolve(null);
                             } else {
-                                setImages((prevImages) => [...prevImages, e.target?.result as string]);
+                                const imageUrl = URL.createObjectURL(file);
+                                setImages((prevImages) => [...prevImages, imageUrl]);
                                 setFetchImages((prevImages) => [...prevImages, file]);
                                 resolve(null);
                             }
@@ -103,10 +104,13 @@ const ChangeAdvert = () => {
         data.append("CategoryId", categoryId.toString());
         data.append("Email", email);
         data.append("PhoneNumber", phone || "");
+        console.log(images);
         images.forEach((image) => {
+            console.log(image);
             data.append("ImageUrls", image);
         });
         fetchImages.forEach((image) => {
+            console.log(image);
             data.append("Images", image);
         });
 
@@ -121,7 +125,6 @@ const ChangeAdvert = () => {
     };
 
     useEffect(() => {
-        console.log(id);
         if (id) {
             refetch();
         }
@@ -130,10 +133,10 @@ const ChangeAdvert = () => {
     useEffect(() => {
         if (data) {
             setTitle(data.title);
-            // setCategory({
-            //     value: data.category.id,
-            //     label: data.category.title,
-            // });
+            setCategory({
+                value: data.category.id,
+                label: data.category.title,
+            });
             setDescription(data.description);
             setImages(data.images);
             setFree(data.isFree);
@@ -190,7 +193,7 @@ const ChangeAdvert = () => {
                                     type="file"
                                     onChange={handleAddImages}
                                     accept="image/png, image/jpeg"
-                                    required
+                                    // required
                                     multiple
                                 />
                             </label>

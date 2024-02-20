@@ -15,6 +15,8 @@ export interface Advert {
     price: string;
     contact: {
         id: string;
+        name?: string;
+        avatar?: string;
         location?: string;
         email: string;
         phoneNumber?: string;
