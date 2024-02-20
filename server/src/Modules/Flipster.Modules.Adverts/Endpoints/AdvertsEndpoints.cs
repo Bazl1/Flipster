@@ -37,13 +37,13 @@ public static class AdvertsEndpoints
         IMapper mapper,
         [FromRoute] string id)
     {
-        if (await db.Adverts.SingleOrDefaultAsync(a => a.Id == id) is not Advert advert)
+        if (await db.Adverts.Include(a => a.Category).SingleOrDefaultAsync(a => a.Id == id) is not Advert advert)
             return Results.BadRequest(new ErrorDto("Advert with given id is not found."));
         var result = mapper.Map<AdvertDto>(advert);
         var seller = userModule.GetById(advert.SellerId);
         result.Contact.Name = seller.Name;
         result.Contact.Avatar = seller.Avatar;
-        return Results.Ok();
+        return Results.Ok(result);
     }
 
     private static async Task<IResult> Update(

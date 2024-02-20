@@ -37,7 +37,7 @@ public static class AuthEndpoints
         IMapper mapper,
         LoginRequestDto request)
     {
-        if (userRepository.FindByEmail(request.Email) is not Domain.User.Entities.User user)
+        if (userRepository.FindByEmail(request.Email.ToLower()) is not Domain.User.Entities.User user)
             return TypedResults.BadRequest(new ErrorDto($"User with given email '{request.Email}' is not found."));
         if (!passwordHasher.VerifyHashedPassword(user.PasswordHash, request.Password))
             return TypedResults.BadRequest(new ErrorDto($"Password mismatch."));
@@ -73,9 +73,9 @@ public static class AuthEndpoints
         var user = new Domain.User.Entities.User
         {
             Name = request.Name,
-            Email = request.Email,
+            Email = request.Email.ToLower(),
         };
-        if (userRepository.FindByEmail(request.Email) is not null)
+        if (userRepository.FindByEmail(request.Email.ToLower()) is not null)
             return TypedResults.BadRequest(new ErrorDto($"User with this email '{request.Email}' already exists."));
         user.PasswordHash = passwordHasher.Hash(request.Password);
         userRepository.Create(user);
