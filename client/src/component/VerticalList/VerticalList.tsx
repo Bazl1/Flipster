@@ -18,7 +18,8 @@ interface VerticalListProps {
 const VerticalList: React.FC<VerticalListProps> = ({ title, list, setActivePage, activePage, changes = false }) => {
     const [deleteAdvert, { isError }] = useDeleteAdvertMutation();
 
-    const handleRemoveAdvert = async (id: string) => {
+    const handleRemoveAdvert = async (e: any, id: string) => {
+        e.preventDefault();
         if (list?.adverts.length === 1 && activePage > 1) {
             setActivePage(activePage - 1);
         }
@@ -39,7 +40,7 @@ const VerticalList: React.FC<VerticalListProps> = ({ title, list, setActivePage,
                     list.adverts &&
                     list.adverts.map((item: Advert) => {
                         return (
-                            <div key={item.id} className={s.list__item}>
+                            <Link to={`/advert/${item.id}`} key={item.id} className={s.list__item}>
                                 <div className={s.list__item_row}>
                                     <div className={s.list__item_columns}>
                                         <img className={s.list__item_img} src={item.images[0]} alt="img" />
@@ -56,7 +57,7 @@ const VerticalList: React.FC<VerticalListProps> = ({ title, list, setActivePage,
                                                         <FaPenToSquare />
                                                     </Link>
                                                     <button
-                                                        onClick={() => handleRemoveAdvert(item.id)}
+                                                        onClick={(e) => handleRemoveAdvert(e, item.id)}
                                                         className={s.list__item_btn}
                                                     >
                                                         <IoTrashBinSharp />
@@ -74,7 +75,7 @@ const VerticalList: React.FC<VerticalListProps> = ({ title, list, setActivePage,
                                     </div>
                                 </div>
                                 {item.isFree && <div className={s.list__item_free}>Free</div>}
-                            </div>
+                            </Link>
                         );
                     })}
             </div>
