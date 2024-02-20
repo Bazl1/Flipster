@@ -5,7 +5,6 @@ using Flipster.Modules.Identity.Domain.User.Services;
 using Flipster.Modules.Identity.Dtos;
 using Flipster.Modules.Identity.Dtos.ChangePassword;
 using Flipster.Modules.Images.Contracts;
-using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +20,31 @@ public static class UsersEndpoints
         builder.MapPut("/change-phone", ChangePhoneNumber).RequireAuthorization();
         builder.MapPut("/change-avatar", ChangeAvatar).RequireAuthorization();
         builder.MapPut("/change-details", ChangeDetails).RequireAuthorization();
+
+        builder.MapGet("/", GetMy).RequireAuthorization();
+        builder.MapGet("/{id}", GetById);
         return builder;
+    }
+
+    private static async Task<IResult> GetMy(
+        HttpContext context,
+        [FromServices] IUserRepository userRepository,
+        [FromServices] IMapper mapper)
+    {
+        var user = userRepository.FindById(context.User.FindFirstValue(ClaimTypes.NameIdentifier));
+        return Results.Ok(mapper.Map<UserDto>(user));
+    }
+
+    private static async Task<IResult> GetById(
+        HttpContext context,
+        IUserRepository userRepository,
+        IMapper mapper,
+        [FromRoute] string id)
+    {
+        var user = userRepository.FindById(id);
+        if (user == null)
+            return Results.BadRequest(new ErrorDto("User with given id is not found."));
+        return Results.Ok(mapper.Map<UserDto>(user));
     }
 
     private static async Task<IResult> ChangePassword(
