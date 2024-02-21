@@ -28,7 +28,8 @@ const SingleAdvert = () => {
     }
 
     if (isError) {
-        return navigate("/");
+        navigate("/");
+        return <></>;
     }
 
     return (

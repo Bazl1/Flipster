@@ -14,6 +14,8 @@ const PublicProfile = lazy(() => import("./pages/PublicProfile/PublicProfile"));
 const CreateAdvert = lazy(() => import("./pages/CreateAdvert/CreateAdvert"));
 const ChangeAdvert = lazy(() => import("./pages/ChangeAdvert/ChangeAdvert"));
 const SingleAdvert = lazy(() => import("./pages/SingleAdvert/SingleAdvert"));
+const SearchPage = lazy(() => import("./pages/SearchPage/SearchPage"));
+const FavoritePage = lazy(() => import("./pages/FavoritePage/FavoritePage"));
 
 function App() {
     const dispatch = useAppDispatch();
@@ -54,6 +56,22 @@ function App() {
                         }
                     />
                     {/* public */}
+                    <Route
+                        path="/search/:search"
+                        element={
+                            <LayoutMain>
+                                <SearchPage />
+                            </LayoutMain>
+                        }
+                    />
+                    <Route
+                        path="/favorite"
+                        element={
+                            <LayoutMain>
+                                <FavoritePage />
+                            </LayoutMain>
+                        }
+                    />
                     <Route
                         path="/advert/:id"
                         element={
