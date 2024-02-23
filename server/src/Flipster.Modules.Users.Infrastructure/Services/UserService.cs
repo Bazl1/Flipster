@@ -32,7 +32,7 @@ internal class UserService(
             user.Avatar = avatar;
         if (phoneNumber != null)
             user.PhoneNumber = phoneNumber;
-        if (locationValue != null)
+        if (locationValue != null && locationValue != string.Empty)
         {
             if (_locationRepository.GetByValue(locationValue) is not Location location)
                 throw new FlipsterError("Invalid location.");
