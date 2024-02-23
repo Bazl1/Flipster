@@ -27,6 +27,7 @@ public static class UsersEndpoints
             .RequireAuthorization();
         builder.MapDelete("/my", (Delegate)RemoveAccount)
             .RequireAuthorization();
+        
         builder.MapGet("/{id}", (Delegate)GetById);
         builder.MapGet("/", (Delegate)GetAll);
         return builder;
