@@ -5,6 +5,7 @@ obj
 # IDEs
 .vscode
 .idea
+.vs
 
 # Other files or folders
 notes
