@@ -205,9 +205,8 @@ internal static class AdvertsEndpoints
             items = advertRepository.GetByUserId(userId).ToList();
         else
             items = advertRepository.Search(query: query, min: min, max: max, isFree: free, categoryId: categoryId, location: location).ToList();
-        result.ItemCount = items.Count;
         result.PageCount = (int)Math.Ceiling((double)items.Count / (double)limit);
-        result.Items = items
+        result.Adverts = items
             .Skip(page * limit)
             .Take(limit)
             .Select(advert => 

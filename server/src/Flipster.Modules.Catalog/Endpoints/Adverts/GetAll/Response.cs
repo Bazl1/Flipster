@@ -6,7 +6,6 @@ namespace Flipster.Modules.Catalog.Endpoints.Adverts.GetAll;
 
 internal class Response
 {
-    public IEnumerable<AdvertDto> Items {get;set;}
+    public IEnumerable<AdvertDto> Adverts {get;set;}
     public int PageCount { get; set; }
-    public int ItemCount { get; set; }
 };
