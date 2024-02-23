@@ -4,7 +4,7 @@ export interface Advert {
     description: string;
     images: string[];
     category: {
-        id: number;
+        id: string;
         title: string;
         icon?: string;
     };
