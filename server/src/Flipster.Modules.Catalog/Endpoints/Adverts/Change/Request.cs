@@ -7,13 +7,13 @@ internal record Request(
     string Description,
     string CategoryId,
     bool IsFree,
-    decimal Price,
     string ProductType,
     string BusinessType,
     string Location,
     string Email,
     string PhoneNumber)
 {
+    public decimal Price { get; set; } = 0.00m;
     public IEnumerable<string>? ImageUrls { get; set; } = null;
     public IFormFileCollection? Images { get; set; } = null;
 }
