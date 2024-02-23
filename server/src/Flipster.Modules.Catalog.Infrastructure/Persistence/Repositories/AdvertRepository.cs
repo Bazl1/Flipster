@@ -38,9 +38,15 @@ public class AdvertRepository(
         _db.SaveChanges();
     }
 
-    public IEnumerable<Advert> Search(string? query = null, int? min = null, int? max = null, string? categoryId = null, string? location = null)
+    public IEnumerable<Advert> Search(string? query = null, int? min = null, int? max = null, bool isFree = false, string? categoryId = null, string? location = null)
     {
-        throw new NotImplementedException();
+        return _db.Adverts
+            .Include(advert => advert.Category)
+            .Where(advert =>
+                (query == null || query.Trim().Split().Any(keyWord => advert.Title.Contains(keyWord) || advert.Description.Contains(keyWord))) &&
+                (isFree ? advert.IsFree : (min == null || max == null) || (min <= advert.Price && advert.Price <= max)) &&
+                (categoryId == null || advert.CategoryId == categoryId) &&
+                (location == null || advert.Location == location));
     }
 
     public void Update(Advert entity)
