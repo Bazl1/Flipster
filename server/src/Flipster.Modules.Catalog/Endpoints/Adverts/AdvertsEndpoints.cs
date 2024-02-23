@@ -95,7 +95,7 @@ internal static class AdvertsEndpoints
             throw new FlipsterError("Category with given id is not found.");
         advert.CategoryId = category.Id;
         {
-            if (request.Urls == null)
+            if (request.ImageUrls == null)
             {
                 try
                 {
@@ -110,7 +110,7 @@ internal static class AdvertsEndpoints
             var removeUrls = new List<string>();
             foreach (var url in advert.Images)
             {
-                if (!request.Urls.Contains(url))
+                if (!request.ImageUrls.Contains(url))
                 {
                     try
                     {
@@ -207,7 +207,7 @@ internal static class AdvertsEndpoints
             items = advertRepository.Search(query: query, min: min, max: max, isFree: free, categoryId: categoryId, location: location).ToList();
         result.PageCount = (int)Math.Ceiling((double)items.Count / (double)limit);
         result.Adverts = items
-            .Skip(page * limit)
+            .Skip((page - 1) * limit)
             .Take(limit)
             .Select(advert => 
             {

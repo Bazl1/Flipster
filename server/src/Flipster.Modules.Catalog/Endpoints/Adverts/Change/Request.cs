@@ -14,6 +14,6 @@ internal record Request(
     string Email,
     string PhoneNumber)
 {
-    public IEnumerable<string>? Urls { get; set; } = null;
+    public IEnumerable<string>? ImageUrls { get; set; } = null;
     public IFormFileCollection? Images { get; set; } = null;
 }
