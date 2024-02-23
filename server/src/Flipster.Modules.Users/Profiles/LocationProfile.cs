@@ -8,6 +8,7 @@ public class LocationProfile : Profile
 {
     public LocationProfile()
     {
-        CreateMap<Location, LocationDto>();
+        CreateMap<Location, LocationDto>()
+            .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Value));
     }
 }
