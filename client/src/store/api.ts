@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery, retry, BaseQueryFn, FetchArgs } from "@redux
 import AuthService from "../services/AuthService";
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: "http://localhost:5247/api",
+    baseUrl: "http://localhost:5145/api",
     prepareHeaders: (headers) => {
         const token = localStorage.getItem("token");
         if (token) {

@@ -61,7 +61,7 @@ const ChangeAdvert = () => {
                 } else {
                     await new Promise((resolve, reject) => {
                         const reader = new FileReader();
-                        reader.onload = function (e) {
+                        reader.onload = function () {
                             if (images.length >= 10) {
                                 toast.error("The maximum number of images is 10");
                                 resolve(null);
@@ -134,7 +134,7 @@ const ChangeAdvert = () => {
         if (data) {
             setTitle(data.title);
             setCategory({
-                value: data.category.id,
+                value: "",
                 label: data.category.title,
             });
             setDescription(data.description);

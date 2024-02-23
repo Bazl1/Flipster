@@ -41,7 +41,7 @@ export const advertApi = apiRTK.injectEndpoints({
 
         getUserAdverts: build.query<AdvertResponse, { limit: number; page: number; userId: string }>({
             query: (params) => ({
-                url: `/catalog/?page=${params.page}&limit=${params.limit}&user=${params.userId}`,
+                url: `/catalog/?page=${params.page}&limit=${params.limit}&userId=${params.userId}`,
                 method: "GET",
             }),
             providesTags: (result) =>
