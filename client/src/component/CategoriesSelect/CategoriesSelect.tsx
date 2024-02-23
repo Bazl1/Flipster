@@ -12,6 +12,7 @@ export interface CategoriesList {
 interface CategoriesSelectProps {
     setValue: (value: CategoriesList | null) => void;
     value: CategoriesList | null;
+    setRequired?: boolean;
 }
 
 const getCategoriesList = async () => {
@@ -25,7 +26,7 @@ const getCategoriesList = async () => {
     return options;
 };
 
-const CategoriesSelect: React.FC<CategoriesSelectProps> = ({ value, setValue }) => {
+const CategoriesSelect: React.FC<CategoriesSelectProps> = ({ value, setValue, setRequired }) => {
     const [categoriesList, setCategoriesList] = useState<CategoriesList[]>([]);
     const [isClearable, setIsClearable] = useState(true);
 
@@ -41,6 +42,7 @@ const CategoriesSelect: React.FC<CategoriesSelectProps> = ({ value, setValue }) 
             value={value}
             placeholder={"Select a category"}
             isClearable={isClearable}
+            required={setRequired ? true : false}
         />
     );
 };

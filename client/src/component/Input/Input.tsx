@@ -10,6 +10,7 @@ interface InputProps {
     errors: any;
     validationOptions?: any;
     dataСy?: string;
+    placeholder?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -22,10 +23,11 @@ const Input: React.FC<InputProps> = ({
     errors,
     validationOptions,
     dataСy = null,
+    placeholder = "",
 }) => {
     return (
         <label className={s.input__columns}>
-            <span className={s.input__text}>{text}</span>
+            {text && <span className={s.input__text}>{text}</span>}
             <input
                 {...register(registerName, validationOptions)}
                 value={value}
@@ -35,12 +37,9 @@ const Input: React.FC<InputProps> = ({
                 className={s.input}
                 type={type}
                 data-cy={dataСy}
+                placeholder={placeholder.toString()}
             />
-            {errors[registerName] && (
-                <p className={s.input__error}>
-                    {errors[registerName]?.message}
-                </p>
-            )}
+            {errors[registerName] && <p className={s.input__error}>{errors[registerName]?.message}</p>}
         </label>
     );
 };

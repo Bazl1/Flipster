@@ -3,7 +3,9 @@
     &__control {
         border-color: $black-priority-hover !important;
     }
-
+    &__menu {
+        z-index: 10 !important;
+    }
     &__value-container {
         padding: 10px 14px !important;
     }

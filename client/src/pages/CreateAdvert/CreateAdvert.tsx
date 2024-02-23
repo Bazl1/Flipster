@@ -3,7 +3,7 @@ import s from "./CreateAdvert.module.scss";
 import Input from "../../component/Input/Input";
 import { MdFileUpload } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -35,7 +35,6 @@ const CreateAdvert = () => {
     const {
         register,
         handleSubmit,
-        control,
         formState: { errors },
     } = useForm({
         mode: "onBlur",
@@ -142,17 +141,7 @@ const CreateAdvert = () => {
                             <div className={s.create__form_columns}>
                                 <label className={s.create__select_columns}>
                                     <span>Select a category</span>
-                                    <Controller
-                                        name="category"
-                                        control={control}
-                                        rules={{ required: "Required field" }}
-                                        render={({ field }) => (
-                                            <CategoriesSelect {...field} value={category} setValue={setCategory} />
-                                        )}
-                                    />
-                                    {errors.category && typeof errors.category.message === "string" && (
-                                        <p className={s.create__error}>{errors.category.message}</p>
-                                    )}
+                                    <CategoriesSelect value={category} setValue={setCategory} setRequired={true} />
                                 </label>
                             </div>
                             <div className={s.create__line}></div>
@@ -313,17 +302,7 @@ const CreateAdvert = () => {
                             <div className={s.create__form_columns}>
                                 <label className={s.create__select_columns}>
                                     <span>Choose your location</span>
-                                    <Controller
-                                        name="location"
-                                        control={control}
-                                        rules={{ required: "Required field" }}
-                                        render={({ field }) => (
-                                            <LocationSelect {...field} value={location} setValue={setLocation} />
-                                        )}
-                                    />
-                                    {errors.location && typeof errors.location.message === "string" && (
-                                        <p className={s.create__error}>{errors.location.message}</p>
-                                    )}
+                                    <LocationSelect value={location} setValue={setLocation} setRequired={true} />
                                 </label>
                             </div>
                             <div className={s.create__line}></div>
@@ -355,13 +334,13 @@ const CreateAdvert = () => {
                                     validationOptions={{
                                         required: "Required field",
                                         pattern: {
-                                            value: /\+380\s*\d{2}\s*\d{3}\s*\d{4}/,
+                                            value: /\+380\s\d{2}\s\d{3}\s\d{4}/,
                                             message:
                                                 "Please enter a valid phone number in the format +380 00 000 0000.",
                                         },
                                         maxLength: {
-                                            value: 13,
-                                            message: "The maximum length of the phone number is 13 characters",
+                                            value: 16,
+                                            message: "The maximum length of the phone number is 12 characters",
                                         },
                                     }}
                                 />

@@ -65,6 +65,7 @@ const ChangeAvatarForm = () => {
                                 type="file"
                                 onChange={handleUploadImg}
                                 accept="image/png, image/jpeg"
+                                data-cy="select-avatar"
                             />
                         </label>
                     </div>
@@ -74,12 +75,7 @@ const ChangeAvatarForm = () => {
                                 <FaUserTie />
                             </div>
                         ) : (
-                            <img
-                                ref={refImg}
-                                className={s.form__avatar}
-                                src={imgUrl}
-                                alt="avatar"
-                            />
+                            <img ref={refImg} className={s.form__avatar} src={imgUrl} alt="avatar" />
                         )}
                     </div>
                 </div>

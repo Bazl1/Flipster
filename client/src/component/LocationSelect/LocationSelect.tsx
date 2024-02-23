@@ -14,6 +14,7 @@ export interface ILocationList extends IGetLocationList {
 interface LocationSelectProps {
     setValue: (value: ILocationList | null) => void;
     value: ILocationList | null;
+    setRequired?: boolean;
 }
 
 const fetchLocationList = async () => {
@@ -27,7 +28,7 @@ const fetchLocationList = async () => {
     return options;
 };
 
-const LocationSelect: React.FC<LocationSelectProps> = ({ setValue, value }) => {
+const LocationSelect: React.FC<LocationSelectProps> = ({ setValue, value, setRequired }) => {
     const [locationList, setLocationList] = useState<ILocationList[]>([]);
     const [isClearable, setIsClearable] = useState(true);
 
@@ -43,6 +44,7 @@ const LocationSelect: React.FC<LocationSelectProps> = ({ setValue, value }) => {
             value={value}
             placeholder={"Choose your location"}
             isClearable={isClearable}
+            required={setRequired ? true : false}
         />
     );
 };

@@ -35,6 +35,13 @@ describe("Change avatar", () => {
         cy.get("button").contains("Change password").should("exist");
     });
 
+    // it("Change avatar", () => {
+    //     cy.get('[data-cy="settings-btn"]').click();
+
+    //     cy.get("button").contains("Change avatar").should("exist").click();
+    //     cy.get('[data-cy="select-avatar"]').should("exist").selectFile("../../fixtures/imgs/1.jpg");
+    // });
+
     // it("Name and location change check", () => {
     //     cy.get('[data-cy="settings-btn"]').click();
     //     cy.get("button").contains("Change contact details").click();

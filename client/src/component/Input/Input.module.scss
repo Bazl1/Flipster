@@ -4,13 +4,21 @@
     outline: none;
     border: 1px solid $black-priority;
     border-radius: 3px;
-    padding: 10px 14px;
+    padding: 11px 14px;
 
     font-size: 16px;
     font-weight: 400;
     line-height: normal;
     font-family: "Inter";
     color: $black-priority;
+
+    &::placeholder {
+        font-family: "Inter";
+        line-height: normal;
+        font-size: 16px;
+        font-weight: 400;
+        color: rgba($color-text-priority, 0.3);
+    }
 
     &__columns {
         display: flex;

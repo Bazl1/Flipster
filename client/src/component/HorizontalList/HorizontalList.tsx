@@ -1,30 +1,48 @@
 import s from "./HorizontalList.module.scss";
-import demo from "../../shared/assets/img/login-banner.jpeg";
-import { IoMdHeart } from "react-icons/io";
+import { Advert, AdvertResponse } from "../../types/response/AdvertResponse";
+import HorizontalListItem from "../HorizontalListItem/HorizontalListItem";
+import { useEffect, useState } from "react";
 
-const HorizontalList = () => {
+interface HorizontalListProprs {
+    title: string;
+    list: AdvertResponse | null;
+    setActivePage: (value: number) => void;
+}
+
+interface ILike {
+    id: string;
+}
+
+const HorizontalList: React.FC<HorizontalListProprs> = ({ title, list, setActivePage }) => {
+    const [likes, setLikes] = useState<ILike[]>([]);
+
+    useEffect(() => {
+        const localLikes = JSON.parse(localStorage.getItem("favorite") || "[]");
+        setLikes(localLikes);
+    }, [list]);
+
     return (
         <section className={s.list}>
             <div className={s.list__inner}>
-                <h2 className={s.list__title}>JUST FOR YOU</h2>
+                <h2 className={s.list__title}>{title}</h2>
                 <div className={s.list__items}>
-                    <div className={s.list__item}>
-                        <img className={s.list__item_img} src={demo} alt="img" />
-                        <div className={s.list__item_box}>
-                            <label className={s.list__item_label}>
-                                <h3 className={s.list__item_title}>Demo title</h3>
-                                <span className={s.list__item_location}>Location: UA, ZP reg, ZP</span>
-                            </label>
-                            <h4 className={s.list__item_price}>$30</h4>
-                        </div>
-                        <div className={s.list__item_likebox}>
-                            <button className={s.list__item_like}>
-                                <IoMdHeart />
-                            </button>
-                        </div>
-                    </div>
+                    {list &&
+                        list.adverts &&
+                        list.adverts.map((advert: Advert) => {
+                            let InitialLike = likes.some((item: ILike) => item.id === advert.id);
+                            return <HorizontalListItem key={advert.id} item={advert} InitialLike={InitialLike} />;
+                        })}
                 </div>
             </div>
+            {list?.pageCount && list?.pageCount !== 1 && list?.pageCount > 0 ? (
+                <div className={s.list__paginations}>
+                    {Array.from({ length: list?.pageCount }, (_, index) => (
+                        <div key={index} className={s.list__pagination_item} onClick={() => setActivePage(index + 1)}>
+                            {index + 1}
+                        </div>
+                    ))}
+                </div>
+            ) : null}
         </section>
     );
 };

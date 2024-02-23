@@ -1,0 +1,102 @@
+@import "../../shared/assets/styles/vars.scss";
+.form-select-big {
+    &__control {
+        border: none !important;
+    }
+    &__menu {
+        z-index: 10 !important;
+    }
+    &__value-container {
+        padding: 20px 30px !important;
+        border: none !important;
+    }
+    &__input-container {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    &__control--is-focused {
+        border-color: $black-priority !important;
+        box-shadow: none !important;
+    }
+    &__placeholder {
+        font-family: "Inter" !important;
+        line-height: normal !important;
+        font-size: 18px !important;
+        font-weight: 500 !important;
+        color: rgba($color-text-priority, 0.1) !important;
+    }
+    &__single-value {
+        font-family: "Inter" !important;
+        font-size: 18px !important;
+        font-weight: 500 !important;
+        color: $color-text-priority !important;
+    }
+    &__option {
+        background-color: #fff !important;
+
+        &:active {
+            background-color: $black-priority !important;
+            color: #fff !important;
+        }
+
+        &--is-selected {
+            background-color: $black-priority-hover !important;
+            color: #fff !important;
+        }
+        &--is-focused {
+            background-color: $black-priority-hover !important;
+            color: #fff !important;
+        }
+    }
+}
+
+.form-select {
+    &__control {
+        border: none !important;
+    }
+    &__menu {
+        z-index: 10 !important;
+    }
+    &__value-container {
+        padding: 14px 20px !important;
+        border: none !important;
+    }
+    &__input-container {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    &__control--is-focused {
+        border-color: $black-priority !important;
+        box-shadow: none !important;
+    }
+    &__placeholder {
+        font-family: "Inter" !important;
+        line-height: normal !important;
+        font-size: 16px !important;
+        font-weight: 400 !important;
+        color: rgba($color-text-priority, 0.1) !important;
+    }
+    &__single-value {
+        font-family: "Inter" !important;
+        font-size: 16px !important;
+        font-weight: 400 !important;
+        color: $color-text-priority !important;
+    }
+    &__option {
+        background-color: #fff !important;
+
+        &:active {
+            background-color: $black-priority !important;
+            color: #fff !important;
+        }
+
+        &--is-selected {
+            background-color: $black-priority-hover !important;
+            color: #fff !important;
+        }
+        &--is-focused {
+            background-color: $black-priority-hover !important;
+            color: #fff !important;
+        }
+    }
+}
