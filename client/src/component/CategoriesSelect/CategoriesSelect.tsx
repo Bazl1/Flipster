@@ -5,7 +5,7 @@ import "../../shared/assets/styles/formSelect.scss";
 import Select from "react-select";
 
 export interface CategoriesList {
-    value: number;
+    value: string;
     label: string;
 }
 

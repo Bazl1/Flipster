@@ -4,18 +4,18 @@ import { IUser } from "../types/IUser";
 
 export default class SettingsService {
     static async changePassword(currentPassword: string, newPassword: string): Promise<AxiosResponse> {
-        return axiosApi.put("/users/change-password", {
+        return axiosApi.put("/users/my/change-password", {
             currentPassword,
             newPassword,
         });
     }
 
     static async changeNumber(phoneNumber: string): Promise<AxiosResponse<IUser>> {
-        return axiosApi.put("/users/change-phone", { phoneNumber });
+        return axiosApi.put("/users/my/change-settings", { phoneNumber });
     }
 
     static async changeAvatar(images: any): Promise<AxiosResponse<IUser>> {
-        return axiosApi.put("/users/change-avatar", images, {
+        return axiosApi.put("/users/my/change-avatar", images, {
             headers: {
                 RequestVerificationToken: localStorage.getItem("antiforgeryToken") || "",
             },
@@ -23,6 +23,6 @@ export default class SettingsService {
     }
 
     static async changeDetails(location: string, name: string): Promise<AxiosResponse<IUser>> {
-        return axiosApi.put("/users/change-details", { location, name });
+        return axiosApi.put(`/users/my/change-settings`, { location, name });
     }
 }

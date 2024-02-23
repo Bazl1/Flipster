@@ -6,7 +6,7 @@ export const advertApi = apiRTK.injectEndpoints({
     endpoints: (build) => ({
         addAvdert: build.mutation<void, FormData>({
             query: (body: FormData) => ({
-                url: "/adverts",
+                url: "/catalog",
                 method: "POST",
                 headers: {
                     RequestVerificationToken: localStorage.getItem("antiforgeryToken") || "",
@@ -18,7 +18,7 @@ export const advertApi = apiRTK.injectEndpoints({
 
         deleteAdvert: build.mutation<void, { id: string }>({
             query: (params) => ({
-                url: `/adverts/${params.id}`,
+                url: `/catalog/${params.id}`,
                 method: "DELETE",
             }),
             invalidatesTags: () => [{ type: "MyAdverts", id: "LIST" }],
@@ -26,7 +26,7 @@ export const advertApi = apiRTK.injectEndpoints({
 
         updateAdvert: build.mutation<IAdvert, { id: string; body: FormData }>({
             query: (params) => ({
-                url: `adverts/${params.id}`,
+                url: `/catalog/${params.id}`,
                 method: "PUT",
                 headers: {
                     RequestVerificationToken: localStorage.getItem("antiforgeryToken") || "",
@@ -41,7 +41,7 @@ export const advertApi = apiRTK.injectEndpoints({
 
         getUserAdverts: build.query<AdvertResponse, { limit: number; page: number; userId: string }>({
             query: (params) => ({
-                url: `/adverts/?page=${params.page}&limit=${params.limit}&user=${params.userId}`,
+                url: `/catalog/?page=${params.page}&limit=${params.limit}&user=${params.userId}`,
                 method: "GET",
             }),
             providesTags: (result) =>
@@ -55,7 +55,7 @@ export const advertApi = apiRTK.injectEndpoints({
 
         getAdverts: build.query<AdvertResponse, { limit: number; page: number }>({
             query: (params) => ({
-                url: `/adverts/?page=${params.page}&limit=${params.limit}`,
+                url: `/catalog/?page=${params.page}&limit=${params.limit}`,
                 method: "GET",
             }),
             providesTags: (result) => {
@@ -70,7 +70,7 @@ export const advertApi = apiRTK.injectEndpoints({
 
         getAdvertForId: build.query<Advert, { id: string }>({
             query: (params) => ({
-                url: `/adverts/${params.id}`,
+                url: `/catalog/${params.id}`,
                 method: "GET",
             }),
             providesTags: (advert) => (advert ? [{ type: "Adverts", id: advert.id }] : []),

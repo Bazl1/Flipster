@@ -1,7 +1,7 @@
 import axios from "axios";
 import AuthService from "../../services/AuthService";
 
-export const API_URL = "http://localhost:5247/api";
+export const API_URL = "http://localhost:5145/api";
 
 const axiosApi = axios.create({
     withCredentials: true,
@@ -22,10 +22,7 @@ axiosApi.interceptors.response.use(
     },
     async (error) => {
         const originalRequest = error.config;
-        if (
-            error.response.status == 401 &&
-            originalRequest._isRetry === false
-        ) {
+        if (error.response.status == 401 && originalRequest._isRetry === false) {
             originalRequest._isRetry = true;
             const response = await AuthService.refresh();
             localStorage.setItem("token", response.data.accessToken);
