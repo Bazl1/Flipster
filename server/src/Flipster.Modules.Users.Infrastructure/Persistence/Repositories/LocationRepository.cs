@@ -14,26 +14,27 @@ internal class LocationRepository(
 
     public IEnumerable<Location> GetAll()
     {
-        throw new NotImplementedException();
+        return _db.Locations;
     }
 
     public Location? GetById(string id)
     {
-        throw new NotImplementedException();
+        return _db.Locations.SingleOrDefault(location => location.Id == id);
     }
 
     public Location? GetByValue(string value)
     {
-        throw new NotImplementedException();
+        return _db.Locations.SingleOrDefault(location => location.Value == value);
     }
 
     public void Remove(Location entity)
     {
-        throw new NotImplementedException();
+        _db.Remove(entity);
+        _db.SaveChanges();
     }
 
     public void Update(Location entity)
     {
-        throw new NotImplementedException();
+        _db.SaveChanges();
     }
 }

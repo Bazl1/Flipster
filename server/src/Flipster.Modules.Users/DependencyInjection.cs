@@ -1,5 +1,6 @@
 ﻿using Flipster.Modules.Users.Contracts;
 using Flipster.Modules.Users.Endpoints.Auth;
+using Flipster.Modules.Users.Endpoints.Locations;
 using Flipster.Modules.Users.Endpoints.Users;
 using Flipster.Modules.Users.Infrastructure;
 using Microsoft.AspNetCore.Builder;
@@ -18,6 +19,8 @@ public static class DependencyInjection
             .MapAuthEndpoints();
         builder.MapGroup("api/users")
             .MapUsersEndpoints();
+        builder.MapGroup("api/locations")
+            .MapLocationsEndpoints();
         return builder;
     }
 

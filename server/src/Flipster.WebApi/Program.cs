@@ -1,6 +1,7 @@
 using Flipster.Modules.Catalog;
 using Flipster.Modules.Catalog.Infrastructure.Persistence.Seeds;
 using Flipster.Modules.Users;
+using Flipster.Modules.Users.Infrastructure.Persistence.Seeds;
 using Flipster.Shared.ImageStore.Services;
 using Flipster.WebApi.Middlewares;
 
@@ -24,7 +25,9 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    new CategorySeed().Seed(app.Services.CreateScope().ServiceProvider);
+    using var scope = app.Services.CreateScope();
+    new LocationSeed().Seed(scope.ServiceProvider);
+    new CategorySeed().Seed(scope.ServiceProvider);
 }
 
 app.UseCors();
