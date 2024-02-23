@@ -26,6 +26,7 @@ internal static class AdvertsEndpoints
             .DisableAntiforgery();
         builder.MapPut("/{id}", Change)
             .DisableAntiforgery();
+        builder.MapDelete("/{id}", Delete);
         builder.MapGet("/{id}", GetById);
         builder.MapGet("/", GetAll);
         return builder;
@@ -153,6 +154,22 @@ internal static class AdvertsEndpoints
             Contact = new ContactDto { Id = advert.Id, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber }
         };
         return Results.Ok(result);
+    }
+
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public static async Task<IResult> Delete(
+        HttpContext context,
+        [FromServices] IAdvertRepository advertRepository,
+        [FromRoute] string id)
+    {
+        var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var role = context.User.FindFirstValue(ClaimTypes.Role);
+        if (advertRepository.GetById(id) is not Advert advert)
+            throw new FlipsterError("Advert with given id is not found.");
+        if (advert.SellerId != userId && role != UserRole.Admin.ToString())
+            throw new FlipsterError("This user is denied access.");
+        advertRepository.Remove(advert);
+        return Results.Ok(new {});
     }
 
     private static async Task<IResult> GetById(
