@@ -107,16 +107,24 @@ public static class AuthEndpoints
         [FromServices] IMapper mapper)
     {
         var refreshTokenCookie = context.Request.Cookies[RefreshTokenCookieName];
-        if (refreshTokenCookie == null || (tokenRepository.GetByValue(refreshTokenCookie) is not Token token))
+        if (refreshTokenCookie == null || tokenRepository.GetByValue(refreshTokenCookie) is not Token token)
         {
-            context.Response.Cookies.Delete(
-                context.Request.Cookies.SingleOrDefault(cookie => cookie.Key.Contains(".AspNetCore.Antiforgery.")).Key);
+            try
+            {
+                context.Response.Cookies.Delete(
+                    context.Request.Cookies.SingleOrDefault(cookie => cookie.Key.Contains(".AspNetCore.Antiforgery.")).Key);
+            }
+            catch {}
             return Results.Unauthorized();
         }
         if (DateTime.UtcNow >= token.ExpiryIn)
         {
-            context.Response.Cookies.Delete(
-                context.Request.Cookies.SingleOrDefault(cookie => cookie.Key.Contains(".AspNetCore.Antiforgery.")).Key);
+            try
+            {
+                context.Response.Cookies.Delete(
+                    context.Request.Cookies.SingleOrDefault(cookie => cookie.Key.Contains(".AspNetCore.Antiforgery.")).Key);
+            }
+            catch {}
             return TypedResults.Unauthorized();
         }
         var user = userRepository.GetById(token.UserId);
