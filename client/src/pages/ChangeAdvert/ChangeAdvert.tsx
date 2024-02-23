@@ -134,7 +134,7 @@ const ChangeAdvert = () => {
         if (data) {
             setTitle(data.title);
             setCategory({
-                value: "",
+                value: data.category.id,
                 label: data.category.title,
             });
             setDescription(data.description);
