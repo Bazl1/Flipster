@@ -26,10 +26,8 @@ internal static class AdvertsEndpoints
             .DisableAntiforgery();
         builder.MapPut("/{id}", Change)
             .DisableAntiforgery();
-
         builder.MapGet("/{id}", GetById);
-        // builder.MapGet("/", GetAll);
-
+        builder.MapGet("/", GetAll);
         return builder;
     }
 
@@ -187,7 +185,7 @@ internal static class AdvertsEndpoints
     }
 
     public static async Task<IResult> GetAll(
-        HttpContent context,
+        HttpContext context,
         [FromServices] IAdvertRepository advertRepository,
         [FromServices] IUsersModule usersModule,
         [FromServices] IMapper mapper,
@@ -197,6 +195,7 @@ internal static class AdvertsEndpoints
         [FromQuery] string? query = null,
         [FromQuery] int? min = null,
         [FromQuery] int? max = null,
+        [FromQuery] bool free = false,
         [FromQuery] string? categoryId = null,
         [FromQuery] string? location = null)
     {
@@ -205,7 +204,7 @@ internal static class AdvertsEndpoints
         if (userId == null)
             items = advertRepository.GetByUserId(userId).ToList();
         else
-            items = advertRepository.Search(query: query, min: min, max: max, categoryId: categoryId, location: location).ToList();
+            items = advertRepository.Search(query: query, min: min, max: max, isFree: free, categoryId: categoryId, location: location).ToList();
         result.ItemCount = items.Count;
         result.PageCount = (int)Math.Ceiling((double)items.Count / (double)limit);
         result.Items = items
@@ -230,6 +229,6 @@ internal static class AdvertsEndpoints
                     Contact = new ContactDto { Id = advert.Id, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber }
                 };
             });
-        return Results.Ok();
+        return Results.Ok(result);
     }
 }
