@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Flipster.Modules.Users.Domain\Flipster.Modules.Users.Domain.csproj" />
+	  <ProjectReference Include="..\Flipster.Modules.Users.Infrastructure\Flipster.Modules.Users.Infrastructure.csproj" />
+	  <ProjectReference Include="..\Flipster.Shared.ImageStore\Flipster.Shared.ImageStore.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Endpoints\Auth\Logout\" />
+	  <Folder Include="Endpoints\Auth\Visit\" />
+	  <Folder Include="Endpoints\Users\GetMyInfo\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="AutoMapper" Version="13.0.1" />
+	  <FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+</Project>
