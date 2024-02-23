@@ -21,7 +21,7 @@ public static class UsersEndpoints
         builder.MapPut("/my/change-avatar", (Delegate)ChangeAvatar)
             .RequireAuthorization()
             .DisableAntiforgery();
-        builder.MapPut("/my/", (Delegate)Change)
+        builder.MapPut("/my/change-settings", (Delegate)Change)
             .RequireAuthorization();
         builder.MapGet("/my", (Delegate)GetMyInfo)
             .RequireAuthorization();
