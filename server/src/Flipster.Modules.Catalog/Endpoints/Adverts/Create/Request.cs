@@ -8,9 +8,11 @@ internal record Request(
     string CategoryId,
     IFormFileCollection Images,
     bool IsFree,
-    decimal Price,
     string ProductType,
     string BusinessType,
     string Location,
     string Email,
-    string PhoneNumber);
+    string PhoneNumber)
+{
+    public decimal Price { get; set; } = 0.00m;
+}
