@@ -30,7 +30,7 @@ const CreateAdvert = () => {
     const [status, setStatus] = useState<string>("New");
     const [location, setLocation] = useState<ILocationList | null>(null);
     const [email, setEmail] = useState<string>(user.email);
-    const [phone, setPhone] = useState<string>(user.number || "");
+    const [phone, setPhone] = useState<string>(user.phoneNumber || "");
 
     const {
         register,
