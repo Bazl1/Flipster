@@ -15,6 +15,7 @@ public static class DependencyInjection
     {
         builder.MapGroup("api/catalog")
             .MapAdvertsEndpoints();
+
         builder.MapGroup("api/categories")
             .MapCategoriesEndpoints();
         return builder;
