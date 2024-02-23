@@ -201,7 +201,7 @@ internal static class AdvertsEndpoints
     {
         var result = new GetAll.Response();
         List<Advert> items;
-        if (userId == null)
+        if (userId != null)
             items = advertRepository.GetByUserId(userId).ToList();
         else
             items = advertRepository.Search(query: query, min: min, max: max, isFree: free, categoryId: categoryId, location: location).ToList();
