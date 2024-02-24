@@ -7,6 +7,11 @@ import { ICategory } from "../../types/response/CategoryResponse";
 import { CategoriesList } from "../CategoriesSelect/CategoriesSelect";
 import "./Select.scss";
 import s from "./SearchBox.module.scss";
+import { ISearchParams } from "../../pages/SearchPage/SearchPage";
+
+interface SearchBoxProps {
+    onSearch: (searchParams: ISearchParams) => void;
+}
 
 const fetchLocationList = async () => {
     const LocationList = await LocationService.getLocationList();
@@ -30,16 +35,26 @@ const getCategoriesList = async () => {
     return options;
 };
 
-const SearchBox = () => {
+const SearchBox = ({ onSearch }: SearchBoxProps) => {
     const [locationList, setLocationList] = useState<ILocationList[]>([]);
     const [categoriesList, setCategoriesList] = useState<CategoriesList[]>([]);
 
+    const [query, setQuery] = useState<string>("");
     const [category, setCategory] = useState<CategoriesList | null>(null);
-    const [location, setLocation] = useState<ILocationList | null>(null);
+    const [locationSelect, setLocationSelect] = useState<ILocationList | null>(null);
     const [sorting, setSorting] = useState<{ value: string; label: string } | null>(null);
+    const [min, setMin] = useState<string | null>(null);
+    const [max, setMax] = useState<string | null>(null);
     const [isClearable, setIsClearable] = useState(true);
 
-    const Submit = async () => {};
+    const Submit = async (e: any) => {
+        e.preventDefault();
+        const categoryId = category?.value || "null";
+        const locationLabel = locationSelect?.label || "null";
+        const minStr = min || "-1";
+        const maxStr = max || "-1";
+        onSearch({ query, categoryId, location: locationLabel, min: minStr, max: maxStr });
+    };
 
     useEffect(() => {
         fetchLocationList().then((res) => setLocationList(res));
@@ -47,17 +62,23 @@ const SearchBox = () => {
     }, []);
 
     return (
-        <form className={s.search}>
+        <form className={s.search} onSubmit={(e) => Submit(e)}>
             <div className={s.search__row}>
                 <label className={s.search__columns}>
-                    <input className={s.search__input_big} type="text" placeholder="Enter your search query" />
+                    <input
+                        className={s.search__input_big}
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        type="text"
+                        placeholder="Enter your search query"
+                    />
                 </label>
                 <label className={s.search__columns}>
                     <Select
                         classNamePrefix="form-select-big"
                         options={locationList}
-                        onChange={(selectedOptions) => setLocation(selectedOptions)}
-                        value={location}
+                        onChange={(selectedOptions) => setLocationSelect(selectedOptions)}
+                        value={locationSelect}
                         placeholder={"Select location"}
                         isClearable={isClearable}
                     />
@@ -68,8 +89,20 @@ const SearchBox = () => {
             </div>
             <div className={s.search__row}>
                 <label className={`${s.search__columns} ${s.search__columns_flex}`}>
-                    <input className={s.search__input} type="number" placeholder="Min $" />
-                    <input className={s.search__input} type="number" placeholder="Max $" />
+                    <input
+                        className={s.search__input}
+                        value={min || ""}
+                        onChange={(e) => setMin(e.target.value)}
+                        type="number"
+                        placeholder="Min $"
+                    />
+                    <input
+                        className={s.search__input}
+                        value={max || ""}
+                        onChange={(e) => setMax(e.target.value)}
+                        type="number"
+                        placeholder="Max $"
+                    />
                 </label>
                 <label className={s.search__columns}>
                     <Select
@@ -86,15 +119,15 @@ const SearchBox = () => {
                         classNamePrefix="form-select"
                         options={[
                             {
-                                value: "Popular-first",
+                                value: "PopularFirst",
                                 label: "Popular first",
                             },
                             {
-                                value: "Cheap-ones-first",
+                                value: "CheapOnesFirst",
                                 label: "Cheap ones first",
                             },
                             {
-                                value: "Dear-ones-first",
+                                value: "DearOnesFirst",
                                 label: "Dear ones first",
                             },
                         ]}

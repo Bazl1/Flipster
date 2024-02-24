@@ -57,7 +57,7 @@ function App() {
                     />
                     {/* public */}
                     <Route
-                        path="/search/:search"
+                        path="/search/:search/:location?"
                         element={
                             <LayoutMain>
                                 <SearchPage />

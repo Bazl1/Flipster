@@ -75,6 +75,32 @@ export const advertApi = apiRTK.injectEndpoints({
             }),
             providesTags: (advert) => (advert ? [{ type: "Adverts", id: advert.id }] : []),
         }),
+
+        getAdvertsSearch: build.query<
+            AdvertResponse,
+            {
+                limit: number;
+                page: number;
+                query?: string;
+                categoryId?: string;
+                location?: string;
+                min?: string;
+                max?: string;
+            }
+        >({
+            query: (params) => ({
+                url: `/catalog/?page=${params.page}&limit=${params.limit}&query=${params.query}&categoryId=${params.categoryId || null}&location=${params.location || null}&min=${params.min || -1}&max=${params.max || -1}`,
+                method: "GET",
+            }),
+            providesTags: (result) => {
+                return result?.adverts
+                    ? [
+                          ...result.adverts.map(({ id }) => ({ type: "Adverts" as const, id })),
+                          { type: "Adverts", id: "LIST" },
+                      ]
+                    : [{ type: "Adverts", id: "LIST" }];
+            },
+        }),
     }),
 });
 
@@ -85,4 +111,6 @@ export const {
     useDeleteAdvertMutation,
     useGetAdvertForIdQuery,
     useGetAdvertsQuery,
+    useGetAdvertsSearchQuery,
+    useLazyGetAdvertsSearchQuery,
 } = advertApi;
