@@ -1,8 +1,8 @@
-﻿using Flipster.Modules.Catalog.Domain.Enums;
+﻿using Flipster.Shared.Contracts.Catalog.Dtos;
 
 namespace Flipster.Modules.Catalog.Dtos;
 
-public class AdvertDto
+public class AdvertDto : IAdvertDto
 {
     public required string Id { get; set; }
     public required string Title { get; set; }
@@ -14,6 +14,6 @@ public class AdvertDto
     public required string ProductType { get; set; }
     public required string Status { get; set; }
     public required string CreatedAt { get; set; }
-    public required CategoryDto Category { get; set; }
-    public required ContactDto Contact { get; set; }
+    public required ICategoryDto Category { get; set; }
+    public required IContactDto Contact { get; set; }
 }

@@ -20,7 +20,7 @@ public class User : EntityBase, IAggregateRoot
     public string? LocationId { get; set; }
     public Location? Location { get; set; }
 
-    // public List<Favorite> Favorites { get; set; } = new();
+    public List<Favorite> Favorites { get; set; } = new();
     
     // public List<View> Views { get; set; } = new();
 

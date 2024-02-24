@@ -32,6 +32,7 @@ public static class DependencyInjection
 
             .AddTransient<IUserRepository, UserRepository>()
             .AddTransient<ITokenRepository, TokenRepository>()
+            .AddTransient<IFavoriteRepository, FavoriteRepository>()
             .AddTransient<ILocationRepository, LocationRepository>();
 
         return services;

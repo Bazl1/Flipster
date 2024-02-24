@@ -9,6 +9,7 @@ public class UsersModuleDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Token> Tokens { get; set; }
     public DbSet<Location> Locations { get; set; }
+    public DbSet<Favorite> Favorites { get; set; }
 
     public UsersModuleDbContext(DbContextOptions<UsersModuleDbContext> options) : base(options)
     {
@@ -17,7 +18,6 @@ public class UsersModuleDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new UserConfiguration());
-
         base.OnModelCreating(modelBuilder);
     }
 }

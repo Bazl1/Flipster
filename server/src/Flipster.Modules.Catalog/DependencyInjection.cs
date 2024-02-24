@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Flipster.Modules.Catalog.Contracts;
+using Flispter.Shared.Contracts.Catalog;
 
 namespace Flipster.Modules.Catalog;
 
@@ -25,6 +27,7 @@ public static class DependencyInjection
     {
         services
             .AddAutoMapper(Assembly.GetExecutingAssembly())
+            .AddTransient<ICatalogModule, CatalogModule>()
             .AddInfrastructure(configuration);
         return services;
     }
