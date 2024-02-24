@@ -21,15 +21,15 @@ public class AdvertRepository(
     public Advert? GetById(string id)
     {
         return _db.Adverts
-            .Include(advert => advert.Category)
-            .SingleOrDefault(advert => advert.Id == id);
+            .Include(a => a.Category)
+            .SingleOrDefault(a => a.Id == id);
     }
 
     public IEnumerable<Advert> GetByUserId(string userId)
     {
         return _db.Adverts
-            .Include(advert => advert.Category)
-            .Where(advert => advert.SellerId == userId);
+            .Where(a => a.SellerId == userId)
+            .Include(a => a.Category);
     }
 
     public void Remove(Advert entity)
@@ -40,13 +40,14 @@ public class AdvertRepository(
 
     public IEnumerable<Advert> Search(string? query = null, int? min = null, int? max = null, bool isFree = false, string? categoryId = null, string? location = null)
     {
+        var keyWords = query.Trim().Contains(' ') ? query.Split().ToList() : new List<string> { query };
         return _db.Adverts
-            .Include(advert => advert.Category)
             .Where(advert =>
-                (query == null || query.Trim().Split().Any(keyWord => advert.Title.Contains(keyWord) || advert.Description.Contains(keyWord))) &&
+                (query == null || keyWords.Any(keyWord => advert.Title.Contains(keyWord) || advert.Description.Contains(keyWord))) &&
                 (isFree ? advert.IsFree : (min == null || max == null) || (min <= advert.Price && advert.Price <= max)) &&
                 (categoryId == null || advert.CategoryId == categoryId) &&
-                (location == null || advert.Location == location));
+                (location == null || advert.Location == location))
+            .Include(a => a.Category);
     }
 
     public void Update(Advert entity)

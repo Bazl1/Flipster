@@ -206,26 +206,18 @@ internal static class AdvertsEndpoints
         [FromServices] IAdvertRepository advertRepository,
         [FromServices] IUsersModule usersModule,
         [FromServices] IMapper mapper,
-        [FromQuery] int page,
-        [FromQuery] int limit,
-        [FromQuery] string? userId = null,
-        [FromQuery] string? query = null,
-        [FromQuery] int? min = null,
-        [FromQuery] int? max = null,
-        [FromQuery] bool free = false,
-        [FromQuery] string? categoryId = null,
-        [FromQuery] string? location = null)
+        [FromBody] GetAll.Request request)
     {
         var result = new GetAll.Response();
         List<Advert> items;
-        if (userId != null)
-            items = advertRepository.GetByUserId(userId).ToList();
+        if (request.UserId != null)
+            items = advertRepository.GetByUserId(request.UserId).ToList();
         else
-            items = advertRepository.Search(query: query, min: min, max: max, isFree: free, categoryId: categoryId, location: location).ToList();
-        result.PageCount = (int)Math.Ceiling((double)items.Count / (double)limit);
+            items = advertRepository.Search(query: request.Query, min: request.Min, max: request.Max, categoryId: request.CategoryId, location: request.Location).ToList();
+        result.PageCount = (int)Math.Ceiling((double)items.Count / (double)request.Limit);
         result.Adverts = items
-            .Skip((page - 1) * limit)
-            .Take(limit)
+            .Skip((request.Page - 1) * request.Limit)
+            .Take(request.Limit)
             .Select(advert => 
             {
                 var seller = usersModule.GetUserById(advert.SellerId);
