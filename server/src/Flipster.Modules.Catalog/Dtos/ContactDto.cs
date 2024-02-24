@@ -1,6 +1,8 @@
-﻿namespace Flipster.Modules.Catalog.Dtos;
+﻿using Flipster.Shared.Contracts.Catalog.Dtos;
 
-public class ContactDto
+namespace Flipster.Modules.Catalog.Dtos;
+
+public class ContactDto : IContactDto
 {
     public required string Id { get; set; }
     public required string Avatar { get; set; }

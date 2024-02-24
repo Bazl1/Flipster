@@ -1,6 +1,8 @@
-﻿namespace Flipster.Modules.Users.Dtos;
+﻿using Flispter.Shared.Contracts.Users.Dtos;
 
-public class UserDto
+namespace Flipster.Modules.Users.Dtos;
+
+public class UserDto : IUserDto
 {
     public required string Id { get; set; }
     public required string Name { get; set; }

@@ -3,7 +3,6 @@ using Flipster.Modules.Catalog.Domain.Entities;
 using Flipster.Modules.Catalog.Domain.Enums;
 using Flipster.Modules.Catalog.Domain.Repositories;
 using Flipster.Modules.Catalog.Dtos;
-using Flipster.Modules.Users.Contracts;
 using Flipster.Modules.Users.Domain.Enums;
 using Flipster.Shared.Domain.Errors;
 using Flipster.Shared.ImageStore.Services;
@@ -15,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
+using Flispter.Shared.Contracts.Users;
 
 namespace Flipster.Modules.Catalog.Endpoints.Adverts;
 

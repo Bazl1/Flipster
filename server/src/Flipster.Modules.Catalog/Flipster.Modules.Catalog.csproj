@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -18,7 +18,9 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Flipster.Modules.Catalog.Domain\Flipster.Modules.Catalog.Domain.csproj" />
 	  <ProjectReference Include="..\Flipster.Modules.Catalog.Infrastructure\Flipster.Modules.Catalog.Infrastructure.csproj" />
-	  <ProjectReference Include="..\Flipster.Modules.Users\Flipster.Modules.Users.csproj" />
+	  <ProjectReference Include="..\Flipster.Modules.Users.Domain\Flipster.Modules.Users.Domain.csproj" />
+	  <ProjectReference Include="..\Flipster.Shared.ImageStore\Flipster.Shared.ImageStore.csproj" />
+	  <ProjectReference Include="..\Flispter.Shared.Contracts\Flispter.Shared.Contracts.csproj" />
 	</ItemGroup>
 
 </Project>

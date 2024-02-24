@@ -10,6 +10,7 @@
 	  <ProjectReference Include="..\Flipster.Modules.Users.Domain\Flipster.Modules.Users.Domain.csproj" />
 	  <ProjectReference Include="..\Flipster.Modules.Users.Infrastructure\Flipster.Modules.Users.Infrastructure.csproj" />
 	  <ProjectReference Include="..\Flipster.Shared.ImageStore\Flipster.Shared.ImageStore.csproj" />
+	  <ProjectReference Include="..\Flispter.Shared.Contracts\Flispter.Shared.Contracts.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

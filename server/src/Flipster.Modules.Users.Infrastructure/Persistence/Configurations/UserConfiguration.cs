@@ -10,5 +10,6 @@ internal class UserConfiguration : IEntityTypeConfiguration<User>
     {
         builder.HasOne(u => u.Token).WithOne(t => t.User);
         builder.HasOne(u => u.Location).WithMany(l => l.Users);
+        builder.HasMany(u => u.Favorites).WithOne(f => f.User);
     }
 }
