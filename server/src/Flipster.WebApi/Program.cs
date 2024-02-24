@@ -3,7 +3,6 @@ using Flipster.Modules.Catalog.Infrastructure.Persistence.Seeds;
 using Flipster.Modules.Users;
 using Flipster.Modules.Users.Infrastructure.Persistence.Seeds;
 using Flipster.Shared.ImageStore.Services;
-using Flipster.WebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,8 +34,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseAntiforgery();
 app.UseStaticFiles();
-app.UseMiddleware<ErrorHandlingMiddleware>();
-app.UseMiddleware<LoggingMiddleware>();
+// app.UseMiddleware<ErrorHandlingMiddleware>();
+// app.UseMiddleware<LoggingMiddleware>();
 
 app
     .MapUsersModuleEndpoints()
