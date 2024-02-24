@@ -38,18 +38,12 @@ public class AdvertRepository(
         _db.SaveChanges();
     }
 
-    public IEnumerable<Advert> Search(string? query = null, int? min = null, int? max = null, string? categoryId = null, string? location = null)
+    public IEnumerable<Advert> Search(string? query = null, int min = -1, int max = -1, string? categoryId = null, string? location = null)
     {
-        List<string> keyWords = new();
-        if (query != null)
-            if (query.Trim().Contains(' '))
-                keyWords.AddRange(query.Split().ToList());
-            else
-                keyWords.Add(query);
         return _db.Adverts
             .Where(advert =>
-                (query == null || keyWords.Any(keyWord => advert.Title.Contains(keyWord) || advert.Description.Contains(keyWord))) &&
-                ((min == null || max == null) || (min <= advert.Price && advert.Price <= max)) &&
+                (query == null || (advert.Title.Contains(query) || advert.Description.Contains(query))) &&
+                ((min == -1 || max == -1) || (min <= advert.Price && advert.Price <= max)) &&
                 (categoryId == null || advert.CategoryId == categoryId) &&
                 (location == null || advert.Location == location))
             .Include(a => a.Category);

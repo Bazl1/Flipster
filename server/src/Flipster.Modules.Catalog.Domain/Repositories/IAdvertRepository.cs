@@ -5,6 +5,6 @@ namespace Flipster.Modules.Catalog.Domain.Repositories;
 
 public interface IAdvertRepository : IRepository<Advert>
 {
-    IEnumerable<Advert> Search(string? query = null, int? min = null, int? max = null, string? categoryId = null, string? location = null);
+    IEnumerable<Advert> Search(string? query = null, int min = -1, int max = -1, string? categoryId = null, string? location = null);
     IEnumerable<Advert> GetByUserId(string userId);
 }

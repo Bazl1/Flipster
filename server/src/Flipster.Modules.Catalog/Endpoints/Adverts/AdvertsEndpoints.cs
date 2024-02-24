@@ -208,14 +208,19 @@ internal static class AdvertsEndpoints
         [FromServices] IMapper mapper,
         [FromQuery] int page,
         [FromQuery] int limit,
-        [FromBody] GetAll.Request request)
+        [FromQuery] string? userId = null,
+        [FromQuery] string? query = null,
+        [FromQuery] int min = -1,
+        [FromQuery] int max = -1,
+        [FromQuery] string? categoryId = null,
+        [FromQuery] string? location = null)
     {
         var result = new GetAll.Response();
         List<Advert> items;
-        if (request.UserId != null)
-            items = advertRepository.GetByUserId(request.UserId).ToList();
+        if (userId != null)
+            items = advertRepository.GetByUserId(userId).ToList();
         else
-            items = advertRepository.Search(query: request.Query, min: request.Min, max: request.Max, categoryId: request.CategoryId, location: request.Location).ToList();
+            items = advertRepository.Search(query: query, min: min, max: max, categoryId: categoryId, location: location).ToList();
         result.PageCount = (int)Math.Ceiling((double)items.Count / (double)limit);
         result.Adverts = items
             .Skip((page - 1) * limit)
