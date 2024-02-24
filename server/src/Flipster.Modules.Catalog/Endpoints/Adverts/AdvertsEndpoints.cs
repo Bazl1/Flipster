@@ -206,6 +206,8 @@ internal static class AdvertsEndpoints
         [FromServices] IAdvertRepository advertRepository,
         [FromServices] IUsersModule usersModule,
         [FromServices] IMapper mapper,
+        [FromQuery] int page,
+        [FromQuery] int limit,
         [FromBody] GetAll.Request request)
     {
         var result = new GetAll.Response();
@@ -214,10 +216,10 @@ internal static class AdvertsEndpoints
             items = advertRepository.GetByUserId(request.UserId).ToList();
         else
             items = advertRepository.Search(query: request.Query, min: request.Min, max: request.Max, categoryId: request.CategoryId, location: request.Location).ToList();
-        result.PageCount = (int)Math.Ceiling((double)items.Count / (double)request.Limit);
+        result.PageCount = (int)Math.Ceiling((double)items.Count / (double)limit);
         result.Adverts = items
-            .Skip((request.Page - 1) * request.Limit)
-            .Take(request.Limit)
+            .Skip((page - 1) * limit)
+            .Take(limit)
             .Select(advert => 
             {
                 var seller = usersModule.GetUserById(advert.SellerId);

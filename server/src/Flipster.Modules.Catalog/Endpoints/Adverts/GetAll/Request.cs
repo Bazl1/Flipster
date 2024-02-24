@@ -1,8 +1,6 @@
 namespace Flipster.Modules.Catalog.Endpoints.Adverts.GetAll;
 
-public record Request(
-    int Page,
-    int Limit)
+public class Request
 {
     public string? Query { get; set; } = null;
     public string? UserId { get; set; } = null;
