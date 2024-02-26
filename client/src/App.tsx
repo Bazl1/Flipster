@@ -5,6 +5,7 @@ import { checkAuth } from "./store/slices/AuthSlice";
 import LayoutMain from "./component/LayoutMain/LayoutMain";
 import LayoutFullPage from "./component/LayoutFullPage/LayoutFullPage";
 import Loader from "./component/Loader/Loader";
+import axiosApi from "./shared/axios";
 
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage/RegisterPage"));
@@ -17,10 +18,15 @@ const SingleAdvert = lazy(() => import("./pages/SingleAdvert/SingleAdvert"));
 const SearchPage = lazy(() => import("./pages/SearchPage/SearchPage"));
 const FavoritePage = lazy(() => import("./pages/FavoritePage/FavoritePage"));
 
+const visitor = async () => {
+    await axiosApi.post("/auth/visit");
+};
+
 function App() {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
+        visitor();
         if (localStorage.getItem("token")) {
             dispatch(checkAuth());
         }

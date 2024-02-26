@@ -68,6 +68,36 @@ export const advertApi = apiRTK.injectEndpoints({
             },
         }),
 
+        getRecommendedAdverts: build.query<AdvertResponse, { limit: number; page: number }>({
+            query: (params) => ({
+                url: `catalog/recommendations/?page=${params.page}&limit=${params.limit}`,
+                method: "GET",
+            }),
+            providesTags: (result) => {
+                return result?.adverts
+                    ? [
+                          ...result.adverts.map(({ id }) => ({ type: "Adverts" as const, id })),
+                          { type: "Adverts", id: "LIST" },
+                      ]
+                    : [{ type: "Adverts", id: "LIST" }];
+            },
+        }),
+
+        getRecommendedForAdvert: build.query<AdvertResponse, { id: string }>({
+            query: (params) => ({
+                url: `catalog/recommendations/${params.id}`,
+                method: "GET",
+            }),
+            providesTags: (result) => {
+                return result?.adverts
+                    ? [
+                          ...result.adverts.map(({ id }) => ({ type: "Adverts" as const, id })),
+                          { type: "Adverts", id: "LIST" },
+                      ]
+                    : [{ type: "Adverts", id: "LIST" }];
+            },
+        }),
+
         getAdvertForId: build.query<Advert, { id: string }>({
             query: (params) => ({
                 url: `/catalog/${params.id}`,
@@ -113,4 +143,6 @@ export const {
     useGetAdvertsQuery,
     useGetAdvertsSearchQuery,
     useLazyGetAdvertsSearchQuery,
+    useGetRecommendedAdvertsQuery,
+    useGetRecommendedForAdvertQuery,
 } = advertApi;
