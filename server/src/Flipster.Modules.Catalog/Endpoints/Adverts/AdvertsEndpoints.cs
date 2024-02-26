@@ -177,7 +177,7 @@ internal static class AdvertsEndpoints
         return Results.Ok(new {});
     }
 
-    [Authorize(AuthenticationSchemes = "Flipster.Cookies.Visitor")]
+    [Authorize]
     private static async Task<IResult> GetById(
         HttpContext context,
         [FromServices] IAdvertRepository advertRepository,
