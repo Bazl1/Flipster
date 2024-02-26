@@ -174,10 +174,10 @@ internal static class AdvertsEndpoints
         if (advert.SellerId != userId && role != UserRole.Admin.ToString())
             throw new FlipsterError("This user is denied access.");
         advertRepository.Remove(advert);
-        return Results.Ok(new {});
+        return Results.Ok(new { });
     }
 
-    [Authorize]
+    [Authorize(AuthenticationSchemes = $"Flipster.Cookies.Visitor,{JwtBearerDefaults.AuthenticationScheme}")]
     private static async Task<IResult> GetById(
         HttpContext context,
         [FromServices] IAdvertRepository advertRepository,
@@ -236,7 +236,7 @@ internal static class AdvertsEndpoints
         result.PageCount = (int)Math.Ceiling((double)items.Count / (double)limit);
         items = sort switch
         {
-            "PopularFirst" => items,
+            "PopularFirst" => items.OrderByDescending(a => viewRepository.GetCountByAdvertId(a.Id)).ToList(),
             "CheapOnesFirst" => items.OrderBy(i => i.Price.Value).ToList(),
             "DearOnesFirst" => items.OrderByDescending(i => i.Price.Value).ToList(),
             _ => items
