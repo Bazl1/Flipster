@@ -15,7 +15,24 @@ public class CatalogModule(
 {
     public IAdvertDto? GetAdvertById(string id)
     {
-        return _mapper.Map<AdvertDto>(_advertRepository.GetById(id));
+        var advert = _advertRepository.GetById(id);
+        var seller = _usersModule.GetUserById(advert.SellerId);
+        return new AdvertDto
+        {
+            Id = advert.Id,
+            Title = advert.Title,
+            Description = advert.Description,
+            Images = advert.Images,
+            IsFree = advert.IsFree,
+            Price = advert.Price != null ? advert.Price.ToString() : string.Empty,
+            BusinessType = advert.BusinessType.ToString(),
+            ProductType = advert.ProductType.ToString(),
+            Status = advert.Status.ToString(),
+            CreatedAt = advert.CreatedAt.ToString(),
+            Category = _mapper.Map<CategoryDto>(advert.Category),
+            Contact = new ContactDto { Id = advert.Id, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber },
+            Views = _viewRepository.GetCountByAdvertId(advert.Id)
+        };
     }
 
     public IEnumerable<IAdvertDto> GetAll()

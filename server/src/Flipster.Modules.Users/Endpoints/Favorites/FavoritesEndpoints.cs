@@ -10,14 +10,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Configuration;
 
 namespace Flipster.Modules.Users.Endpoints.Favorites;
 
 public static class FavoritesEndpoints
 {
-    public static IEndpointRouteBuilder MapFavoritesEndpoints(this IEndpointRouteBuilder builder,
-        IConfiguration configuration)
+    public static IEndpointRouteBuilder MapFavoritesEndpoints(this IEndpointRouteBuilder builder)
     {
         builder.MapPost("/", (Delegate)Create);
         builder.MapDelete("/", (Delegate)Delete);

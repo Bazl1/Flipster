@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Flispter.Shared.Contracts.Users;
+using Flipster.Modules.Users.Endpoints.Favorites;
 
 namespace Flipster.Modules.Users;
 
@@ -22,6 +23,8 @@ public static class DependencyInjection
             .MapUsersEndpoints();
         builder.MapGroup("api/locations")
             .MapLocationsEndpoints();
+        builder.MapGroup("api/favorites")
+            .MapFavoritesEndpoints();
         return builder;
     }
 
