@@ -18,7 +18,7 @@ public static class FavoritesEndpoints
     public static IEndpointRouteBuilder MapFavoritesEndpoints(this IEndpointRouteBuilder builder)
     {
         builder.MapPost("/", (Delegate)Create);
-        builder.MapDelete("/", (Delegate)Delete);
+        // builder.MapDelete("/", (Delegate)Delete);
         builder.MapGet("/ids", (Delegate)GetAllIds);
         builder.MapGet("/", (Delegate)GetAll);
 
@@ -33,10 +33,15 @@ public static class FavoritesEndpoints
         [FromBody] Create.Request request)
     {
         var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (catalogModule.GetAdvertById(request.AdvertId) is null)
-            throw new FlipsterError("Advert with given id is not found.");
-        var favorite = new Favorite { UserId = userId, AdvertId = request.AdvertId };
-        favoriteRepository.Add(favorite);
+        if (catalogModule.GetAdvertById(request.AdvertId) is Favorite favorite)
+        {
+            favoriteRepository.Remove(favorite);
+        }
+        else
+        { 
+            var favorite1 = new Favorite { UserId = userId, AdvertId = request.AdvertId };
+            favoriteRepository.Add(favorite1);
+        }
         return Results.Ok(new {});
     }
     
