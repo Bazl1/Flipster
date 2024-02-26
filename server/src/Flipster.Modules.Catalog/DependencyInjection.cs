@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Flipster.Modules.Catalog.Contracts;
 using Flispter.Shared.Contracts.Catalog;
+using Flipster.Modules.Catalog.Endpoints.Recommendations;
 
 namespace Flipster.Modules.Catalog;
 
@@ -17,6 +18,9 @@ public static class DependencyInjection
     {
         builder.MapGroup("api/catalog")
             .MapAdvertsEndpoints();
+        
+        builder.MapGroup("api/catalog/recommendations")
+            .MapRecommendationsEndpoints();
 
         builder.MapGroup("api/categories")
             .MapCategoriesEndpoints();

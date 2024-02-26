@@ -1,7 +1,6 @@
 ﻿using Flipster.Modules.Catalog.Domain.Repositories;
 using Flipster.Modules.Catalog.Infrastructure.Persistence;
 using Flipster.Modules.Catalog.Infrastructure.Persistence.Repositories;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +15,7 @@ public static class DependencyInjection
             opt.UseInMemoryDatabase("Flipster.InMemoryDatabase"));
         services
             .AddTransient<IAdvertRepository, AdvertRepository>()
+            .AddTransient<IViewRepository, ViewRepository>()
             .AddTransient<ICategoryRepository, CategoryRepository>();
         return services;
     }

@@ -16,4 +16,5 @@ public class AdvertDto : IAdvertDto
     public required string CreatedAt { get; set; }
     public required ICategoryDto Category { get; set; }
     public required IContactDto Contact { get; set; }
+    public required int Views { get; set; }
 }

@@ -31,11 +31,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flipster.Modules.Catalog.Do
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flipster.Modules.Catalog.Infrastructure", "src\Flipster.Modules.Catalog.Infrastructure\Flipster.Modules.Catalog.Infrastructure.csproj", "{B2DA71DB-F0B8-485C-ACDA-CBD194305A50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flispter.Shared.AdvertsSearchSystem", "src\Flispter.Shared.AdvertsSearchSystem\Flispter.Shared.AdvertsSearchSystem.csproj", "{E465DF46-AE4F-4736-879A-4301D0E59C2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flispter.Shared.AdvertsSearchSystem", "src\Flispter.Shared.AdvertsSearchSystem\Flispter.Shared.AdvertsSearchSystem.csproj", "{E465DF46-AE4F-4736-879A-4301D0E59C2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flispter.Shared.AdvertsRecommendationSystem", "src\Flispter.Shared.AdvertsRecommendationSystem\Flispter.Shared.AdvertsRecommendationSystem.csproj", "{50915584-A838-4523-B3F9-466CA6B5D7C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flispter.Shared.AdvertsRecommendationSystem", "src\Flispter.Shared.AdvertsRecommendationSystem\Flispter.Shared.AdvertsRecommendationSystem.csproj", "{50915584-A838-4523-B3F9-466CA6B5D7C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flispter.Shared.Contracts", "src\Flispter.Shared.Contracts\Flispter.Shared.Contracts.csproj", "{FE5DD176-6865-4893-9050-ED3693718510}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flispter.Shared.Contracts", "src\Flispter.Shared.Contracts\Flispter.Shared.Contracts.csproj", "{FE5DD176-6865-4893-9050-ED3693718510}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,10 +83,10 @@ Global
 		{E465DF46-AE4F-4736-879A-4301D0E59C2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E465DF46-AE4F-4736-879A-4301D0E59C2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E465DF46-AE4F-4736-879A-4301D0E59C2D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C71EE007-274D-481C-8C02-3259FB1FCBFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C71EE007-274D-481C-8C02-3259FB1FCBFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C71EE007-274D-481C-8C02-3259FB1FCBFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C71EE007-274D-481C-8C02-3259FB1FCBFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50915584-A838-4523-B3F9-466CA6B5D7C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50915584-A838-4523-B3F9-466CA6B5D7C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50915584-A838-4523-B3F9-466CA6B5D7C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50915584-A838-4523-B3F9-466CA6B5D7C8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FE5DD176-6865-4893-9050-ED3693718510}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FE5DD176-6865-4893-9050-ED3693718510}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE5DD176-6865-4893-9050-ED3693718510}.Release|Any CPU.ActiveCfg = Release|Any CPU

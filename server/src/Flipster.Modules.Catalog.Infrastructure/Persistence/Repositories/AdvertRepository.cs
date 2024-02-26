@@ -15,7 +15,15 @@ public class AdvertRepository(
 
     public IEnumerable<Advert> GetAll()
     {
-        return _db.Adverts;
+        return _db.Adverts
+            .Include(a => a.Category);
+    }
+
+    public IEnumerable<Advert> GetByCategoryId(string categoryId)
+    {
+        return _db.Adverts
+            .Where(a => a.CategoryId == categoryId)
+            .Include(a => a.Category);
     }
 
     public Advert? GetById(string id)
@@ -42,7 +50,8 @@ public class AdvertRepository(
     {
         return _db.Adverts
             .Where(advert =>
-                (query == null || (advert.Title.Contains(query) || advert.Description.Contains(query))) &&
+                (advert.Status == Domain.Enums.Status.Active) &&
+                (query == null || (advert.Title.ToUpper().Contains(query.ToUpper()) || advert.Description.ToUpper().Contains(query.ToUpper()))) &&
                 ((min == -1 || max == -1) || (min <= advert.Price && advert.Price <= max)) &&
                 (categoryId == null || advert.CategoryId == categoryId) &&
                 (location == null || advert.Location == location))
