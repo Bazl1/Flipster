@@ -4,6 +4,8 @@ using Flipster.Modules.Catalog.Domain.Repositories;
 using Flipster.Modules.Catalog.Dtos;
 using Flipster.Shared.Domain.Errors;
 using Flispter.Shared.Contracts.Users;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

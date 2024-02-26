@@ -2,6 +2,7 @@ using AutoMapper;
 using Flipster.Modules.Catalog.Domain.Repositories;
 using Flipster.Modules.Catalog.Dtos;
 using Flipster.Shared.Contracts.Catalog.Dtos;
+using Flipster.Shared.Domain.Errors;
 using Flispter.Shared.Contracts.Catalog;
 using Flispter.Shared.Contracts.Users;
 
@@ -16,6 +17,8 @@ public class CatalogModule(
     public IAdvertDto? GetAdvertById(string id)
     {
         var advert = _advertRepository.GetById(id);
+        if (advert == null)
+            throw new FlipsterError("Advert with given id is not found.");
         var seller = _usersModule.GetUserById(advert.SellerId);
         return new AdvertDto
         {

@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Flipster.Modules.Users.Domain.Entities;
 using Flipster.Modules.Users.Domain.Repositories;
 using Flipster.Modules.Users.Dtos;
+using Flipster.Modules.Users.Infrastructure.Auth;
 using Flipster.Shared.Domain.Errors;
 using Flispter.Shared.Contracts.Catalog;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -25,7 +26,7 @@ public static class FavoritesEndpoints
         return builder;
     }
 
-    [Authorize]
+    [Authorize(AuthenticationSchemes = $"{FlipsterAuthenticationSchemes.CookieScheme.SchemeName},{JwtBearerDefaults.AuthenticationScheme}")]
     private static async Task<IResult> Create(
         HttpContext context,
         [FromServices] IFavoriteRepository favoriteRepository,
@@ -33,7 +34,7 @@ public static class FavoritesEndpoints
         [FromBody] Create.Request request)
     {
         var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (catalogModule.GetAdvertById(request.AdvertId) is Favorite favorite)
+        if (favoriteRepository.GetById(userId, request.AdvertId) is Favorite favorite)
         {
             favoriteRepository.Remove(favorite);
         }
@@ -44,8 +45,8 @@ public static class FavoritesEndpoints
         }
         return Results.Ok(new {});
     }
-    
-    [Authorize]
+
+    [Authorize(AuthenticationSchemes = $"{FlipsterAuthenticationSchemes.CookieScheme.SchemeName},{JwtBearerDefaults.AuthenticationScheme}")]
     private static async Task<IResult> Delete(
         HttpContext context,
         [FromServices] IFavoriteRepository favoriteRepository,
@@ -57,8 +58,8 @@ public static class FavoritesEndpoints
         favoriteRepository.Remove(favorite);
         return Results.Ok(new {});
     }
-    
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
+    [Authorize(AuthenticationSchemes = $"{FlipsterAuthenticationSchemes.CookieScheme.SchemeName},{JwtBearerDefaults.AuthenticationScheme}")]
     private static async Task<IResult> GetAllIds(
         HttpContext context,
         [FromServices] IFavoriteRepository favoriteRepository,
@@ -70,7 +71,7 @@ public static class FavoritesEndpoints
         return Results.Ok(favorites);
     }
 
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = $"{FlipsterAuthenticationSchemes.CookieScheme.SchemeName},{JwtBearerDefaults.AuthenticationScheme}")]
     private static async Task<IResult> GetAll(
         HttpContext context,
         [FromServices] IFavoriteRepository favoriteRepository,

@@ -41,7 +41,6 @@ public class FavoriteRepository(
     {
         return _db.Favorites
             .Where(f => f.UserId == userId)
-            .Include(f => f.User)
             .ToList();
     }
 
@@ -49,6 +48,12 @@ public class FavoriteRepository(
     {
         return _db.Favorites
             .Include(f => f.User)
+            .SingleOrDefault(f => f.UserId == userId && f.AdvertId == advertId);
+    }
+
+    public Favorite? GetById(string userId, string advertId)
+    {
+        return _db.Favorites
             .SingleOrDefault(f => f.UserId == userId && f.AdvertId == advertId);
     }
 }
