@@ -14,4 +14,5 @@ public interface IAdvertDto
     string CreatedAt { get; set; }
     ICategoryDto Category { get; set; }
     IContactDto Contact { get; set; }
+    int Views { get; set; }
 }

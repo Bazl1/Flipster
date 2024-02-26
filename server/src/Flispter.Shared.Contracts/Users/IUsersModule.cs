@@ -5,4 +5,5 @@ namespace Flispter.Shared.Contracts.Users;
 public interface IUsersModule
 {
     IUserDto? GetUserById(string userId);
+    IEnumerable<IFavoriteDto> GetFavoritesByUserId(string userId);
 }

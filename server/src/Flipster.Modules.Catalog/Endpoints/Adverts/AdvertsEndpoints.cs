@@ -37,6 +37,7 @@ internal static class AdvertsEndpoints
         HttpContext context,
         [FromServices] IAdvertRepository advertRepository,
         [FromServices] ICategoryRepository categoryRepository,
+        [FromServices] IViewRepository viewRepository,
         [FromServices] IUsersModule usersModule,
         [FromServices] IImageService imageService,
         [FromServices] IMapper mapper,
@@ -51,7 +52,7 @@ internal static class AdvertsEndpoints
             throw new FlipsterError("Category invalid. Category with given id is not found.");
         advert.Images = (await imageService.LoadImagesAsync(request.Images)).ToList();
         advertRepository.Add(advert);
-        var user = usersModule.GetUserById(advert.SellerId);
+        var seller = usersModule.GetUserById(advert.SellerId);
         var result = new AdvertDto
         {
             Id = advert.Id,
@@ -65,7 +66,8 @@ internal static class AdvertsEndpoints
             Status = advert.Status.ToString(),
             CreatedAt = advert.CreatedAt.ToString(),
             Category = mapper.Map<CategoryDto>(category),
-            Contact = new ContactDto { Id = advert.Id, Name = user.Name, Avatar = user.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber }
+            Contact = new ContactDto { Id = advert.Id, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber },
+            Views = viewRepository.GetCountByAdvertId(advert.Id)
         };
         return Results.Ok(result);
     }
@@ -75,6 +77,7 @@ internal static class AdvertsEndpoints
         HttpContext context,
         [FromServices] IAdvertRepository advertRepository,
         [FromServices] ICategoryRepository categoryRepository,
+        [FromServices] IViewRepository viewRepository,
         [FromServices] IUsersModule usersModule,
         [FromServices] IImageService imageService,
         [FromServices] ILogger<ImageService> _imageServiceLogger,
@@ -151,7 +154,8 @@ internal static class AdvertsEndpoints
             Status = advert.Status.ToString(),
             CreatedAt = advert.CreatedAt.ToString(),
             Category = mapper.Map<CategoryDto>(category),
-            Contact = new ContactDto { Id = advert.Id, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber }
+            Contact = new ContactDto { Id = advert.Id, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber },
+            Views = viewRepository.GetCountByAdvertId(advert.Id)
         };
         return Results.Ok(result);
     }
@@ -160,6 +164,7 @@ internal static class AdvertsEndpoints
     public static async Task<IResult> Delete(
         HttpContext context,
         [FromServices] IAdvertRepository advertRepository,
+        [FromServices] IViewRepository viewRepository,
         [FromRoute] string id)
     {
         var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -172,16 +177,20 @@ internal static class AdvertsEndpoints
         return Results.Ok(new {});
     }
 
+    [Authorize(AuthenticationSchemes = "Flipster.Cookies.Visitor")]
     private static async Task<IResult> GetById(
         HttpContext context,
         [FromServices] IAdvertRepository advertRepository,
         [FromServices] ICategoryRepository categoryRepository,
+        [FromServices] IViewRepository viewRepository,
         [FromServices] IUsersModule usersModule,
         [FromServices] IMapper mapper,
         [FromRoute] string id)
     {
+        var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (advertRepository.GetById(id) is not Advert advert)
             throw new FlipsterError("Advert with given id is not found.");
+        viewRepository.Add(new View { AdvertId = advert.Id, UserId = userId });
         var seller = usersModule.GetUserById(advert.SellerId);
         var result = new AdvertDto
         {
@@ -196,7 +205,8 @@ internal static class AdvertsEndpoints
             Status = advert.Status.ToString(),
             CreatedAt = advert.CreatedAt.ToString(),
             Category = mapper.Map<CategoryDto>(advert.Category),
-            Contact = new ContactDto { Id = advert.Id, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber }
+            Contact = new ContactDto { Id = advert.Id, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber },
+            Views = viewRepository.GetCountByAdvertId(advert.Id)
         };
         return Results.Ok(result);
     }
@@ -204,6 +214,7 @@ internal static class AdvertsEndpoints
     public static async Task<IResult> GetAll(
         HttpContext context,
         [FromServices] IAdvertRepository advertRepository,
+        [FromServices] IViewRepository viewRepository,
         [FromServices] IUsersModule usersModule,
         [FromServices] IMapper mapper,
         [FromQuery] int page,
@@ -213,7 +224,8 @@ internal static class AdvertsEndpoints
         [FromQuery] int min = -1,
         [FromQuery] int max = -1,
         [FromQuery] string? categoryId = null,
-        [FromQuery] string? location = null)
+        [FromQuery] string? location = null,
+        [FromQuery] string? sort = null)
     {
         var result = new GetAll.Response();
         List<Advert> items;
@@ -222,6 +234,13 @@ internal static class AdvertsEndpoints
         else
             items = advertRepository.Search(query: query, min: min, max: max, categoryId: categoryId, location: location).ToList();
         result.PageCount = (int)Math.Ceiling((double)items.Count / (double)limit);
+        items = sort switch
+        {
+            "PopularFirst" => items,
+            "CheapOnesFirst" => items.OrderBy(i => i.Price.Value).ToList(),
+            "DearOnesFirst" => items.OrderByDescending(i => i.Price.Value).ToList(),
+            _ => items
+        };
         result.Adverts = items
             .Skip((page - 1) * limit)
             .Take(limit)
@@ -241,7 +260,8 @@ internal static class AdvertsEndpoints
                     Status = advert.Status.ToString(),
                     CreatedAt = advert.CreatedAt.ToString(),
                     Category = mapper.Map<CategoryDto>(advert.Category),
-                    Contact = new ContactDto { Id = advert.Id, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber }
+                    Contact = new ContactDto { Id = advert.Id, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber },
+                    Views = viewRepository.GetCountByAdvertId(advert.Id)
                 };
             });
         return Results.Ok(result);
