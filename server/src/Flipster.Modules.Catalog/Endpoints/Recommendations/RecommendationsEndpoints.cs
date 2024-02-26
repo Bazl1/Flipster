@@ -95,11 +95,11 @@ internal static class RecommendationsEndpoints
         var response = new GetRecommendations.Response();
         var adverts = advertRepository
             .GetByCategoryId(advert.CategoryId)
-            .Where(a => userId == null || a.SellerId != userId)
+            .Where(a => (userId == null || a.SellerId != userId) && (a.Id != id))
             .OrderByDescending(a => advert.Title.ToUpper().Split(' ').Any(kw => a.Title.ToUpper().Contains(kw) || a.Description.ToUpper().Contains(kw)))
             .ThenByDescending(a => viewRepository.GetCountByAdvertId(a.Id))
             .ThenBy(a => a.CreatedAt);
-        response.PageCount = (int)Math.Ceiling((float)adverts.Count() / (float)limit);
+        response.PageCount = 0;// (int)Math.Ceiling((float)adverts.Count() / (float)limit);
         response.Adverts = adverts
             .Skip((page - 1) * limit)
             .Take(limit)

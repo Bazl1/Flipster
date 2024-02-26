@@ -46,15 +46,15 @@ public class AdvertRepository(
         _db.SaveChanges();
     }
 
-    public IEnumerable<Advert> Search(string? query = null, int min = -1, int max = -1, string? categoryId = null, string? location = null)
+    public IEnumerable<Advert> Search(string query = "", int min = -1, int max = -1, string categoryId = "", string location = "")
     {
         return _db.Adverts
             .Where(advert =>
                 (advert.Status == Domain.Enums.Status.Active) &&
-                (query == null || (advert.Title.ToUpper().Contains(query.ToUpper()) || advert.Description.ToUpper().Contains(query.ToUpper()))) &&
+                (query == "" || (advert.Title.ToUpper().Contains(query.ToUpper()) || advert.Description.ToUpper().Contains(query.ToUpper()))) &&
                 ((min == -1 || max == -1) || (min <= advert.Price && advert.Price <= max)) &&
-                (categoryId == null || advert.CategoryId == categoryId) &&
-                (location == null || advert.Location == location))
+                (categoryId == "" || advert.CategoryId == categoryId) &&
+                (location == "" || advert.Location == location))
             .Include(a => a.Category);
     }
 
