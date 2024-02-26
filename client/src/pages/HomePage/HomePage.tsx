@@ -7,7 +7,7 @@ import LocationSelect, { ILocationList } from "../../component/LocationSelect/Lo
 import HorizontalList from "../../component/HorizontalList/HorizontalList";
 import CategoriesService from "../../services/CategoriesService";
 import { ICategory } from "../../types/response/CategoryResponse";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useGetAdvertsQuery } from "../../services/AdvertService";
 import { AdvertResponse } from "../../types/response/AdvertResponse";
 
@@ -24,6 +24,7 @@ const HomePage = () => {
     const [activePage, setActivePage] = useState<number>(1);
 
     const { data } = useGetAdvertsQuery({ limit: 12, page: activePage });
+    const navigate = useNavigate();
 
     const {
         register,
@@ -33,7 +34,9 @@ const HomePage = () => {
         mode: "onBlur",
     });
 
-    const Submit = async () => {};
+    const Submit = () => {
+        navigate(`/search/${searchInput}/${location?.label || ""}`);
+    };
 
     useEffect(() => {
         FetchCategoriesData().then((res) => {

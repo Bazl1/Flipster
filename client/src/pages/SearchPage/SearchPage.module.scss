@@ -8,3 +8,11 @@
         border-radius: 3px;
     }
 }
+
+.adverts {
+    margin: 100px 0;
+    &__search_title {
+        font-size: 32px;
+        font-weight: 500;
+    }
+}
