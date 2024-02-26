@@ -21,12 +21,13 @@ public static class FavoritesEndpoints
     {
         builder.MapPost("/", (Delegate)Create);
         builder.MapDelete("/", (Delegate)Delete);
-        builder.MapPost("/synchronizing", (Delegate)Synchronizing);
-            
+        builder.MapGet("/ids", (Delegate)GetAllIds);
+        builder.MapGet("/", (Delegate)GetAll);
+
         return builder;
     }
 
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize]
     private static async Task<IResult> Create(
         HttpContext context,
         [FromServices] IFavoriteRepository favoriteRepository,
@@ -41,7 +42,7 @@ public static class FavoritesEndpoints
         return Results.Ok(new {});
     }
     
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize]
     private static async Task<IResult> Delete(
         HttpContext context,
         [FromServices] IFavoriteRepository favoriteRepository,
@@ -55,23 +56,36 @@ public static class FavoritesEndpoints
     }
     
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    private static async Task<IResult> Synchronizing(
+    private static async Task<IResult> GetAllIds(
         HttpContext context,
         [FromServices] IFavoriteRepository favoriteRepository,
-        [FromServices] ICatalogModule catalogModule,
-        [FromBody] Synchronizing.Request request)
+        [FromServices] ICatalogModule catalogModule)
     {
         var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        foreach (var id in request.Ids)
-        {
-            if (catalogModule.GetAdvertById(id) is not null)
-            {
-                var favorite = new Favorite { UserId = userId, AdvertId = id };
-                favoriteRepository.Add(favorite);
-            }
-        }
         var favorites = favoriteRepository.GetByUserId(userId)
             .Select(f => new FavoriteDto { Id = f.AdvertId });
         return Results.Ok(favorites);
+    }
+
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    private static async Task<IResult> GetAll(
+        HttpContext context,
+        [FromServices] IFavoriteRepository favoriteRepository,
+        [FromServices] IUserRepository userRepository,
+        [FromServices] ICatalogModule catalogModule,
+        [FromQuery] int page,
+        [FromQuery] int limit)
+    {
+        var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var response = new GetAll.Response();
+        var adverts = favoriteRepository
+            .GetByUserId(userId)
+            .Join(catalogModule.GetAll(), f => f.AdvertId, a => a.Id, (f, a) => a);
+        response.PageCount = (int)Math.Ceiling((float)adverts.Count() / (float)limit);
+        response.Adverts = adverts
+            .Skip((page - 1) * limit)
+            .Take(limit)
+            .ToList();
+        return Results.Ok(response);
     }
 }
