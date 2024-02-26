@@ -34,6 +34,7 @@ internal static class RecommendationsEndpoints
         string? userId = null;
         try { userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier); } catch { };
 
+        var response = new GetRecommendations.Response();
         var adverts = advertRepository.GetAll()
             .Where(a => userId == null ||
                 a.SellerId != userId ||
@@ -45,7 +46,9 @@ internal static class RecommendationsEndpoints
                     .Contains(a.CategoryId)
             )
             .OrderByDescending(a => viewRepository.GetCountByAdvertId(a.Id))
-            .ThenBy(a => a.CreatedAt)
+            .ThenBy(a => a.CreatedAt);
+        response.PageCount = (int)Math.Ceiling((float)adverts.Count() / (float)limit);
+        response.Adverts = adverts
             .Skip((page - 1) * limit)
             .Take(limit)
             .Select(advert =>
@@ -70,8 +73,7 @@ internal static class RecommendationsEndpoints
             })
             .ToList();
 
-
-        return Results.Ok(adverts);
+        return Results.Ok(response);
     }
 
     private static async Task<IResult> GetRecommendationsByAdvertId(
@@ -80,22 +82,25 @@ internal static class RecommendationsEndpoints
         [FromServices] IViewRepository viewRepository,
         [FromServices] IUsersModule usersModule,
         [FromServices] IMapper mapper,
+        [FromRoute] string id,
         [FromQuery] int page,
-        [FromQuery] int limit,
-        [FromRoute] string id)
+        [FromQuery] int limit = 4)
     {
         string? userId = null;
         try { userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier); } catch { };
-        
+
         if (advertRepository.GetById(id) is not Advert advert)
             throw new FlipsterError("Advert with given id is not found.");
 
+        var response = new GetRecommendations.Response();
         var adverts = advertRepository
             .GetByCategoryId(advert.CategoryId)
             .Where(a => userId == null || a.SellerId != userId)
             .OrderByDescending(a => advert.Title.ToUpper().Split(' ').Any(kw => a.Title.ToUpper().Contains(kw) || a.Description.ToUpper().Contains(kw)))
             .ThenByDescending(a => viewRepository.GetCountByAdvertId(a.Id))
-            .ThenBy(a => a.CreatedAt)
+            .ThenBy(a => a.CreatedAt);
+        response.PageCount = (int)Math.Ceiling((float)adverts.Count() / (float)limit);
+        response.Adverts = adverts
             .Skip((page - 1) * limit)
             .Take(limit)
             .Select(advert =>
@@ -120,6 +125,6 @@ internal static class RecommendationsEndpoints
             })
             .ToList();
 
-        return Results.Ok(adverts);
+        return Results.Ok(response);
     }
 }

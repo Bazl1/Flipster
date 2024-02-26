@@ -24,6 +24,7 @@ public static class DependencyInjection
 
         builder.MapGroup("api/categories")
             .MapCategoriesEndpoints();
+
         return builder;
     }
 
