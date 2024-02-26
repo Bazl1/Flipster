@@ -8,7 +8,7 @@ import HorizontalList from "../../component/HorizontalList/HorizontalList";
 import CategoriesService from "../../services/CategoriesService";
 import { ICategory } from "../../types/response/CategoryResponse";
 import { Link, useNavigate } from "react-router-dom";
-import { useGetAdvertsQuery } from "../../services/AdvertService";
+import { useGetRecommendedAdvertsQuery } from "../../services/AdvertService";
 import { AdvertResponse } from "../../types/response/AdvertResponse";
 
 const FetchCategoriesData = async () => {
@@ -23,7 +23,7 @@ const HomePage = () => {
     const [advertsList, setAdvertsList] = useState<AdvertResponse | null>(null);
     const [activePage, setActivePage] = useState<number>(1);
 
-    const { data } = useGetAdvertsQuery({ limit: 12, page: activePage });
+    const { data } = useGetRecommendedAdvertsQuery({ limit: 12, page: activePage });
     const navigate = useNavigate();
 
     const {

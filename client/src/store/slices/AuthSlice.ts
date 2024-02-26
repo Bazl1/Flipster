@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IUser } from "../../types/IUser";
 import AuthService from "../../services/AuthService";
-import axiosApi from "../../shared/axios";
 
 interface ILogin {
     email: string;
@@ -26,7 +25,6 @@ export const registration = createAsyncThunk(
     "auth/registration",
     async function ({ name, email, password }: IRegistration, { dispatch }) {
         try {
-            await axiosApi.post("/auth/visit");
             const response = await AuthService.registration(name, email, password);
             localStorage.setItem("token", response.data.accessToken);
             localStorage.setItem("antiforgeryToken", response.data.antiforgeryToken || "");
@@ -41,7 +39,6 @@ export const registration = createAsyncThunk(
 
 export const login = createAsyncThunk("auth/login", async function ({ email, password }: ILogin, { dispatch }) {
     try {
-        await axiosApi.post("/auth/visit");
         const response = await AuthService.login(email, password);
         localStorage.setItem("token", response.data.accessToken);
         localStorage.setItem("antiforgeryToken", response.data.antiforgeryToken || "");

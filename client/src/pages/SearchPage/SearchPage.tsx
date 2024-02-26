@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SearchBox from "../../component/SearchBox/SearchBox";
 import VerticalList from "../../component/VerticalList/VerticalList";
 import s from "./SearchPage.module.scss";
@@ -24,16 +24,13 @@ const SearchPage = () => {
 
     const [searchQuery, { data: searchData }] = useLazyGetAdvertsSearchQuery();
 
-    const handleSearch = useCallback(
-        async (searchParams: ISearchParams) => {
-            searchQuery({
-                limit: 12,
-                page: activePage,
-                ...searchParams,
-            });
-        },
-        [searchQuery, activePage],
-    );
+    const handleSearch = async (searchParams: ISearchParams) => {
+        searchQuery({
+            limit: 12,
+            page: activePage,
+            ...searchParams,
+        });
+    };
 
     useEffect(() => {
         searchQuery({

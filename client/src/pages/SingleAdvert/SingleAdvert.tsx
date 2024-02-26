@@ -7,7 +7,7 @@ import user from "../../shared/assets/img/user.png";
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import HorizontalList from "../../component/HorizontalList/HorizontalList";
-import { useGetAdvertForIdQuery } from "../../services/AdvertService";
+import { useGetAdvertForIdQuery, useGetRecommendedForAdvertQuery } from "../../services/AdvertService";
 import Loader from "../../component/Loader/Loader";
 
 type IParams = {
@@ -20,6 +20,7 @@ const SingleAdvert = () => {
 
     const AdvertId = id || "";
     const { data, isLoading, isError } = useGetAdvertForIdQuery({ id: AdvertId });
+    const { data: recommendedData } = useGetRecommendedForAdvertQuery({ id: AdvertId });
 
     const [active, setActive] = useState<boolean>(false);
 
@@ -115,7 +116,11 @@ const SingleAdvert = () => {
                         </div>
                     </div>
                 </div>
-                {/* <HorizontalList title="Similar advertisements" /> */}
+                <HorizontalList
+                    title="Similar advertisements"
+                    list={recommendedData || null}
+                    setActivePage={() => {}}
+                />
             </div>
         </section>
     );
