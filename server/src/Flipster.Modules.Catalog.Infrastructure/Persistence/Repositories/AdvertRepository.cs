@@ -52,7 +52,8 @@ public class AdvertRepository(
             .Where(advert =>
                 (advert.Status == Domain.Enums.Status.Active) &&
                 (query == "" || (advert.Title.ToUpper().Contains(query.ToUpper()) || advert.Description.ToUpper().Contains(query.ToUpper()))) &&
-                ((min == -1 || max == -1) || (min <= advert.Price && advert.Price <= max)) &&
+                (min == -1 || min <= advert.Price) &&
+                (max == -1 || max >= advert.Price) &&
                 (categoryId == "" || advert.CategoryId == categoryId) &&
                 (location == "" || advert.Location == location))
             .Include(a => a.Category);
