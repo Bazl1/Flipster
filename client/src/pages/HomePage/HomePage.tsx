@@ -35,7 +35,18 @@ const HomePage = () => {
     });
 
     const Submit = () => {
-        navigate(`/search/${searchInput}/${location?.label || ""}`);
+        if (searchInput && location) {
+            navigate(`/search/query/${searchInput}/location/${location.label}`);
+        }
+        if (searchInput && !location) {
+            navigate(`/search/query/${searchInput}`);
+        }
+        if (location && !searchInput) {
+            navigate(`/search/location/${location.label}`);
+        }
+        if (!searchInput && !location) {
+            navigate("/search/");
+        }
     };
 
     useEffect(() => {
@@ -64,9 +75,6 @@ const HomePage = () => {
                                 setValue={setSearchInput}
                                 register={register}
                                 errors={errors}
-                                validationOptions={{
-                                    required: "Required field",
-                                }}
                             />
                             <div className={s.search__select}>
                                 <LocationSelect value={location} setValue={setLocation} />

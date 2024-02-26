@@ -19,6 +19,7 @@ const VerticalListItem: React.FC<VarticalListItemProps> = ({ item, changes, hand
     const [like, setLike] = useState<boolean>(InitialLike);
 
     const navigate = useNavigate();
+    const toggleFavorite = useFavorite(item.id);
 
     return (
         <Link to={`/advert/${item.id}`} key={item.id} className={s.list__item}>
@@ -52,7 +53,7 @@ const VerticalListItem: React.FC<VarticalListItemProps> = ({ item, changes, hand
                                 onClick={(e) => {
                                     e.preventDefault();
                                     setLike(!like);
-                                    useFavorite(item.id);
+                                    toggleFavorite();
                                 }}
                                 className={s.list__item_btn}
                             >

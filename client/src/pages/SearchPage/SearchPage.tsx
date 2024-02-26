@@ -12,12 +12,13 @@ export interface ISearchParams {
     location: string;
     min: string;
     max: string;
+    sort: string;
 }
 
 const SearchPage = () => {
     const { search, location } = useParams();
     const searchStr = search || "";
-    const locationStr = location || "null";
+    const locationStr = location || "";
 
     const [data, setData] = useState<AdvertResponse | null>(null);
     const [activePage, setActivePage] = useState<number>(1);

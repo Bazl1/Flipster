@@ -33,7 +33,7 @@ const baseQueryWithRetry = retry(baseQueryWithRefresh, { maxRetries: 2 });
 
 export const apiRTK = createApi({
     baseQuery: baseQueryWithRetry,
-    tagTypes: ["Adverts", "MyAdverts"],
+    tagTypes: ["Adverts", "MyAdverts", "Favorite"],
     endpoints: () => ({}),
     keepUnusedDataFor: 60,
 });
