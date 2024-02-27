@@ -3,6 +3,7 @@ using Flipster.Modules.Users.Domain.Entities;
 using Flipster.Modules.Users.Domain.Repositories;
 using Flipster.Modules.Users.Dtos;
 using Flipster.Modules.Users.Infrastructure.Auth;
+using Flipster.Shared.Contracts.Catalog.Dtos;
 using Flipster.Shared.Domain.Errors;
 using Flispter.Shared.Contracts.Catalog;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -43,7 +44,7 @@ public static class FavoritesEndpoints
             var favorite1 = new Favorite { UserId = userId, AdvertId = request.AdvertId };
             favoriteRepository.Add(favorite1);
         }
-        return Results.Ok(new {});
+        return Results.Ok(request);
     }
 
     [Authorize(AuthenticationSchemes = $"{FlipsterAuthenticationSchemes.CookieScheme.SchemeName},{JwtBearerDefaults.AuthenticationScheme}")]
