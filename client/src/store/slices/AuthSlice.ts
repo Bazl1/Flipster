@@ -34,7 +34,6 @@ export const registration = createAsyncThunk(
 
             const favorites = await axiosApi.get<{ id: string }>("/favorites/ids");
             localStorage.setItem("favorite", JSON.stringify(favorites.data));
-            console.log(favorites.data);
 
             return response.status;
         } catch (error) {
@@ -53,7 +52,6 @@ export const login = createAsyncThunk("auth/login", async function ({ email, pas
 
         const favorites = await axiosApi.get<{ id: string }>("/favorites/ids");
         localStorage.setItem("favorite", JSON.stringify(favorites.data));
-        console.log(favorites.data);
 
         return response.status;
     } catch (error) {
