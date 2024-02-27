@@ -63,7 +63,31 @@ function App() {
                     />
                     {/* public */}
                     <Route
-                        path="/search/:search/:location?"
+                        path="/search/query/:search/location/:location"
+                        element={
+                            <LayoutMain>
+                                <SearchPage />
+                            </LayoutMain>
+                        }
+                    />
+                    <Route
+                        path="/search/query/:search"
+                        element={
+                            <LayoutMain>
+                                <SearchPage />
+                            </LayoutMain>
+                        }
+                    />
+                    <Route
+                        path="/search/location/:location"
+                        element={
+                            <LayoutMain>
+                                <SearchPage />
+                            </LayoutMain>
+                        }
+                    />
+                    <Route
+                        path="/search/"
                         element={
                             <LayoutMain>
                                 <SearchPage />

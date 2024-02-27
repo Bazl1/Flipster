@@ -14,6 +14,8 @@ interface HorizontalListItemProps {
 const HorizontalListItem: React.FC<HorizontalListItemProps> = ({ item, InitialLike }) => {
     const [like, setLike] = useState<boolean>(InitialLike);
 
+    const toggleFavorite = useFavorite(item.id);
+
     return (
         <Link to={`/advert/${item.id}`} key={item.id} className={s.list__item}>
             <img className={s.list__item_img} src={item.images[0]} alt="img" />
@@ -29,7 +31,7 @@ const HorizontalListItem: React.FC<HorizontalListItemProps> = ({ item, InitialLi
                     onClick={(e) => {
                         e.preventDefault();
                         setLike(!like);
-                        useFavorite(item.id);
+                        toggleFavorite();
                     }}
                     className={s.list__item_like}
                 >

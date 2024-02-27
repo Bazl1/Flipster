@@ -49,11 +49,12 @@ const SearchBox = ({ onSearch }: SearchBoxProps) => {
 
     const Submit = async (e: any) => {
         e.preventDefault();
-        const categoryId = category?.value || "null";
-        const locationLabel = locationSelect?.label || "null";
+        const categoryId = category?.value || "";
+        const locationLabel = locationSelect?.label || "";
+        const sortStr = sorting?.label || "";
         const minStr = min || "-1";
         const maxStr = max || "-1";
-        onSearch({ query, categoryId, location: locationLabel, min: minStr, max: maxStr });
+        onSearch({ query, categoryId, location: locationLabel, min: minStr, max: maxStr, sort: sortStr });
     };
 
     useEffect(() => {
@@ -106,7 +107,7 @@ const SearchBox = ({ onSearch }: SearchBoxProps) => {
                 </label>
                 <label className={s.search__columns}>
                     <Select
-                        classNamePrefix="form-select"
+                        classNamePrefix="form-select-search"
                         options={categoriesList}
                         onChange={(selectedOptions) => setCategory(selectedOptions)}
                         value={category}
@@ -116,7 +117,7 @@ const SearchBox = ({ onSearch }: SearchBoxProps) => {
                 </label>
                 <label className={`${s.search__columns} ${s.search__columns_small}`}>
                     <Select
-                        classNamePrefix="form-select"
+                        classNamePrefix="form-select-search"
                         options={[
                             {
                                 value: "PopularFirst",

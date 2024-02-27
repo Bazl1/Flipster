@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IUser } from "../../types/IUser";
 import AuthService from "../../services/AuthService";
+import axiosApi from "../../shared/axios";
 
 interface ILogin {
     email: string;
@@ -30,6 +31,11 @@ export const registration = createAsyncThunk(
             localStorage.setItem("antiforgeryToken", response.data.antiforgeryToken || "");
             dispatch(setAuth(true));
             dispatch(setUser(response.data.user));
+
+            const favorites = await axiosApi.get<{ id: string }>("/favorites/ids");
+            localStorage.setItem("favorite", JSON.stringify(favorites.data));
+            console.log(favorites.data);
+
             return response.status;
         } catch (error) {
             console.log(error);
@@ -44,6 +50,11 @@ export const login = createAsyncThunk("auth/login", async function ({ email, pas
         localStorage.setItem("antiforgeryToken", response.data.antiforgeryToken || "");
         dispatch(setAuth(true));
         dispatch(setUser(response.data.user));
+
+        const favorites = await axiosApi.get<{ id: string }>("/favorites/ids");
+        localStorage.setItem("favorite", JSON.stringify(favorites.data));
+        console.log(favorites.data);
+
         return response.status;
     } catch (error) {
         console.log(error);
@@ -57,6 +68,7 @@ export const logout = createAsyncThunk("auth/logout", async function (_, { dispa
         localStorage.removeItem("antiforgeryToken");
         dispatch(setAuth(false));
         dispatch(setUser({} as IUser));
+        await axiosApi.post("/auth/visit");
     } catch (error) {
         console.log(error);
     }

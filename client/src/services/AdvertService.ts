@@ -85,7 +85,7 @@ export const advertApi = apiRTK.injectEndpoints({
 
         getRecommendedForAdvert: build.query<AdvertResponse, { id: string }>({
             query: (params) => ({
-                url: `catalog/recommendations/${params.id}`,
+                url: `catalog/recommendations/${params.id}/?page=${1}`,
                 method: "GET",
             }),
             providesTags: (result) => {
@@ -116,10 +116,11 @@ export const advertApi = apiRTK.injectEndpoints({
                 location?: string;
                 min?: string;
                 max?: string;
+                sort?: string;
             }
         >({
             query: (params) => ({
-                url: `/catalog/?page=${params.page}&limit=${params.limit}&query=${params.query}&categoryId=${params.categoryId || null}&location=${params.location || null}&min=${params.min || -1}&max=${params.max || -1}`,
+                url: `/catalog/?page=${params.page}&limit=${params.limit}&query=${params.query || ""}&categoryId=${params.categoryId || ""}&location=${params.location || ""}&min=${params.min || -1}&max=${params.max || -1}&sort=${params.sort || ""}`,
                 method: "GET",
             }),
             providesTags: (result) => {
