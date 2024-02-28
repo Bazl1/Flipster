@@ -13,6 +13,7 @@ export interface Advert {
     createAt: string;
     isFree: boolean;
     price: string;
+    views: number;
     contact: {
         id: string;
         name?: string;

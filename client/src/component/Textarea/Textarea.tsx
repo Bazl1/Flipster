@@ -8,6 +8,7 @@ interface InputProps {
     register: any;
     errors: any;
     validationOptions?: any;
+    rows?: number;
     dataСy?: string;
 }
 
@@ -20,6 +21,7 @@ const Textarea: React.FC<InputProps> = ({
     errors,
     validationOptions,
     dataСy = null,
+    rows = 10,
 }) => {
     return (
         <label className={s.input__columns}>
@@ -32,13 +34,9 @@ const Textarea: React.FC<InputProps> = ({
                 }}
                 className={s.input}
                 data-cy={dataСy}
-                rows={10}
+                rows={rows}
             ></textarea>
-            {errors[registerName] && (
-                <p className={s.input__error}>
-                    {errors[registerName]?.message}
-                </p>
-            )}
+            {errors[registerName] && <p className={s.input__error}>{errors[registerName]?.message}</p>}
         </label>
     );
 };

@@ -12,5 +12,6 @@ export interface IAdvert {
     location: string;
     createAt: string;
     categoryId: number;
+    views?: number;
     images: string[] | FormData;
 }

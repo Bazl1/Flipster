@@ -3,13 +3,13 @@ import { AdvertResponse } from "../types/response/AdvertResponse";
 
 export const favoriteAdvertApi = apiRTK.injectEndpoints({
     endpoints: (build) => ({
-        toggleAddFavorite: build.mutation<{ advertId: string }, { advertId: string }>({
+        toggleAddFavorite: build.mutation<void, { advertId: string }>({
             query: (params) => ({
                 url: `/favorites`,
                 method: "POST",
                 body: params,
             }),
-            invalidatesTags: (advert) => (advert?.advertId ? [{ type: "Favorite", id: advert?.advertId }] : []),
+            invalidatesTags: () => [{ type: "Favorite", id: "LIST" }],
         }),
 
         getFavorites: build.query<AdvertResponse, { page: number; limit: number }>({
