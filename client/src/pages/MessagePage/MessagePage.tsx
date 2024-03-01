@@ -1,45 +1,44 @@
 import { useForm } from "react-hook-form";
-import Textarea from "../../component/Textarea/Textarea";
 import s from "./MessagePage.module.scss";
 import { useState } from "react";
+import MessageItem from "../../component/MessageItem/MessageItem";
 
 const MessagePage = () => {
     const [message, setMessage] = useState<string>("");
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm({
+
+    const { register, handleSubmit } = useForm({
         mode: "onBlur",
     });
+
+    const Submit = () => {};
+
     return (
-        <section className={s.message}>
+        <section className={s.message} onSubmit={handleSubmit(Submit)}>
             <div className="container">
                 <div className={s.message__inner}>
                     <div className={s.message__box}>
-                        <div className={s.message__item}>
-                            <p className={s.message__item_text}>Text fdsfs dsf fds fsdfdsf</p>
-                        </div>
-                        <div className={`${s.message__item} ${s.message__item_me}`}>
-                            <p className={s.message__item_text}>Text fdsfs dsf fds fsdfdsf</p>
-                        </div>
-                        <div className={s.message__item}>
-                            <p className={s.message__item_text}>Text fdsfs dsf fds fsdfdsf</p>
-                        </div>
-                        <div className={s.message__item}>
-                            <p className={s.message__item_text}>Text fdsfs dsf fds fsdfdsf</p>
-                        </div>
+                        <MessageItem />
+                        <MessageItem myMessage={true} />
+                        <MessageItem />
+                        <MessageItem />
+                        <MessageItem />
+                        <MessageItem />
+                        <MessageItem />
+                        <MessageItem />
+                        <MessageItem />
                     </div>
                     <form className={s.message__form}>
-                        <Textarea
-                            text="Type your message"
-                            registerName="message"
-                            register={register}
-                            errors={errors}
+                        <textarea
+                            {...register("textarea", {
+                                required: "Required field",
+                            })}
                             value={message}
-                            setValue={setMessage}
-                            rows={6}
-                        />
+                            onChange={(e) => {
+                                setMessage(e.target.value);
+                            }}
+                            className={s.message__textarea}
+                            rows={5}
+                        ></textarea>
                         <button className={s.message__btn} type="submit">
                             Submit
                         </button>
