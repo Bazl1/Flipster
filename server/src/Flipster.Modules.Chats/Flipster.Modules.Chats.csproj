@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.2" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Flipster.Modules.Chats.Domain\Flipster.Modules.Chats.Domain.csproj" />
+    <ProjectReference Include="..\Flipster.Modules.Chats.Infrastructure\Flipster.Modules.Chats.Infrastructure.csproj" />
+    <ProjectReference Include="..\Flispter.Shared.Contracts\Flispter.Shared.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

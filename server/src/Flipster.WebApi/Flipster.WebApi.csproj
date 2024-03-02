@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Flipster.Modules.Catalog\Flipster.Modules.Catalog.csproj" />
+    <ProjectReference Include="..\Flipster.Modules.Chats\Flipster.Modules.Chats.csproj" />
     <ProjectReference Include="..\Flipster.Modules.Users\Flipster.Modules.Users.csproj" />
   </ItemGroup>
 
