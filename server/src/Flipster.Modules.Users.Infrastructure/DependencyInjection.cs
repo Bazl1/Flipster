@@ -62,6 +62,20 @@ public static class DependencyInjection
                     ValidAudience = tokenOptions.Audience,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SecretKey))
                 };
+                opt.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context => {
+                        var accessToken = context.Request.Query["access_token"];
+
+                        var path = context.HttpContext.Request.Path;
+                        if (string.IsNullOrEmpty(accessToken) &&
+                            (path.StartsWithSegments("/hub")))
+                        {
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
             })
             .AddCookie(FlipsterAuthenticationSchemes.CookieScheme.SchemeName, opt => opt.Cookie.Name = FlipsterAuthenticationSchemes.CookieScheme.CookieName);
         services.AddAuthorization();
