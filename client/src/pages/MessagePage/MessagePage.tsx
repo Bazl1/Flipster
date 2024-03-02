@@ -11,7 +11,7 @@ import * as signalR from "@microsoft/signalr";
 
 let connection = new signalR.HubConnectionBuilder()
     .withUrl("http://localhost:5145/hubs/chats", {
-        accessTokenFactory: () => `Bearer ${localStorage.getItem("token")}`,
+        accessTokenFactory: () => `${localStorage.getItem("token")}`,
     })
     .build();
 
@@ -30,6 +30,7 @@ const MessagePage = () => {
     const { id } = useParams();
     const chatId = id || "";
 
+    const [loading, setLoading] = useState<boolean>(true);
     const [allMessages, setAllMessages] = useState<IMessage[] | null>(null);
     const [message, setMessage] = useState<string>("");
 
@@ -51,12 +52,13 @@ const MessagePage = () => {
     }, []);
 
     const handleSendMessage = () => {
-        console.log();
+        console.log("submit");
         connection.invoke("SendMessage", chatId, message);
     };
 
     const handleAddMessage = (data: string) => {
         const response: IMessage = JSON.parse(data);
+        console.log([...(allMessages || []), response]);
         setAllMessages([...(allMessages || []), response]);
     };
 
@@ -88,11 +90,12 @@ const MessagePage = () => {
                         {allMessages && allMessages.length > 0 ? (
                             allMessages?.map((message: IMessage) => {
                                 let myMessage: boolean = false;
-                                if (message.id === user.user.id) {
+                                if (message.from.id === user.user.id) {
                                     myMessage = true;
                                 }
                                 return (
                                     <MessageItem
+                                        key={message.id}
                                         id={message.id}
                                         title={message.text}
                                         avatar={message.from.avatar}
