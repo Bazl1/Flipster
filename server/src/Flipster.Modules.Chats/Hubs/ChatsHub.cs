@@ -50,6 +50,8 @@ public class ChatsHub(
             await Clients.Caller.SendAsync(ErrorEvent, "You cannot delete a conversation partner's message.");
             return;
         }
+        message.Text = "This message has been deleted.";
+        _messageRepository.Update(message);
         if (Chats[message.ChatId].TryGetValue(message.ToId, out string? toConnectionId))
         {
             await Clients.Client(toConnectionId).SendAsync(RemoveMessageEvent, message.Id);

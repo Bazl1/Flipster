@@ -1,6 +1,7 @@
 ﻿using Flipster.Modules.Chats.Endpoints.Chats;
 using Flipster.Modules.Chats.Endpoints.Messages;
 using Flipster.Modules.Chats.Hubs;
+using Flipster.Modules.Chats.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
@@ -22,9 +23,10 @@ public static class DependencyInjection
         return builder;
     }
 
-    public static IServiceCollection AddUsersModule(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddChatsModule(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSignalR();
+        services.AddInfrastructure(configuration);
         return services;
     }
 }
