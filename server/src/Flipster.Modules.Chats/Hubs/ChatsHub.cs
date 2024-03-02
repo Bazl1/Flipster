@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
-using System.Text.Json;
 
 namespace Flipster.Modules.Chats.Hubs;
 
@@ -20,13 +19,13 @@ public class ChatsHub(
     private const string ErrorEvent = "e:error";
 
     public Dictionary<string, string> Users = new();
-
+    
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task StartReceivingMessages(string chatId)
     {
         var userId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
         Users.Add(userId, Context.ConnectionId);
-        await Groups.AddToGroupAsync(chatId, Context.ConnectionId);
+        await Groups.AddToGroupAsync(Context.ConnectionId, chatId);
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
