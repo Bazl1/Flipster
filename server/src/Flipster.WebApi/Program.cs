@@ -40,7 +40,5 @@ app.UseStaticFiles();
 app
     .MapUsersModuleEndpoints()
     .MapCatalogModuleEndpoints();
-app.MapHub<>("/");
-
 
 app.Run();
