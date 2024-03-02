@@ -1,5 +1,7 @@
 ﻿using Flipster.Modules.Chats.Domain.Repositories;
+using Flipster.Modules.Chats.Infrastructure.Persistence;
 using Flipster.Modules.Chats.Infrastructure.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,7 +14,8 @@ public static class DependencyInjection
         services
             .AddTransient<IChatRepository, ChatRepository>()
             .AddTransient<IMessageRepository, MessageRepository>();
-
+        services.AddDbContext<ChatsModuleDbContext>(opt =>
+            opt.UseInMemoryDatabase("Flipster.InMemoryDatabase"));
         return services;
     }
 }
