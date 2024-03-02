@@ -95,6 +95,7 @@ public class ChatsHub(
             { 
                 PropertyNameCaseInsensitive = true 
             });
+        await Clients.Client(Chats[chatId][to]).SendAsync(RemoveMessageEvent, messageResult);
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
