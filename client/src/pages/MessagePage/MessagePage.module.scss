@@ -50,4 +50,15 @@
         box-shadow: 0 0 5px 2px $light-priority;
         padding: 30px;
     }
+    &__chat_title {
+        display: inline-flex;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 500;
+        background: $light-priority;
+        padding: 12px 30px;
+        border-radius: 20px;
+        margin: 0 auto;
+        box-shadow: 0 0 5px 1px rgba($black-priority, 0.1);
+    }
 }

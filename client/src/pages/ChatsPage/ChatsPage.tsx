@@ -32,13 +32,13 @@ const ChatsPage = () => {
                 <div className={s.message__inner}>
                     <h2 className={s.message__title}>Your chats</h2>
                     <div className={s.message__items}>
-                        {chats ? (
+                        {chats && chats.length > 0 ? (
                             chats.map((chat: IChat) => {
                                 return (
                                     <div key={chat.id} className={s.message__item}>
                                         <div className={s.message__item_box}>
                                             <h3 className={s.message__item_title}>{chat.title}</h3>
-                                            <Link to={"/"} className={s.message__user}>
+                                            <Link to={`/profile/${chat.interlocutor.id}`} className={s.message__user}>
                                                 <img
                                                     className={s.message__avatar}
                                                     src={

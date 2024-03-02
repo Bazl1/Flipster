@@ -48,7 +48,7 @@ function App() {
                         }
                     />
                     <Route
-                        path="/message"
+                        path="/chats"
                         element={
                             <LayoutMain>
                                 <ChatsPage />
