@@ -56,10 +56,10 @@ const MessagePage = () => {
         connection.invoke("SendMessage", chatId, message);
     };
 
-    const handleAddMessage = (data: string) => {
-        const response: IMessage = JSON.parse(data);
-        console.log([...(allMessages || []), response]);
-        setAllMessages([...(allMessages || []), response]);
+    const handleAddMessage = (message: IMessage) => {
+        // const response: IMessage = JSON.parse(data);
+        console.log(message);
+        setAllMessages([...(allMessages || []), message]);
     };
 
     const handleRemovedMessage = (id: string) => {

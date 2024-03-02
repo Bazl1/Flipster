@@ -1,4 +1,5 @@
-﻿using Flipster.Modules.Chats.Domain.Entities;
+﻿using AutoMapper;
+using Flipster.Modules.Chats.Domain.Entities;
 using Flipster.Modules.Chats.Domain.Repositories;
 using Flipster.Modules.Chats.Dtos;
 using Flispter.Shared.Contracts.Users;
@@ -72,26 +73,21 @@ public class ChatsHub(
         _messageRepository.Add(message);
 
         var user = _usersModule.GetUserById(userId);
-        var messageResult = JsonSerializer.Serialize(
-            new MessageDto
-            {
-                Id = message.Id,
-                From = new UserDto { Id = user.Id, Name = user.Name, Avatar = user.Avatar },
-                Text = message.Text,
-                IsRead = message.IsRead,
-                CreatedAt = message.CreatedAt.ToString("dd.MM.yyyy H:mm"),
-            }, 
-            options: new JsonSerializerOptions
-            { 
-                PropertyNameCaseInsensitive = true 
-            });
+        var messageResult = new MessageDto
+        {
+            Id = message.Id,
+            From = new UserDto { Id = user.Id, Name = user.Name, Avatar = user.Avatar },
+            Text = message.Text,
+            IsRead = message.IsRead,
+            CreatedAt = message.CreatedAt.ToString("dd.MM.yyyy H:mm"),
+        };
 
         if (!interlocutorOnline)
         {
-            await Clients.Caller.SendAsync(RemoveMessageEvent, messageResult);
+            await Clients.Caller.SendAsync(NewMessageEvent, messageResult);
         }
 
-        await Clients.Group(chatId).SendAsync(RemoveMessageEvent, messageResult);
+        await Clients.Group(chatId).SendAsync(NewMessageEvent, messageResult);
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
