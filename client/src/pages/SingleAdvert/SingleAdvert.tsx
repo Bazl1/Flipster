@@ -9,6 +9,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import HorizontalList from "../../component/HorizontalList/HorizontalList";
 import { useGetAdvertForIdQuery, useGetRecommendedForAdvertQuery } from "../../services/AdvertService";
 import Loader from "../../component/Loader/Loader";
+import ChatsService from "../../services/ChatsService";
 
 type IParams = {
     [key: string]: string | undefined;
@@ -23,6 +24,11 @@ const SingleAdvert = () => {
     const { data: recommendedData } = useGetRecommendedForAdvertQuery({ id: AdvertId });
 
     const [active, setActive] = useState<boolean>(false);
+
+    const handleCreateChat = async () => {
+        const response = await ChatsService.createChat(AdvertId);
+        navigate(`/message/${response.data.id}`);
+    };
 
     if (isLoading) {
         return <Loader />;
@@ -98,7 +104,9 @@ const SingleAdvert = () => {
                             </div>
                         </Link>
                         <div className={s.advert__btns}>
-                            <button className={s.advert__user_btn}>Send Message</button>
+                            <button onClick={() => handleCreateChat()} className={s.advert__user_btn}>
+                                Send Message
+                            </button>
                             {data?.contact.phoneNumber ? (
                                 !active ? (
                                     <button onClick={() => setActive(true)} className={s.advert__user_btn}>

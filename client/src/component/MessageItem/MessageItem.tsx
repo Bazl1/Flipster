@@ -8,9 +8,12 @@ import useOutside from "../../shared/hooks/useOutside";
 
 interface MessageItemProps {
     myMessage?: boolean;
+    title: string;
+    avatar: string;
+    data: string;
 }
 
-const MessageItem = memo(({ myMessage = false }: MessageItemProps) => {
+const MessageItem = memo(({ title, avatar, data, myMessage = false }: MessageItemProps) => {
     const [activeToolbar, setActiveToolbar] = useState<boolean>(false);
     const ref = useRef<HTMLDivElement>(null);
 
@@ -29,12 +32,12 @@ const MessageItem = memo(({ myMessage = false }: MessageItemProps) => {
                     className={activeToolbar ? `${s.message__item} ${s.message__active}` : `${s.message__item} `}
                 >
                     <Link to={"/"} className={s.message__user}>
-                        <img className={s.message__avatar} src={user} alt="avatar" />
+                        <img className={s.message__avatar} src={avatar !== "" ? avatar : user} alt="avatar" />
                     </Link>
                     <div className={s.message__item_box} onContextMenu={(e) => handleRightClick(e)}>
-                        <p className={s.message__item_text}>Text fdsfs dsf fds fsdfdsf Text fdsfs</p>
+                        <p className={s.message__item_text}>{title}</p>
                         <div className={s.message__toolbar}>
-                            <p className={s.message__data}>09.22</p>
+                            <p className={s.message__data}>{data}</p>
                             <button onClick={() => console.log("click")} className={s.message__toolbar_btn}>
                                 <FaPencilAlt />
                             </button>
@@ -54,9 +57,9 @@ const MessageItem = memo(({ myMessage = false }: MessageItemProps) => {
                     }
                 >
                     <div className={s.message__item_box} onContextMenu={(e) => handleRightClick(e)}>
-                        <p className={s.message__item_text}>Text fdsfs dsf fds fsdfdsf</p>
+                        <p className={s.message__item_text}>{title}</p>
                         <div className={s.message__toolbar}>
-                            <p className={s.message__data}>09.22</p>
+                            <p className={s.message__data}>{data}</p>
                             <button className={s.message__toolbar_btn}>
                                 <FaPencilAlt />
                             </button>
@@ -66,7 +69,7 @@ const MessageItem = memo(({ myMessage = false }: MessageItemProps) => {
                         </div>
                     </div>
                     <Link to={"/"} className={s.message__user}>
-                        <img className={s.message__avatar} src={user} alt="avatar" />
+                        <img className={s.message__avatar} src={avatar !== "" ? avatar : user} alt="avatar" />
                     </Link>
                 </div>
             )}
