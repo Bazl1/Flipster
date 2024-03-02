@@ -1,5 +1,6 @@
 using Flipster.Modules.Catalog;
 using Flipster.Modules.Catalog.Infrastructure.Persistence.Seeds;
+using Flipster.Modules.Chats;
 using Flipster.Modules.Users;
 using Flipster.Modules.Users.Infrastructure.Persistence.Seeds;
 using Flipster.Shared.ImageStore.Services;
@@ -18,6 +19,7 @@ builder.Services
     .AddTransient<IImageService, ImageService>()
     .AddAntiforgery()
     .AddUsersModule(builder.Configuration)
+    .AddChatsModule(builder.Configuration)
     .AddCatalogModule(builder.Configuration);
 
 var app = builder.Build();
@@ -39,6 +41,7 @@ app.UseStaticFiles();
 
 app
     .MapUsersModuleEndpoints()
-    .MapCatalogModuleEndpoints();
+    .MapCatalogModuleEndpoints()
+    .MapChatsModuleEndpoints();
 
 app.Run();

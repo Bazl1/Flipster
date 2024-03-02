@@ -18,7 +18,6 @@ internal static class MessagesEndpoints
     public static IEndpointRouteBuilder MapMessagesEndpoints(this IEndpointRouteBuilder builder)
     {
         builder.MapGet("/", (Delegate)GetAll);
-        builder.MapDelete("/{messageId}", (Delegate)Delete);
         return builder;
     }
 
@@ -52,23 +51,5 @@ internal static class MessagesEndpoints
             };
         });
         return Results.Ok(new GetAll.Response(messages));
-    }
-
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    private static async Task<IResult> Delete(
-        HttpContext context,
-        [FromServices] IMessageRepository messageRepository,
-        [FromServices] IChatRepository chatRepository,
-        [FromServices] IUsersModule usersModule,
-        [FromRoute] string chatId,
-        [FromRoute] string messageId)
-    {
-        var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (messageRepository.GetById(messageId) is not Message message)
-            throw new FlipsterError("Message with given id is not found.");
-        if (message.ChatId != chatId)
-            throw new FlipsterError("Invalid chat id");
-        messageRepository.Remove(message);
-        return Results.Ok();
     }
 }
