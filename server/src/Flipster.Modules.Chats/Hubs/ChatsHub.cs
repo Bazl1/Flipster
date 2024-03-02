@@ -71,9 +71,6 @@ public class ChatsHub(
         };
         _messageRepository.Add(message);
 
-        if (!interlocutorOnline)
-            return;
-
         var user = _usersModule.GetUserById(userId);
         var messageResult = JsonSerializer.Serialize(
             new MessageDto
@@ -88,6 +85,12 @@ public class ChatsHub(
             { 
                 PropertyNameCaseInsensitive = true 
             });
+
+        if (!interlocutorOnline)
+        {
+            await Clients.Caller.SendAsync(RemoveMessageEvent, messageResult);
+        }
+
         await Clients.Group(chatId).SendAsync(RemoveMessageEvent, messageResult);
     }
 
