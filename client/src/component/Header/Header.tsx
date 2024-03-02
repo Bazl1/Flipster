@@ -30,7 +30,7 @@ const Header = () => {
                         <nav className={s.header__menu}>
                             <ul className={s.header__list}>
                                 <li className={s.header__list_item}>
-                                    <Link to={"/messages"}>
+                                    <Link to={"/chats"}>
                                         Messages{" "}
                                         <span>
                                             <BiSolidMessage />

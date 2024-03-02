@@ -7,13 +7,16 @@ import s from "./MessageItem.module.scss";
 import useOutside from "../../shared/hooks/useOutside";
 
 interface MessageItemProps {
+    id: string;
     myMessage?: boolean;
     title: string;
     avatar: string;
     data: string;
+    deleteMessage: (messageId: string) => void;
 }
 
-const MessageItem = memo(({ title, avatar, data, myMessage = false }: MessageItemProps) => {
+const MessageItem = memo(({ id, title, avatar, data, deleteMessage, myMessage = false }: MessageItemProps) => {
+    console.log("message item");
     const [activeToolbar, setActiveToolbar] = useState<boolean>(false);
     const ref = useRef<HTMLDivElement>(null);
 
@@ -63,7 +66,7 @@ const MessageItem = memo(({ title, avatar, data, myMessage = false }: MessageIte
                             <button className={s.message__toolbar_btn}>
                                 <FaPencilAlt />
                             </button>
-                            <button className={s.message__toolbar_btn}>
+                            <button onClick={() => deleteMessage(id)} className={s.message__toolbar_btn}>
                                 <FaDeleteLeft />
                             </button>
                         </div>
