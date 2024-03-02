@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using System;
 using System.Security.Claims;
 
 namespace Flipster.Modules.Chats.Endpoints.Chats;
@@ -54,7 +55,7 @@ internal static class ChatsEndpoints
         var chats = chatRepository.GetByMemberId(userId)
             .Select(c =>
             {
-                var interlocutor = usersModule.GetUserById(userId == c.FirstMemberId ? c.SecondMemberId : c.FirstMemberId);
+                var interlocutor = usersModule.GetUserById(c.GetInterlocutorByMemberId(userId));
                 return new ChatDto
                 {
                     Id = c.Id,

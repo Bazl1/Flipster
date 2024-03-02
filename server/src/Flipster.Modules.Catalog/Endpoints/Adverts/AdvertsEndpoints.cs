@@ -66,7 +66,7 @@ internal static class AdvertsEndpoints
             Status = advert.Status.ToString(),
             CreatedAt = advert.CreatedAt.ToString(),
             Category = mapper.Map<CategoryDto>(category),
-            Contact = new ContactDto { Id = advert.Id, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber },
+            Contact = new ContactDto { Id = advert.SellerId, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber },
             Views = viewRepository.GetCountByAdvertId(advert.Id)
         };
         return Results.Ok(result);
@@ -154,7 +154,7 @@ internal static class AdvertsEndpoints
             Status = advert.Status.ToString(),
             CreatedAt = advert.CreatedAt.ToString(),
             Category = mapper.Map<CategoryDto>(category),
-            Contact = new ContactDto { Id = advert.Id, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber },
+            Contact = new ContactDto { Id = advert.SellerId, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber },
             Views = viewRepository.GetCountByAdvertId(advert.Id)
         };
         return Results.Ok(result);
@@ -205,7 +205,7 @@ internal static class AdvertsEndpoints
             Status = advert.Status.ToString(),
             CreatedAt = advert.CreatedAt.ToString(),
             Category = mapper.Map<CategoryDto>(advert.Category),
-            Contact = new ContactDto { Id = advert.Id, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber },
+            Contact = new ContactDto { Id = advert.SellerId, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber },
             Views = viewRepository.GetCountByAdvertId(advert.Id)
         };
         return Results.Ok(result);
@@ -260,7 +260,7 @@ internal static class AdvertsEndpoints
                     Status = advert.Status.ToString(),
                     CreatedAt = advert.CreatedAt.ToString(),
                     Category = mapper.Map<CategoryDto>(advert.Category),
-                    Contact = new ContactDto { Id = advert.Id, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber },
+                    Contact = new ContactDto { Id = advert.SellerId, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber },
                     Views = viewRepository.GetCountByAdvertId(advert.Id)
                 };
             });
