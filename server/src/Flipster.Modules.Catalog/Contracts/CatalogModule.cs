@@ -33,7 +33,7 @@ public class CatalogModule(
             Status = advert.Status.ToString(),
             CreatedAt = advert.CreatedAt.ToString(),
             Category = _mapper.Map<CategoryDto>(advert.Category),
-            Contact = new ContactDto { Id = advert.Id, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber },
+            Contact = new ContactDto { Id = advert.SellerId, Name = seller.Name, Avatar = seller.Avatar, Email = advert.Email, Location = advert.Location, PhoneNumber = advert.PhoneNumber },
             Views = _viewRepository.GetCountByAdvertId(advert.Id)
         };
     }
@@ -58,7 +58,7 @@ public class CatalogModule(
                     Status = a.Status.ToString(),
                     CreatedAt = a.CreatedAt.ToString(),
                     Category = _mapper.Map<CategoryDto>(a.Category),
-                    Contact = new ContactDto { Id = a.Id, Name = seller.Name, Avatar = seller.Avatar, Email = a.Email, Location = a.Location, PhoneNumber = a.PhoneNumber },
+                    Contact = new ContactDto { Id = a.SellerId, Name = seller.Name, Avatar = seller.Avatar, Email = a.Email, Location = a.Location, PhoneNumber = a.PhoneNumber },
                     Views = _viewRepository.GetCountByAdvertId(a.Id)
                 };
             }));
