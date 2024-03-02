@@ -19,21 +19,14 @@ public class ChatsHub(
     private const string RemoveMessageEvent = "e:messages:removed";
     private const string ErrorEvent = "e:error";
 
-    public Dictionary<string, Dictionary<string, string>> Chats = new();
     public Dictionary<string, string> Users = new();
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task StartReceivingMessages(string chatId)
     {
         var userId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        Dictionary<string, string>? members;
-        if (!Chats.TryGetValue(chatId, out members))
-        {
-            members = new();
-            Chats.Add(chatId, members);
-        }
-        members.Add(userId, Context.ConnectionId);
         Users.Add(userId, Context.ConnectionId);
+        await Groups.AddToGroupAsync(chatId, Context.ConnectionId);
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -52,14 +45,14 @@ public class ChatsHub(
         }
         message.Text = "This message has been deleted.";
         _messageRepository.Update(message);
-        if (Chats[message.ChatId].TryGetValue(message.ToId, out string? toConnectionId))
+        if (Users.TryGetValue(message.ToId, out string? toConnectionId))
         {
             await Clients.Client(toConnectionId).SendAsync(RemoveMessageEvent, message.Id);
         }
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public async Task SendMessage(string chatId, string to, string text)
+    public async Task SendMessage(string chatId, string text)
     {
         var userId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (_chatRepository.GetById(chatId) is not Chat chat)
@@ -67,7 +60,7 @@ public class ChatsHub(
             await Clients.Caller.SendAsync(ErrorEvent, "Chat with given id is not found.");
             return;
         }
-        var interlocutorOnline = Chats[chatId].ContainsKey(to);
+        var interlocutorOnline = Users.ContainsKey(chat.GetInterlocutorByMemberId(userId));
         var message = new Message
         {
             ChatId = chat.Id,
@@ -95,18 +88,14 @@ public class ChatsHub(
             { 
                 PropertyNameCaseInsensitive = true 
             });
-        await Clients.Client(Chats[chatId][to]).SendAsync(RemoveMessageEvent, messageResult);
+        await Clients.Group(chatId).SendAsync(RemoveMessageEvent, messageResult);
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public void EndReceivingMessages(string chatId)
+    public async void EndReceivingMessages(string chatId)
     {
-        var userId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        Dictionary<string, string>? members;
-        if (!Chats.TryGetValue(chatId, out members))
-            return;
-        if (!members.TryGetValue(userId, out string? connectionId))
-            return;
-        members.Remove(userId);
+        var userId = Context.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+        await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatId);
+        Users.Remove(userId);
     }
 }
