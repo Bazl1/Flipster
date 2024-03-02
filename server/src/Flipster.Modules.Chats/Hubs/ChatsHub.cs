@@ -59,7 +59,7 @@ public class ChatsHub(
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public async Task SentMessage(string chatId, string to, string text)
+    public async Task SendMessage(string chatId, string to, string text)
     {
         var userId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (_chatRepository.GetById(chatId) is not Chat chat)
