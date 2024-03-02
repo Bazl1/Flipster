@@ -1,0 +1,98 @@
+@import "../../shared/assets/styles/vars.scss";
+
+.message {
+    &__item {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        margin-right: auto;
+    }
+
+    &__item_box {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    &__item_text {
+        max-width: 550px;
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 21px;
+        color: $black-priority;
+        background: $light-priority;
+        box-shadow: 0 0 5px 1px rgba($black-priority, 0.1);
+        border-radius: 20px;
+    }
+
+    &__user {
+        display: flex;
+        align-items: center;
+    }
+
+    &__avatar {
+        max-width: 45px;
+        width: 100%;
+        max-height: 45px;
+        border-radius: 100px;
+        height: 100vh;
+        object-fit: cover;
+    }
+
+    &__data {
+        color: rgba($black-priority, 0.5);
+        font-size: 12px;
+        font-weight: 500px;
+    }
+    &__toolbar {
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+    }
+    &__toolbar_btn {
+        display: none;
+        justify-content: space-between;
+        align-items: center;
+        outline: none;
+        border: none;
+        background: transparent;
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+        svg {
+            color: rgba($black-priority, 0.5);
+            width: 16px;
+            height: 16px;
+        }
+        &:nth-child(2) {
+            margin-left: auto;
+            svg {
+                width: 14px;
+                height: 14px;
+            }
+        }
+    }
+
+    &__item_me {
+        margin-left: auto;
+        margin-right: 0;
+        .message__item_text {
+            color: #fff;
+            background: rgba($black-priority, 0.8);
+        }
+        .message__data {
+            margin-left: auto;
+        }
+    }
+    &__active {
+        .message__toolbar_btn {
+            display: flex;
+        }
+        .message__data {
+            margin-left: 0;
+        }
+    }
+}

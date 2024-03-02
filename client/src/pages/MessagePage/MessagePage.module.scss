@@ -1,0 +1,53 @@
+@import "../../shared/assets/styles/vars.scss";
+
+.message {
+    margin: 50px 0;
+    &__box {
+        max-height: 600px;
+        min-height: 200px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        box-shadow: 0 0 5px 2px $light-priority;
+        border-radius: 20px;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        padding: 45px;
+        margin-bottom: 50px;
+
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: rgba($black-priority, 0.8);
+            border-radius: 3px;
+        }
+    }
+    &__btn {
+        outline: none;
+        border: none;
+        border-radius: 3px;
+        font-family: "Inter";
+        font-weight: 500;
+        font-size: 16px;
+        color: #fff;
+        padding: 12px 40px;
+        margin-top: 20px;
+        background: $black-priority;
+        cursor: pointer;
+    }
+    &__textarea {
+        outline: none;
+        width: 100%;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 21px;
+        border-radius: 20px;
+        border: none;
+        resize: none;
+        box-shadow: 0 0 5px 2px $light-priority;
+        padding: 30px;
+    }
+}

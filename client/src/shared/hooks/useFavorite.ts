@@ -1,11 +1,11 @@
-import { useAddNewFavoriteMutation } from "../../services/FavoriteAdvertService";
+import { useToggleAddFavoriteMutation } from "../../services/FavoriteAdvertService";
 
 interface IFavorite {
     id: string;
 }
 
 const useFavorite = (id: string) => {
-    const [addNewFavorite] = useAddNewFavoriteMutation();
+    const [toggleAddFavorite] = useToggleAddFavoriteMutation();
 
     const toggleFavorite = async () => {
         let favorite: IFavorite[] = JSON.parse(localStorage.getItem("favorite") || "[]");
@@ -17,7 +17,7 @@ const useFavorite = (id: string) => {
             favorite.push({ id: id });
         }
 
-        await addNewFavorite({ id });
+        await toggleAddFavorite({ advertId: id });
         localStorage.setItem("favorite", JSON.stringify(favorite));
     };
 

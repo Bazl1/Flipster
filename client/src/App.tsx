@@ -17,6 +17,8 @@ const ChangeAdvert = lazy(() => import("./pages/ChangeAdvert/ChangeAdvert"));
 const SingleAdvert = lazy(() => import("./pages/SingleAdvert/SingleAdvert"));
 const SearchPage = lazy(() => import("./pages/SearchPage/SearchPage"));
 const FavoritePage = lazy(() => import("./pages/FavoritePage/FavoritePage"));
+const ChatsPage = lazy(() => import("./pages/ChatsPage/ChatsPage"));
+const MessagePage = lazy(() => import("./pages/MessagePage/MessagePage"));
 
 const visitor = async () => {
     await axiosApi.post("/auth/visit");
@@ -37,6 +39,22 @@ function App() {
             <Suspense fallback={<Loader />}>
                 <Routes>
                     {/* user */}
+                    <Route
+                        path="/message/:id"
+                        element={
+                            <LayoutMain>
+                                <MessagePage />
+                            </LayoutMain>
+                        }
+                    />
+                    <Route
+                        path="/message"
+                        element={
+                            <LayoutMain>
+                                <ChatsPage />
+                            </LayoutMain>
+                        }
+                    />
                     <Route
                         path="/profile"
                         element={
@@ -61,6 +79,7 @@ function App() {
                             </LayoutMain>
                         }
                     />
+
                     {/* public */}
                     <Route
                         path="/search/query/:search/location/:location"

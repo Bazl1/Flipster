@@ -51,7 +51,7 @@ const SearchBox = ({ onSearch }: SearchBoxProps) => {
         e.preventDefault();
         const categoryId = category?.value || "";
         const locationLabel = locationSelect?.label || "";
-        const sortStr = sorting?.label || "";
+        const sortStr = sorting?.value || "";
         const minStr = min || "-1";
         const maxStr = max || "-1";
         onSearch({ query, categoryId, location: locationLabel, min: minStr, max: maxStr, sort: sortStr });
