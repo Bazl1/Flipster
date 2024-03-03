@@ -47,7 +47,8 @@ internal static class MessagesEndpoints
                 From = new UserDto { Id = from.Id, Name = from.Name, Avatar = from.Avatar },
                 Text = m.Text,
                 IsRead = m.IsRead,
-                CreatedAt = m.CreatedAt.ToString("dd.MM.yyyy H:mm")
+                CreatedAt = m.CreatedAt.ToString("dd.MM.yyyy H:mm"),
+                IsDeleted = m.IsDeleted,
             };
         });
         return Results.Ok(new GetAll.Response(messages));
