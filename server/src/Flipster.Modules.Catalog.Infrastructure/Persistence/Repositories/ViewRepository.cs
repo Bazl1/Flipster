@@ -8,7 +8,8 @@ internal class ViewRepository(
 {
     public void Add(View entity)
     {
-        _db.Add(entity);
+        if(!_db.Views.Any(v => v.AdvertId == entity.AdvertId && v.UserId == entity.UserId))
+            _db.Add(entity);
         _db.SaveChanges();
     }
 

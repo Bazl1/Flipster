@@ -14,8 +14,7 @@ using System.Security.Claims;
 using Flipster.Modules.Users.Infrastructure.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Flispter.Shared.Contracts.EventBus;
-using Flispter.Shared.Contracts.Users.Events;
+using Flispter.Shared.Contracts.Catalog;
 
 namespace Flipster.Modules.Users.Endpoints.Auth;
 
@@ -82,7 +81,8 @@ public static class AuthEndpoints
         HttpContext context,
         [FromServices] IAuthService authService,
         [FromServices] ITokenGenerator tokenGenerator,
-        [FromServices] EventBus eventBus,
+        [FromServices] IFavoriteRepository favoriteRepository,
+        [FromServices] ICatalogModule catalogModule,
         [FromServices] IMapper mapper,
         [FromServices] IAntiforgery antiforgery,
         [FromBody] Login.Request request)
@@ -95,7 +95,8 @@ public static class AuthEndpoints
         var accessToken = tokenGenerator.GenerateAccessToken(user);
         var antiforgeryToken = antiforgery.GetAndStoreTokens(context);
         await context.SignOutAsync(FlipsterAuthenticationSchemes.CookieScheme.SchemeName);
-        eventBus.Publish(new UserLoggedinEvent(user.Id, visitorId));
+        favoriteRepository.Update(visitorId, user.Id);
+        catalogModule.UpdateViews(visitorId, user.Id);
         return Results.Ok(new Register.Response(
             accessToken,
             antiforgeryToken.RequestToken,
