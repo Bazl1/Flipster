@@ -24,7 +24,7 @@ const ChatsPage = () => {
 
     useEffect(() => {
         fetchChats().then((res) => setChats(res));
-    }, [fetchChats]);
+    }, []);
 
     return (
         <section className={s.message}>

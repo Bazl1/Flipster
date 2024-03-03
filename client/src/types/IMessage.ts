@@ -7,5 +7,5 @@ export interface IMessage {
     };
     text: string;
     isRead: boolean;
-    createdAd: string;
+    createdAt: string;
 }

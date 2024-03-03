@@ -30,10 +30,7 @@ const MessageItem = memo(({ id, title, avatar, data, deleteMessage, myMessage = 
     return (
         <>
             {!myMessage ? (
-                <div
-                    ref={ref}
-                    className={activeToolbar ? `${s.message__item} ${s.message__active}` : `${s.message__item} `}
-                >
+                <div ref={ref} className={s.message__item}>
                     <Link to={"/"} className={s.message__user}>
                         <img className={s.message__avatar} src={avatar !== "" ? avatar : user} alt="avatar" />
                     </Link>
@@ -41,12 +38,6 @@ const MessageItem = memo(({ id, title, avatar, data, deleteMessage, myMessage = 
                         <p className={s.message__item_text}>{title}</p>
                         <div className={s.message__toolbar}>
                             <p className={s.message__data}>{data}</p>
-                            <button onClick={() => console.log("click")} className={s.message__toolbar_btn}>
-                                <FaPencilAlt />
-                            </button>
-                            <button className={s.message__toolbar_btn}>
-                                <FaDeleteLeft />
-                            </button>
                         </div>
                     </div>
                 </div>

@@ -8,6 +8,7 @@ import { IMessage } from "../../types/IMessage";
 import { useAppSelector } from "../../shared/hooks/storeHooks";
 import { selectAuthInfo } from "../../store/selectors";
 import * as signalR from "@microsoft/signalr";
+import Loader from "../../component/Loader/Loader";
 
 let connection = new signalR.HubConnectionBuilder()
     .withUrl("http://localhost:5145/hubs/chats", {
@@ -15,10 +16,10 @@ let connection = new signalR.HubConnectionBuilder()
     })
     .build();
 
-const removeMessage = (id: string, array: IMessage[]) => {
+const updateMessage = (id: string, array: IMessage[], text: string) => {
     const updatedMessages = array?.map((item: IMessage) => {
         if (item.id === id) {
-            return { ...item, text: "This message has been deleted." };
+            return { ...item, text: text };
         }
         return item;
     });
@@ -26,12 +27,11 @@ const removeMessage = (id: string, array: IMessage[]) => {
 };
 
 const MessagePage = () => {
-    console.log("Page render");
     const { id } = useParams();
     const chatId = id || "";
 
     const [loading, setLoading] = useState<boolean>(true);
-    const [allMessages, setAllMessages] = useState<IMessage[] | null>(null);
+    const [allMessages, setAllMessages] = useState<IMessage[]>([]);
     const [message, setMessage] = useState<string>("");
 
     const { register, handleSubmit } = useForm({
@@ -45,30 +45,36 @@ const MessagePage = () => {
         return response.data.messages;
     };
 
+    // const handleChangeMessage = useCallback((messageId: string, text: string) => {
+    //     const updatedMessages = updateMessage(messageId, allMessages, text);
+    //     setAllMessages(updatedMessages);
+    // }, []);
+
     const handleDeleteMessage = useCallback((messageId: string) => {
-        const updatedMessages = removeMessage(messageId, allMessages || []);
-        setAllMessages(updatedMessages || null);
+        const updatedMessages = updateMessage(messageId, allMessages, "This message has been deleted.");
+        setAllMessages(updatedMessages || []);
         connection.invoke("RemoveMessage", messageId);
     }, []);
 
     const handleSendMessage = () => {
-        console.log("submit");
         connection.invoke("SendMessage", chatId, message);
     };
 
     const handleAddMessage = (message: IMessage) => {
-        // const response: IMessage = JSON.parse(data);
+        console.log("render handleAddMessage");
         console.log(message);
-        setAllMessages([...(allMessages || []), message]);
+        setAllMessages((current) => [...current, message]);
     };
 
     const handleRemovedMessage = (id: string) => {
-        const updatedMessages = removeMessage(id, allMessages || []);
-        setAllMessages(updatedMessages || null);
+        const updatedMessages = updateMessage(id, allMessages, "This message has been deleted.");
+        setAllMessages(updatedMessages || []);
     };
 
     useEffect(() => {
-        fetchMessages().then((res) => setAllMessages(res));
+        fetchMessages()
+            .then((res) => setAllMessages(res))
+            .then(() => setLoading(false));
 
         connection.start().then(() => connection.invoke("StartReceivingMessages", chatId));
         connection.on("e:messages:new", handleAddMessage);
@@ -87,7 +93,9 @@ const MessagePage = () => {
             <div className="container">
                 <div className={s.message__inner}>
                     <div className={s.message__box}>
-                        {allMessages && allMessages.length > 0 ? (
+                        {loading ? (
+                            <Loader />
+                        ) : allMessages && allMessages.length > 0 ? (
                             allMessages?.map((message: IMessage) => {
                                 let myMessage: boolean = false;
                                 if (message.from.id === user.user.id) {
@@ -99,7 +107,7 @@ const MessagePage = () => {
                                         id={message.id}
                                         title={message.text}
                                         avatar={message.from.avatar}
-                                        data={message.createdAd}
+                                        data={message.createdAt}
                                         myMessage={myMessage}
                                         deleteMessage={handleDeleteMessage}
                                     />
