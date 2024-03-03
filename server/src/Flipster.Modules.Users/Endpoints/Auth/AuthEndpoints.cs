@@ -95,7 +95,7 @@ public static class AuthEndpoints
         var accessToken = tokenGenerator.GenerateAccessToken(user);
         var antiforgeryToken = antiforgery.GetAndStoreTokens(context);
         await context.SignOutAsync(FlipsterAuthenticationSchemes.CookieScheme.SchemeName);
-        eventBus.Invoke(new UserLoggedinEvent(user.Id, visitorId));
+        eventBus.Publish(new UserLoggedinEvent(user.Id, visitorId));
         return Results.Ok(new Register.Response(
             accessToken,
             antiforgeryToken.RequestToken,
