@@ -16,9 +16,10 @@ public class ChatsHub(
 {
     private const string NewMessageEvent = "e:messages:new";
     private const string RemoveMessageEvent = "e:messages:removed";
+    private const string ChangedMessageEvent = "e:messages:changed";
     private const string ErrorEvent = "e:error";
 
-    public Dictionary<string, string> Users = new();
+    public static Dictionary<string, string> Users = new();
     
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task StartReceivingMessages(string chatId)
@@ -46,9 +47,27 @@ public class ChatsHub(
         message.IsDeleted = true;
         _messageRepository.Update(message);
         if (Users.TryGetValue(message.ToId, out string? toConnectionId))
-        {
             await Clients.Client(toConnectionId).SendAsync(RemoveMessageEvent, message.Id);
+    }
+
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public async Task ChangeMessage(string messageId, string text)
+    {
+        var userId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (_messageRepository.GetById(messageId) is not Message message)
+        {
+            await Clients.Caller.SendAsync(ErrorEvent, "Message with given id is not found.");
+            return;
         }
+        if (message.FromId != userId)
+        {
+            await Clients.Caller.SendAsync(ErrorEvent, "You cannot delete a conversation partner's message.");
+            return;
+        }
+        message.Text = text;
+        _messageRepository.Update(message);
+        if (Users.TryGetValue(message.ToId, out string? toConnectionId))
+            await Clients.Client(toConnectionId).SendAsync(ChangedMessageEvent, message.Id);
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
