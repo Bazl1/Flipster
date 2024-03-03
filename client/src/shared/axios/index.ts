@@ -10,9 +10,12 @@ const axiosApi = axios.create({
 
 axiosApi.interceptors.request.use((config) => {
     const token = localStorage.getItem("token");
+    const time = new Date().getTimezoneOffset();
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
+
+    config.headers.TimeOffset = time;
     return config;
 });
 

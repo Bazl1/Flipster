@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import s from "./MessagePage.module.scss";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import MessageItem from "../../component/MessageItem/MessageItem";
 import ChatsService from "../../services/ChatsService";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { IMessage } from "../../types/IMessage";
 import { useAppSelector } from "../../shared/hooks/storeHooks";
 import { selectAuthInfo } from "../../store/selectors";
@@ -16,10 +16,10 @@ let connection = new signalR.HubConnectionBuilder()
     })
     .build();
 
-const updateMessage = (id: string, array: IMessage[], text: string) => {
-    const updatedMessages = array?.map((item: IMessage) => {
+const updateMessage = (id: string, array: IMessage[], text: string, isDelete = false) => {
+    const updatedMessages = array.map((item: IMessage) => {
         if (item.id === id) {
-            return { ...item, text: text };
+            return { ...item, text: text, isDeleted: isDelete };
         }
         return item;
     });
@@ -30,6 +30,8 @@ const MessagePage = () => {
     const { id } = useParams();
     const chatId = id || "";
 
+    const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
     const [loading, setLoading] = useState<boolean>(true);
     const [allMessages, setAllMessages] = useState<IMessage[]>([]);
     const [message, setMessage] = useState<string>("");
@@ -39,10 +41,11 @@ const MessagePage = () => {
     });
 
     const user = useAppSelector(selectAuthInfo);
+    const navigate = useNavigate();
 
     const fetchMessages = async () => {
         const response = await ChatsService.getMessages(chatId);
-        return response.data.messages;
+        setAllMessages(response.data.messages);
     };
 
     // const handleChangeMessage = useCallback((messageId: string, text: string) => {
@@ -51,88 +54,125 @@ const MessagePage = () => {
     // }, []);
 
     const handleDeleteMessage = useCallback((messageId: string) => {
-        const updatedMessages = updateMessage(messageId, allMessages, "This message has been deleted.");
-        setAllMessages(updatedMessages || []);
+        setAllMessages((currentMessages) => {
+            const updatedMessages = updateMessage(messageId, currentMessages, "This message has been deleted.", true);
+            return updatedMessages;
+        });
         connection.invoke("RemoveMessage", messageId);
     }, []);
 
     const handleSendMessage = () => {
         connection.invoke("SendMessage", chatId, message);
+        setMessage("");
     };
 
     const handleAddMessage = (message: IMessage) => {
-        console.log("render handleAddMessage");
-        console.log(message);
         setAllMessages((current) => [...current, message]);
     };
 
     const handleRemovedMessage = (id: string) => {
-        const updatedMessages = updateMessage(id, allMessages, "This message has been deleted.");
-        setAllMessages(updatedMessages || []);
+        setAllMessages((currentMessages) => {
+            const updatedMessages = updateMessage(id, currentMessages, "This message has been deleted.", true);
+            return updatedMessages;
+        });
+    };
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    };
+
+    const handleReviewed = () => {
+        const updatedMessages = allMessages.map((item: IMessage) => {
+            return { ...item, isRead: true };
+        });
+        setAllMessages(updatedMessages);
     };
 
     useEffect(() => {
-        fetchMessages()
-            .then((res) => setAllMessages(res))
-            .then(() => setLoading(false));
-
+        fetchMessages();
         connection.start().then(() => connection.invoke("StartReceivingMessages", chatId));
+
+        // connection.on("e:success", () => {
+        //     setLoading(false);
+        // });
         connection.on("e:messages:new", handleAddMessage);
         connection.on("e:messages:removed", handleRemovedMessage);
-        connection.on("e:error", (message) => console.log(message));
+        // connection.on("e:messages:reviewed", handleReviewed);
+        connection.on("e:error", () => {
+            navigate("/");
+        });
         return () => {
+            // connection.off("e:success");
             connection.off("e:messages:new");
             connection.off("e:messages:removed");
+            // connection.off("e:messages:reviewed");
             connection.off("e:error");
             connection.invoke("EndReceivingMessages", chatId);
+            connection.stop();
         };
     }, []);
+
+    useEffect(() => {
+        console.log(allMessages);
+    }, []);
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [allMessages]);
+
+    // if (loading) {
+    //     return <Loader />;
+    // }
 
     return (
         <section className={s.message}>
             <div className="container">
                 <div className={s.message__inner}>
                     <div className={s.message__box}>
-                        {loading ? (
-                            <Loader />
-                        ) : allMessages && allMessages.length > 0 ? (
-                            allMessages?.map((message: IMessage) => {
-                                let myMessage: boolean = false;
-                                if (message.from.id === user.user.id) {
-                                    myMessage = true;
-                                }
-                                return (
-                                    <MessageItem
-                                        key={message.id}
-                                        id={message.id}
-                                        title={message.text}
-                                        avatar={message.from.avatar}
-                                        data={message.createdAt}
-                                        myMessage={myMessage}
-                                        deleteMessage={handleDeleteMessage}
-                                    />
-                                );
-                            })
-                        ) : (
-                            <h3 className={s.message__chat_title}>Write the first message &#128521;</h3>
-                        )}
+                        <div className={s.message__items}>
+                            {allMessages && allMessages.length > 0 ? (
+                                <>
+                                    {allMessages?.map((message: IMessage) => {
+                                        let myMessage: boolean = false;
+                                        if (message.from.id === user.user.id) {
+                                            myMessage = true;
+                                        }
+                                        return (
+                                            <MessageItem
+                                                key={message.id}
+                                                id={message.id}
+                                                title={message.text}
+                                                avatar={message.from.avatar}
+                                                data={message.createdAt}
+                                                myMessage={myMessage}
+                                                isDeleted={message.isDeleted}
+                                                isRead={message.isRead}
+                                                deleteMessage={handleDeleteMessage}
+                                            />
+                                        );
+                                    })}
+                                    <div ref={messagesEndRef}></div>
+                                </>
+                            ) : (
+                                <h3 className={s.message__chat_title}>Write the first message &#128521;</h3>
+                            )}
+                        </div>
+                        <form className={s.message__form} onSubmit={handleSubmit(handleSendMessage)}>
+                            <input
+                                {...register("text", {
+                                    required: "Required field",
+                                })}
+                                value={message}
+                                onChange={(e) => {
+                                    setMessage(e.target.value);
+                                }}
+                                className={s.message__textarea}
+                            />
+                            <button className={s.message__btn} type="submit">
+                                Submit
+                            </button>
+                        </form>
                     </div>
-                    <form className={s.message__form} onSubmit={handleSubmit(handleSendMessage)}>
-                        <textarea
-                            {...register("textarea", {
-                                required: "Required field",
-                            })}
-                            value={message}
-                            onChange={(e) => {
-                                setMessage(e.target.value);
-                            }}
-                            className={s.message__textarea}
-                            rows={5}
-                        ></textarea>
-                        <button className={s.message__btn} type="submit">
-                            Submit
-                        </button>
-                    </form>
                 </div>
             </div>
         </section>

@@ -5,6 +5,7 @@ import { RiDislikeFill } from "react-icons/ri";
 import { IoMdHeart } from "react-icons/io";
 import { useState } from "react";
 import useFavorite from "../../shared/hooks/useFavorite";
+import { FaEye } from "react-icons/fa";
 
 interface HorizontalListItemProps {
     item: Advert;
@@ -22,7 +23,14 @@ const HorizontalListItem: React.FC<HorizontalListItemProps> = ({ item, InitialLi
             <div className={s.list__item_box}>
                 <label className={s.list__item_label}>
                     <h3 className={s.list__item_title}>{item.title}</h3>
+
                     <span className={s.list__item_location}>Location: {item.contact.location}</span>
+                    <div className={s.list__item_view}>
+                        {item.views}
+                        <span>
+                            <FaEye />
+                        </span>
+                    </div>
                 </label>
                 <h4 className={s.list__item_price}>${item.price}</h4>
             </div>

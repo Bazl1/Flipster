@@ -97,4 +97,18 @@
             font-weight: 700;
         }
     }
+
+    &__item_view {
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        font-weight: 500;
+        gap: 5px;
+        span {
+            display: flex;
+            align-items: center;
+            width: 18px;
+            height: 18px;
+        }
+    }
 }

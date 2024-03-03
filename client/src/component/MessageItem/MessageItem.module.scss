@@ -87,8 +87,9 @@
             margin-right: 0;
             margin-left: auto;
         }
-        .message__data {
-            margin-left: auto;
+        .message__read {
+            margin-left: auto !important;
+            margin-right: 0 !important;
         }
     }
     &__active {
@@ -97,6 +98,28 @@
         }
         .message__data {
             margin-left: 0;
+        }
+    }
+    &__item_delete {
+        .message__item_text {
+            color: rgba($black-priority, 0.4);
+        }
+    }
+    &__item_delete.message__item_me {
+        .message__item_text {
+            color: rgba(#fff, 0.5);
+            background: rgba($black-priority, 0.5);
+        }
+    }
+    &__read {
+        margin-right: auto;
+        width: 16px;
+        height: 16px;
+        svg {
+            width: 16px;
+            height: 16px;
+            object-fit: cover;
+            color: rgba($black-priority, 0.5);
         }
     }
 }

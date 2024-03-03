@@ -78,4 +78,17 @@
         border-bottom-right-radius: 8px;
         border-top-left-radius: 3px;
     }
+    &__item_view {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 500;
+        gap: 5px;
+        span {
+            display: flex;
+            align-items: center;
+            width: 16px;
+            height: 16px;
+        }
+    }
 }

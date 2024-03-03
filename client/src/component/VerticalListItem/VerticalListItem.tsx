@@ -6,6 +6,7 @@ import { RiDislikeFill } from "react-icons/ri";
 import { Advert } from "../../types/response/AdvertResponse";
 import s from "./VerticalListItem.module.scss";
 import { Link, useNavigate } from "react-router-dom";
+import { FaEye } from "react-icons/fa";
 import useFavorite from "../../shared/hooks/useFavorite";
 
 interface VarticalListItemProps {
@@ -35,6 +36,12 @@ const VerticalListItem: React.FC<VarticalListItemProps> = ({ item, changes, hand
                     <div className={s.list__item_box}>
                         {changes ? (
                             <div className={s.list__item_btns}>
+                                <div className={s.list__item_view}>
+                                    {item.views}
+                                    <span>
+                                        <FaEye />
+                                    </span>
+                                </div>
                                 <button
                                     onClick={(e) => {
                                         e.preventDefault();
@@ -49,16 +56,25 @@ const VerticalListItem: React.FC<VarticalListItemProps> = ({ item, changes, hand
                                 </button>
                             </div>
                         ) : (
-                            <button
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    setLike(!like);
-                                    toggleFavorite();
-                                }}
-                                className={s.list__item_btn}
-                            >
-                                {!like ? <IoMdHeart /> : <RiDislikeFill />}
-                            </button>
+                            <div className={s.list__item_btns}>
+                                <div className={s.list__item_view}>
+                                    {item.views}
+                                    <span>
+                                        <FaEye />
+                                    </span>
+                                </div>
+
+                                <button
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setLike(!like);
+                                        toggleFavorite();
+                                    }}
+                                    className={s.list__item_btn}
+                                >
+                                    {!like ? <IoMdHeart /> : <RiDislikeFill />}
+                                </button>
+                            </div>
                         )}
                         <p className={s.list__item_price}>
                             Price: <span>${item.price}</span>
