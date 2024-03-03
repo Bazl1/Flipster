@@ -5,6 +5,7 @@ using Flispter.Shared.Contracts.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using System;
 using System.Security.Claims;
 
 namespace Flipster.Modules.Chats.Hubs;
@@ -16,8 +17,10 @@ public class ChatsHub(
 {
     private const string NewMessageEvent = "e:messages:new";
     private const string RemoveMessageEvent = "e:messages:removed";
+    private const string ReviewedMessageEvent = "e:messages:reviewed";
     private const string ChangedMessageEvent = "e:messages:changed";
     private const string ErrorEvent = "e:error";
+    private const string SuccessEvent = "e:success";
 
     public static Dictionary<string, string> Users = new();
     
@@ -25,8 +28,21 @@ public class ChatsHub(
     public async Task StartReceivingMessages(string chatId)
     {
         var userId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (_chatRepository.GetById(chatId) is not Chat chat)
+        {
+            await Clients.Caller.SendAsync(ErrorEvent, "Chat with given id is not found.");
+            return;
+        }
+        if (!chat.IsMember(userId))
+        {
+            await Clients.Caller.SendAsync(ErrorEvent, "You're not a member of the chat room.");
+            return;
+        }
         Users.Add(userId, Context.ConnectionId);
+        await Clients.Caller.SendAsync(SuccessEvent);
         await Groups.AddToGroupAsync(Context.ConnectionId, chatId);
+        if (Users.ContainsKey(chat.GetInterlocutorByMemberId(userId)))
+            await Clients.Caller.SendAsync(ReviewedMessageEvent);
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

@@ -26,4 +26,9 @@ public class Chat : EntityBase, IAggregateRoot
     {
         return FirstMemberId == memberId ? SecondMemberId : FirstMemberId;
     }
+
+    public bool IsMember(string memberId)
+    {
+        return FirstMemberId == memberId || SecondMemberId == memberId;
+    }
 }

@@ -8,4 +8,5 @@ public interface IFavoriteRepository : IRepository<Favorite>
     IEnumerable<Favorite> GetByUserId(string userId);
     Favorite? GetById(string userId, string advertId);
     Favorite? GetByUserIdAndAdvertId(string userId, string advertId);
+    void Update(string visitorId, string userId);
 }
