@@ -63,4 +63,9 @@ public class CatalogModule(
                 };
             }));
     }
+
+    public void UpdateViews(string visitorId, string userId)
+    {
+        _viewRepository.Update(visitorId, userId);
+    }
 }

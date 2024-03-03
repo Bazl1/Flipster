@@ -6,4 +6,5 @@ public interface ICatalogModule
 {
     IAdvertDto? GetAdvertById(string id);
     IEnumerable<IAdvertDto> GetAll();
+    void UpdateViews(string visitorId, string userId);
 }
