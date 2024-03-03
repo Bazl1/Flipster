@@ -11,4 +11,5 @@ public class Message : EntityBase
     public required string Text { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public bool IsRead { get; set; } = false;
+    public bool IsDeleted { get; set; } = false;
 }

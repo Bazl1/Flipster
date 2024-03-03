@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Flipster.Modules.Chats.Domain.Entities;
+﻿using Flipster.Modules.Chats.Domain.Entities;
 using Flipster.Modules.Chats.Domain.Repositories;
 using Flipster.Modules.Chats.Dtos;
 using Flispter.Shared.Contracts.Users;
@@ -44,6 +43,7 @@ public class ChatsHub(
             return;
         }
         message.Text = "This message has been deleted.";
+        message.IsDeleted = true;
         _messageRepository.Update(message);
         if (Users.TryGetValue(message.ToId, out string? toConnectionId))
         {
@@ -79,14 +79,13 @@ public class ChatsHub(
             Text = message.Text,
             IsRead = message.IsRead,
             CreatedAt = message.CreatedAt.ToString("dd.MM.yyyy H:mm"),
+            IsDeleted = message.IsDeleted,
         };
 
         if (!interlocutorOnline)
-        {
             await Clients.Caller.SendAsync(NewMessageEvent, messageResult);
-        }
-
-        await Clients.Group(chatId).SendAsync(NewMessageEvent, messageResult);
+        else
+            await Clients.Group(chatId).SendAsync(NewMessageEvent, messageResult);
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
