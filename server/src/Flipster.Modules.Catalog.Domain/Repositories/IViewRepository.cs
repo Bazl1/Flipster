@@ -7,4 +7,5 @@ public interface IViewRepository : IRepository<View>
 {
     int GetCountByUserId(string userId);
     int GetCountByAdvertId(string advertId);
+    IEnumerable<View> Update(string visitorId, string userId);
 }

@@ -46,4 +46,15 @@ internal class ViewRepository(
     {
         _db.SaveChanges();
     }
+
+    public void Update(string visitorId, string userId)
+    {
+        foreach (var view in _db.Views.Where(v => v.UserId == visitorId))
+        {
+            if (!_db.Views.Any(v => v.AdvertId == view.AdvertId && v.UserId == userId))
+                _db.Add(new View { AdvertId = view.AdvertId, UserId = userId });
+            _db.Remove(view);
+        }
+        _db.SaveChanges();
+    }
 }

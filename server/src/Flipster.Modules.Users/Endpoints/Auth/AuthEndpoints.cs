@@ -14,6 +14,8 @@ using System.Security.Claims;
 using Flipster.Modules.Users.Infrastructure.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Flispter.Shared.Contracts.EventBus;
+using Flispter.Shared.Contracts.Users.Events;
 
 namespace Flipster.Modules.Users.Endpoints.Auth;
 
@@ -80,11 +82,12 @@ public static class AuthEndpoints
         HttpContext context,
         [FromServices] IAuthService authService,
         [FromServices] ITokenGenerator tokenGenerator,
+        [FromServices] EventBus eventBus,
         [FromServices] IMapper mapper,
         [FromServices] IAntiforgery antiforgery,
         [FromBody] Login.Request request)
     {
-        // var visitorId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var visitorId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
         var user = authService.Login(request.Email, request.Password);
         var refreshToken = tokenGenerator.GenerateRefreshToken();
         authService.Refresh(user, refreshToken);
@@ -92,6 +95,7 @@ public static class AuthEndpoints
         var accessToken = tokenGenerator.GenerateAccessToken(user);
         var antiforgeryToken = antiforgery.GetAndStoreTokens(context);
         await context.SignOutAsync(FlipsterAuthenticationSchemes.CookieScheme.SchemeName);
+        eventBus.Invoke(new UserLoggedinEvent(user.Id, visitorId));
         return Results.Ok(new Register.Response(
             accessToken,
             antiforgeryToken.RequestToken,
@@ -132,7 +136,6 @@ public static class AuthEndpoints
         authService.Refresh(user, refreshToken);
         context.Response.Cookies.Append(RefreshTokenCookieName, refreshToken);
         var accessToken = tokenGenerator.GenerateAccessToken(user);
-        
         return Results.Ok(new Refresh.Response(
             accessToken,
             mapper.Map<UserDto>(user)));

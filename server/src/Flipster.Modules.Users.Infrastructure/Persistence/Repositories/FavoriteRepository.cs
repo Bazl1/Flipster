@@ -56,4 +56,15 @@ public class FavoriteRepository(
         return _db.Favorites
             .SingleOrDefault(f => f.UserId == userId && f.AdvertId == advertId);
     }
+
+    public void Update(string visitorId, string userId)
+    {
+        foreach (var favorite in _db.Favorites.Where(f => f.UserId == visitorId))
+        {
+            if (!_db.Favorites.Any(f => f.AdvertId == favorite.AdvertId && f.UserId == userId))
+                _db.Add(new Favorite { AdvertId = favorite.AdvertId, UserId = userId });
+            _db.Remove(favorite);
+        }
+        _db.SaveChanges();
+    }
 }
