@@ -11,7 +11,10 @@ public class ImageService(
     public async Task<string> LoadImageAsync(IFormFile image)
     {
         var fileName = Path.Combine($"{Guid.NewGuid().ToString()}{Path.GetExtension(image.FileName)}");
-        var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", fileName);
+        var imagesPath = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+        var filePath = Path.Combine(imagesPath, fileName);
+        if (!Directory.Exists(imagesPath))
+            Directory.CreateDirectory(imagesPath);
         using (var stream = new FileStream(filePath, FileMode.Create))
             await image.CopyToAsync(stream);
         return $"{BASE_URL}{fileName}";
