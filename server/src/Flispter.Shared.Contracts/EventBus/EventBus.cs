@@ -1,34 +1,37 @@
 ﻿namespace Flispter.Shared.Contracts.EventBus;
+using Microsoft.Extensions.DependencyInjection;
 
-public class EventBus
+public class EventBus(
+    IServiceProvider _serviceProvider)
 {
-    private Dictionary<string, List<object>> _callbacks = new();
+    private Dictionary<string, List<Type>> _handlers = new();
 
-    public void Subscribe<T>(IEventHandler<T> callback)
+    public void Subscribe<T, TH>()
         where T : IEvent
+        where TH : IEventHandler<T>
     {
         string eKey = typeof(T).Name;
-        if (_callbacks.ContainsKey(eKey))
-            _callbacks[eKey].Add(callback);
-        else
-            _callbacks.Add(eKey, new List<object>() { callback });
+        if (!_handlers.ContainsKey(eKey))
+            _handlers.Add(eKey, new());
+        _handlers[eKey].Add(typeof(TH));
     }
 
-    public void Unsubscribe<T>(IEventHandler<T> callback)
+    public void Unsubscribe<T, TH>()
         where T : IEvent
+        where TH : IEventHandler<T>
     {
         string eKey = typeof(T).Name;
-        if (!_callbacks.ContainsKey(eKey))
-            throw new ArgumentException(nameof(callback));
-        _callbacks[eKey].Remove(callback);
+        if (!_handlers.ContainsKey(eKey))
+            throw new ArgumentException(typeof(T).Name);
+        _handlers[eKey].Remove(typeof(TH));
     }
 
-    public void Invoke<T>(T e)
+    public void Publish<T>(T @event)
         where T : IEvent
     {
         string eKey = typeof(T).Name;
-        if (_callbacks.ContainsKey(eKey))
-            foreach (var callback in _callbacks[eKey])
-                (callback as IEventHandler<T>)?.Handler(e);
+        if (_handlers.ContainsKey(eKey))
+            foreach (Type handlerType in _handlers[eKey])
+                (_serviceProvider.GetRequiredService(handlerType) as IEventHandler<T>)?.Handler(@event);
     }
 }
