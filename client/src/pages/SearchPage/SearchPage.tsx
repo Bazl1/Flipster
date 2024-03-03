@@ -16,9 +16,10 @@ export interface ISearchParams {
 }
 
 const SearchPage = () => {
-    const { search, location } = useParams();
+    const { search, location, categoryId } = useParams();
     const searchStr = search || "";
     const locationStr = location || "";
+    const categoryIdStr = categoryId || "";
 
     const [data, setData] = useState<AdvertResponse | null>(null);
     const [activePage, setActivePage] = useState<number>(1);
@@ -39,6 +40,7 @@ const SearchPage = () => {
             page: activePage,
             query: searchStr,
             location: locationStr,
+            categoryId: categoryIdStr,
         });
     }, []);
 

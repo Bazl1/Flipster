@@ -7,5 +7,6 @@ export interface IMessage {
     };
     text: string;
     isRead: boolean;
+    isDeleted: boolean;
     createdAt: string;
 }

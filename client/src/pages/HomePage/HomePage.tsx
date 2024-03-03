@@ -97,7 +97,11 @@ const HomePage = () => {
                             {categories &&
                                 categories.map((item: ICategory) => {
                                     return (
-                                        <Link to={"/"} key={item.id} className={s.categories__item}>
+                                        <Link
+                                            to={`/search/category/${item.id}`}
+                                            key={item.id}
+                                            className={s.categories__item}
+                                        >
                                             <img className={s.categories__img} src={item.icon} alt="img" />
                                             <h3 className={s.categories__item_title}>{item.title}</h3>
                                         </Link>

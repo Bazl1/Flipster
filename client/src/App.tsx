@@ -106,6 +106,14 @@ function App() {
                         }
                     />
                     <Route
+                        path="/search/category/:categoryId"
+                        element={
+                            <LayoutMain>
+                                <SearchPage />
+                            </LayoutMain>
+                        }
+                    />
+                    <Route
                         path="/search/"
                         element={
                             <LayoutMain>
