@@ -33,6 +33,8 @@ const MessagePage = () => {
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
     const [loading, setLoading] = useState<boolean>(true);
+    const [changes, setChanges] = useState<boolean>(false);
+    const [changeMessageId, setChangeMessageId] = useState<string>("");
     const [allMessages, setAllMessages] = useState<IMessage[]>([]);
     const [message, setMessage] = useState<string>("");
 
@@ -48,10 +50,11 @@ const MessagePage = () => {
         setAllMessages(response.data.messages);
     };
 
-    // const handleChangeMessage = useCallback((messageId: string, text: string) => {
-    //     const updatedMessages = updateMessage(messageId, allMessages, text);
-    //     setAllMessages(updatedMessages);
-    // }, []);
+    const handleChangeMessage = useCallback((messageId: string, text: string) => {
+        setMessage(text);
+        setChanges(true);
+        setChangeMessageId(messageId);
+    }, []);
 
     const handleDeleteMessage = useCallback((messageId: string) => {
         setAllMessages((currentMessages) => {
@@ -61,9 +64,25 @@ const MessagePage = () => {
         connection.invoke("RemoveMessage", messageId);
     }, []);
 
+    const handleChangedMessage = (messageId: string, text: string) => {
+        setAllMessages((currentMessages) => {
+            const updatedMessages = updateMessage(messageId, currentMessages, text);
+            return updatedMessages;
+        });
+    };
+
     const handleSendMessage = () => {
-        connection.invoke("SendMessage", chatId, message);
-        setMessage("");
+        if (changes) {
+            setAllMessages((currentMessages) => {
+                const updatedMessages = updateMessage(changeMessageId, currentMessages, message);
+                return updatedMessages;
+            });
+            connection.invoke("ChangeMessage", changeMessageId, message);
+            setMessage("");
+        } else {
+            connection.invoke("SendMessage", chatId, message);
+            setMessage("");
+        }
     };
 
     const handleAddMessage = (message: IMessage) => {
@@ -82,30 +101,33 @@ const MessagePage = () => {
     };
 
     const handleReviewed = () => {
-        const updatedMessages = allMessages.map((item: IMessage) => {
-            return { ...item, isRead: true };
+        setAllMessages((currentMessages) => {
+            const updatedMessages = currentMessages.map((item: IMessage) => {
+                return { ...item, isRead: true };
+            });
+            return updatedMessages;
         });
-        setAllMessages(updatedMessages);
     };
 
     useEffect(() => {
         fetchMessages();
         connection.start().then(() => connection.invoke("StartReceivingMessages", chatId));
 
-        // connection.on("e:success", () => {
-        //     setLoading(false);
-        // });
+        connection.on("e:success", () => {
+            setLoading(false);
+        });
         connection.on("e:messages:new", handleAddMessage);
         connection.on("e:messages:removed", handleRemovedMessage);
-        // connection.on("e:messages:reviewed", handleReviewed);
+        connection.on("e:messages:changed", handleChangedMessage);
+        connection.on("e:messages:reviewed", handleReviewed);
         connection.on("e:error", () => {
             navigate("/");
         });
         return () => {
-            // connection.off("e:success");
+            connection.off("e:success");
             connection.off("e:messages:new");
             connection.off("e:messages:removed");
-            // connection.off("e:messages:reviewed");
+            connection.off("e:messages:reviewed");
             connection.off("e:error");
             connection.invoke("EndReceivingMessages", chatId);
             connection.stop();
@@ -113,16 +135,12 @@ const MessagePage = () => {
     }, []);
 
     useEffect(() => {
-        console.log(allMessages);
-    }, []);
-
-    useEffect(() => {
         scrollToBottom();
     }, [allMessages]);
 
-    // if (loading) {
-    //     return <Loader />;
-    // }
+    if (loading) {
+        return <Loader />;
+    }
 
     return (
         <section className={s.message}>
@@ -148,6 +166,7 @@ const MessagePage = () => {
                                                 isDeleted={message.isDeleted}
                                                 isRead={message.isRead}
                                                 deleteMessage={handleDeleteMessage}
+                                                changeMessage={handleChangeMessage}
                                             />
                                         );
                                     })}

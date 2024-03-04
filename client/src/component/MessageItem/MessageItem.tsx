@@ -14,13 +14,23 @@ interface MessageItemProps {
     avatar: string;
     data: string;
     deleteMessage: (messageId: string) => void;
+    changeMessage: (messageId: string, text: string) => void;
     isDeleted: boolean;
     isRead: boolean;
 }
 
 const MessageItem = memo(
-    ({ id, title, avatar, data, deleteMessage, myMessage = false, isDeleted, isRead }: MessageItemProps) => {
-        console.log("message item");
+    ({
+        id,
+        title,
+        avatar,
+        data,
+        deleteMessage,
+        changeMessage,
+        myMessage = false,
+        isDeleted,
+        isRead,
+    }: MessageItemProps) => {
         const [activeToolbar, setActiveToolbar] = useState<boolean>(false);
         const ref = useRef<HTMLDivElement>(null);
 
@@ -69,7 +79,7 @@ const MessageItem = memo(
                                     {!isRead ? <IoCheckmarkSharp /> : <IoCheckmarkDoneSharp />}
                                 </div>
                                 <p className={s.message__data}>{data}</p>
-                                <button className={s.message__toolbar_btn}>
+                                <button onClick={() => changeMessage(id, title)} className={s.message__toolbar_btn}>
                                     <FaPencilAlt />
                                 </button>
                                 <button onClick={() => deleteMessage(id)} className={s.message__toolbar_btn}>
