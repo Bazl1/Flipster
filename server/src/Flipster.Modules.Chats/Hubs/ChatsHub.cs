@@ -108,7 +108,7 @@ public class ChatsHub(
         if (_users.ContainsKey(message.ToId))
             await Clients
                 .Client(_users[message.ToId].ConnectionId)
-                .SendAsync(ChangedMessageEvent, message.Id);
+                .SendAsync(ChangedMessageEvent, message.Id, text);
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
