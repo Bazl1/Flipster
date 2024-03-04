@@ -42,7 +42,9 @@ public class ChatsHub(
         await Clients.Caller.SendAsync(SuccessEvent);
         await Groups.AddToGroupAsync(Context.ConnectionId, chatId);
         if (Users.ContainsKey(chat.GetInterlocutorByMemberId(userId)))
-            await Clients.Caller.SendAsync(ReviewedMessageEvent);
+            await Clients
+                .Client(Users[chat.GetInterlocutorByMemberId(userId)])
+                .SendAsync(ReviewedMessageEvent);
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
