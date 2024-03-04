@@ -5,10 +5,21 @@ using Flispter.Shared.Contracts.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using System;
 using System.Security.Claims;
 
 namespace Flipster.Modules.Chats.Hubs;
+
+internal class UserSession
+{
+    public string ConnectionId { get; set; }
+    public string ChatId { get; set; }
+
+    public UserSession(string connectionId, string chatId)
+    {
+        ConnectionId = connectionId;
+        ChatId = chatId;
+    }
+}
 
 public class ChatsHub(
     IMessageRepository _messageRepository,
@@ -21,8 +32,7 @@ public class ChatsHub(
     private const string ChangedMessageEvent = "e:messages:changed";
     private const string ErrorEvent = "e:error";
     private const string SuccessEvent = "e:success";
-
-    public static Dictionary<string, string> Users = new();
+    private static Dictionary<string, UserSession> _users = new();
     
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task StartReceivingMessages(string chatId)
@@ -38,12 +48,13 @@ public class ChatsHub(
             await Clients.Caller.SendAsync(ErrorEvent, "You're not a member of the chat room.");
             return;
         }
-        Users.Add(userId, Context.ConnectionId);
+        _users.Add(userId, new UserSession(Context.ConnectionId, chatId));
         await Clients.Caller.SendAsync(SuccessEvent);
         await Groups.AddToGroupAsync(Context.ConnectionId, chatId);
-        if (Users.ContainsKey(chat.GetInterlocutorByMemberId(userId)))
+        if (_users.ContainsKey(chat.GetInterlocutorByMemberId(userId)) &&
+            _users[chat.GetInterlocutorByMemberId(userId)].ChatId == chatId)
             await Clients
-                .Client(Users[chat.GetInterlocutorByMemberId(userId)])
+                .Client(_users[chat.GetInterlocutorByMemberId(userId)].ConnectionId)
                 .SendAsync(ReviewedMessageEvent);
     }
 
@@ -53,19 +64,25 @@ public class ChatsHub(
         var userId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (_messageRepository.GetById(messageId) is not Message message)
         {
-            await Clients.Caller.SendAsync(ErrorEvent, "Message with given id is not found.");
+            await Clients
+                .Caller
+                .SendAsync(ErrorEvent, "Message with given id is not found.");
             return;
         }
         if (message.FromId != userId)
         {
-            await Clients.Caller.SendAsync(ErrorEvent, "You cannot delete a conversation partner's message.");
+            await Clients
+                .Caller
+                .SendAsync(ErrorEvent, "You cannot delete a conversation partner's message.");
             return;
         }
         message.Text = "This message has been deleted.";
         message.IsDeleted = true;
         _messageRepository.Update(message);
-        if (Users.TryGetValue(message.ToId, out string? toConnectionId))
-            await Clients.Client(toConnectionId).SendAsync(RemoveMessageEvent, message.Id);
+        if (_users.ContainsKey(message.ToId))
+            await Clients
+                .Client(_users[message.ToId].ConnectionId)
+                .SendAsync(RemoveMessageEvent, message.Id);
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -74,18 +91,24 @@ public class ChatsHub(
         var userId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (_messageRepository.GetById(messageId) is not Message message)
         {
-            await Clients.Caller.SendAsync(ErrorEvent, "Message with given id is not found.");
+            await Clients
+                .Caller
+                .SendAsync(ErrorEvent, "Message with given id is not found.");
             return;
         }
         if (message.FromId != userId)
         {
-            await Clients.Caller.SendAsync(ErrorEvent, "You cannot delete a conversation partner's message.");
+            await Clients
+                .Caller
+                .SendAsync(ErrorEvent, "You cannot delete a conversation partner's message.");
             return;
         }
         message.Text = text;
         _messageRepository.Update(message);
-        if (Users.TryGetValue(message.ToId, out string? toConnectionId))
-            await Clients.Client(toConnectionId).SendAsync(ChangedMessageEvent, message.Id);
+        if (_users.ContainsKey(message.ToId))
+            await Clients
+                .Client(_users[message.ToId].ConnectionId)
+                .SendAsync(ChangedMessageEvent, message.Id);
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -97,7 +120,7 @@ public class ChatsHub(
             await Clients.Caller.SendAsync(ErrorEvent, "Chat with given id is not found.");
             return;
         }
-        var interlocutorOnline = Users.ContainsKey(chat.GetInterlocutorByMemberId(userId));
+        var interlocutorOnline = _users.ContainsKey(chat.GetInterlocutorByMemberId(userId));
         var message = new Message
         {
             ChatId = chat.Id,
@@ -120,9 +143,13 @@ public class ChatsHub(
         };
 
         if (!interlocutorOnline)
-            await Clients.Caller.SendAsync(NewMessageEvent, messageResult);
+            await Clients
+                .Caller
+                .SendAsync(NewMessageEvent, messageResult);
         else
-            await Clients.Group(chatId).SendAsync(NewMessageEvent, messageResult);
+            await Clients
+                .Group(chatId)
+                .SendAsync(NewMessageEvent, messageResult);
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -130,6 +157,6 @@ public class ChatsHub(
     {
         var userId = Context.User?.FindFirstValue(ClaimTypes.NameIdentifier);
         await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatId);
-        Users.Remove(userId);
+        _users.Remove(userId);
     }
 }
