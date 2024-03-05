@@ -78,6 +78,7 @@ const MessagePage = () => {
                 return updatedMessages;
             });
             connection.invoke("ChangeMessage", changeMessageId, message);
+            setChanges(false);
             setMessage("");
         } else {
             connection.invoke("SendMessage", chatId, message);

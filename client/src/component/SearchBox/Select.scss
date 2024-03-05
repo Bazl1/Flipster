@@ -100,3 +100,17 @@
         }
     }
 }
+
+@media (max-width: 920px) {
+    .form-select-big {
+        &__value-container {
+            padding: 14px 20px !important;
+        }
+        &__placeholder {
+            font-size: 16px !important;
+        }
+        &__single-value {
+            font-size: 16px !important;
+        }
+    }
+}

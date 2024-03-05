@@ -37,3 +37,11 @@
         cursor: pointer;
     }
 }
+
+@media (max-width: 970px) {
+    .list {
+        &__title {
+            font-size: 21px;
+        }
+    }
+}

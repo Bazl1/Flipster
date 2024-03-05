@@ -13,7 +13,10 @@ export const advertApi = apiRTK.injectEndpoints({
                 },
                 body: body,
             }),
-            invalidatesTags: [{ type: "MyAdverts", id: "LIST" }],
+            invalidatesTags: [
+                { type: "MyAdverts", id: "LIST" },
+                { type: "Adverts", id: "LIST" },
+            ],
         }),
 
         deleteAdvert: build.mutation<void, { id: string }>({
