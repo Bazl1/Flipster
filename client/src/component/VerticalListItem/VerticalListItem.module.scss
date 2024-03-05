@@ -112,3 +112,26 @@
         }
     }
 }
+@media (max-width: 770px) {
+    .list {
+        &__item_row {
+            flex-direction: column;
+        }
+        &__item_img {
+            max-width: 770px;
+            width: 100%;
+            border-radius: 8px;
+        }
+        &__item_columns {
+            &:nth-child(1) {
+                max-width: 100%;
+                width: 100%;
+                overflow: hidden;
+            }
+            &:nth-child(2) {
+                width: 100%;
+                padding: 20px;
+            }
+        }
+    }
+}

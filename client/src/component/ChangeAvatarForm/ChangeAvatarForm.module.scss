@@ -91,3 +91,22 @@
         cursor: pointer;
     }
 }
+
+@media (max-width: 970px) {
+    .form {
+        &__row {
+            flex-direction: column-reverse;
+        }
+        &__columns {
+            margin: 0 auto;
+        }
+        &__skeleton,
+        &__avatar {
+            display: flex;
+            margin: 0 auto;
+        }
+        &__btn {
+            margin: 0 auto;
+        }
+    }
+}

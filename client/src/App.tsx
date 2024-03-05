@@ -6,6 +6,7 @@ import LayoutMain from "./component/LayoutMain/LayoutMain";
 import LayoutFullPage from "./component/LayoutFullPage/LayoutFullPage";
 import Loader from "./component/Loader/Loader";
 import axiosApi from "./shared/axios";
+import ProtectedRoute from "./component/ProtectedRoute/ProtectedRoute";
 
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage/RegisterPage"));
@@ -39,47 +40,48 @@ function App() {
             <Suspense fallback={<Loader />}>
                 <Routes>
                     {/* user */}
-                    <Route
-                        path="/message/:id"
-                        element={
-                            <LayoutMain>
-                                <MessagePage />
-                            </LayoutMain>
-                        }
-                    />
-                    <Route
-                        path="/chats"
-                        element={
-                            <LayoutMain>
-                                <ChatsPage />
-                            </LayoutMain>
-                        }
-                    />
-                    <Route
-                        path="/profile"
-                        element={
-                            <LayoutMain>
-                                <ProfilePage />
-                            </LayoutMain>
-                        }
-                    />
-                    <Route
-                        path="/change-advert/:id"
-                        element={
-                            <LayoutMain>
-                                <ChangeAdvert />
-                            </LayoutMain>
-                        }
-                    />
-                    <Route
-                        path="/create-advert"
-                        element={
-                            <LayoutMain>
-                                <CreateAdvert />
-                            </LayoutMain>
-                        }
-                    />
-
+                    <Route element={<ProtectedRoute role={"User"} />}>
+                        <Route
+                            path="/message/:id"
+                            element={
+                                <LayoutMain>
+                                    <MessagePage />
+                                </LayoutMain>
+                            }
+                        />
+                        <Route
+                            path="/chats"
+                            element={
+                                <LayoutMain>
+                                    <ChatsPage />
+                                </LayoutMain>
+                            }
+                        />
+                        <Route
+                            path="/profile"
+                            element={
+                                <LayoutMain>
+                                    <ProfilePage />
+                                </LayoutMain>
+                            }
+                        />
+                        <Route
+                            path="/change-advert/:id"
+                            element={
+                                <LayoutMain>
+                                    <ChangeAdvert />
+                                </LayoutMain>
+                            }
+                        />
+                        <Route
+                            path="/create-advert"
+                            element={
+                                <LayoutMain>
+                                    <CreateAdvert />
+                                </LayoutMain>
+                            }
+                        />
+                    </Route>
                     {/* public */}
                     <Route
                         path="/search/query/:search/location/:location"

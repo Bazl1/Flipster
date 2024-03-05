@@ -167,8 +167,16 @@ const CreateAdvert = () => {
                                         className={s.create__slider}
                                         modules={[Pagination]}
                                         pagination={{ clickable: true }}
-                                        spaceBetween={40}
-                                        slidesPerView={3}
+                                        breakpoints={{
+                                            320: {
+                                                slidesPerView: 2,
+                                                spaceBetween: 10,
+                                            },
+                                            970: {
+                                                slidesPerView: 3,
+                                                spaceBetween: 40,
+                                            },
+                                        }}
                                     >
                                         {images.map((item: any, index: number) => {
                                             return (
@@ -190,7 +198,7 @@ const CreateAdvert = () => {
                                     <div className={s.create__skeletons}>
                                         <div className={s.create__skelet}></div>
                                         <div className={s.create__skelet}></div>
-                                        <div className={s.create__skelet}></div>
+                                        <div className={`${s.create__skelet} mb-hidden`}></div>
                                     </div>
                                 )}
                             </div>

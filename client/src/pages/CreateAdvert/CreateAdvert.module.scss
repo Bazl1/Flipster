@@ -209,3 +209,15 @@
         color: #ff0000;
     }
 }
+
+@media (max-width: 970px) {
+    .create {
+        &__onload_imgs {
+            flex-direction: column;
+            align-items: center;
+        }
+        &__skeletons {
+            gap: 10px;
+        }
+    }
+}

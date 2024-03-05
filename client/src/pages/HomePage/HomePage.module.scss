@@ -104,3 +104,28 @@
 .products {
     padding: 50px 0 100px;
 }
+
+@media (max-width: 678px) {
+    .categories {
+        &__title {
+            font-size: 26px;
+        }
+        &__items {
+            gap: 20px;
+        }
+        &__item_title {
+            font-size: 16px;
+        }
+    }
+    .search {
+        &__inner {
+            padding: 35px 35px 40px;
+        }
+        &__title {
+            font-size: 26px;
+        }
+        &__form {
+            flex-direction: column;
+        }
+    }
+}
